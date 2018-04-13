@@ -1,15 +1,12 @@
-package cn.licoy.sbm.mapper;
+package cn.licoy.sbm.core.mapper;
 
-import cn.licoy.sbm.entity.User;
+import cn.licoy.sbm.core.entity.User;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
-/**
- * @author Licoy
- * @version 2018/4/13/14:03
- */
 @Mapper
 @Repository
 public interface UserMapper extends BaseMapper<User> {
+
 }

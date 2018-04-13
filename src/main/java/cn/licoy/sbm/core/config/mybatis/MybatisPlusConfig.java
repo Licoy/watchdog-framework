@@ -1,4 +1,4 @@
-package cn.licoy.sbm.config;
+package cn.licoy.sbm.core.config.mybatis;
 
 
 import com.baomidou.mybatisplus.MybatisConfiguration;
@@ -13,7 +13,6 @@ import org.apache.ibatis.plugin.Interceptor;
 import org.mybatis.spring.boot.autoconfigure.MybatisProperties;
 import org.mybatis.spring.boot.autoconfigure.SpringBootVFS;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.bind.RelaxedPropertyResolver;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;

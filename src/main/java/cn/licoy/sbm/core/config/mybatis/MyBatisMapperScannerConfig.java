@@ -1,4 +1,4 @@
-package cn.licoy.sbm.config;
+package cn.licoy.sbm.core.config.mybatis;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
