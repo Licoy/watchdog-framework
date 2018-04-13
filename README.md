@@ -20,6 +20,6 @@ spring:
     将sbm.sql导入到数据库
 - 启动
 # 推荐
-此项目配合<a href="https://github.com/Licoy/javas/tree/master/code-generate">code-generate</a>食用效果更佳！
+此项目配合`mybatisPlus-codeGenerate`食用效果更佳，地址：<a href="https://github.com/Licoy/javas/tree/master/code-generate">https://github.com/Licoy/javas/tree/master/code-generate</a>
 # SSM版本
 <a href="https://github.com/Licoy/ssm-basic-model">https://github.com/Licoy/ssm-basic-model</a>
