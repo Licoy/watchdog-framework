@@ -2,11 +2,11 @@
 `springboot-basic-model`是基于springboot+freemarker+mybatis+mybatis-plus+HikariCP的基础框架脚手架
 # 使用方法
 - 克隆到本地
-```
+```git
 git clone git@github.com:Licoy/springboot-basic-model.git
 ```
 - 修改数据库信息
-```
+```yml
 # application.yml
 spring:
   datasource:
