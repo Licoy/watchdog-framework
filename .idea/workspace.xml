@@ -2,38 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="05af94d0-8ee2-4693-bba7-abebff3591f8" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/licoy/sbm/common/exception/RequestException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/licoy/sbm/common/handler/GlobalDefaultExceptionHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/licoy/sbm/common/util/Encrypt.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/licoy/sbm/core/config/ErrorPageConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/licoy/sbm/core/config/freemarker/PlatformFreeMarkerConfigurer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/licoy/sbm/core/config/shiro/CredentialsMatcher.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/licoy/sbm/core/config/shiro/MyRealm.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/licoy/sbm/core/config/shiro/ShiroConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/licoy/sbm/core/controller/PageController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/licoy/sbm/core/dto/SignInDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/account/home.ftl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/account/sign-in.ftl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/error/401.ftl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/error/403.ftl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/error/404.ftl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/error/500.ftl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/page/remove.ftl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/page/select.ftl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/springboot-basic-model.iml" beforeDir="false" afterPath="$PROJECT_DIR$/springboot-basic-model.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/licoy/sbm/config/MyBatisMapperScannerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/licoy/sbm/core/config/mybatis/MyBatisMapperScannerConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/licoy/sbm/config/MybatisPlusConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/licoy/sbm/core/config/mybatis/MybatisPlusConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/licoy/sbm/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/licoy/sbm/core/controller/AccountController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/licoy/sbm/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/licoy/sbm/core/entity/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/licoy/sbm/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/licoy/sbm/core/mapper/UserMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/licoy/sbm/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/licoy/sbm/core/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/licoy/sbm/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/licoy/sbm/core/service/impl/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/UserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapper/UserMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/user.ftl" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/error/400.ftl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -58,18 +28,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MyRealm.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cn/licoy/sbm/core/config/shiro/MyRealm.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="23">
-              <caret line="40" column="110" selection-start-line="40" selection-start-column="110" selection-end-line="40" selection-end-column="110" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="ErrorPageConfig.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cn/licoy/sbm/core/config/ErrorPageConfig.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -79,11 +37,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="401.ftl" pinned="false" current-in-tab="true">
+      <file leaf-file-name="401.ftl" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/templates/error/401.ftl">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="340">
               <caret line="10" column="7" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="136">
+                <caret line="1" column="131" selection-start-line="1" selection-start-column="131" selection-end-line="1" selection-end-column="131" />
+              </first_editor>
+              <second_editor />
             </state>
           </provider>
         </entry>
@@ -210,6 +180,7 @@
         <option value="$PROJECT_DIR$/src/main/java/cn/licoy/sbm/core/config/ErrorPageConfig.java" />
         <option value="$PROJECT_DIR$/src/main/java/cn/licoy/sbm/common/handler/GlobalDefaultExceptionHandler.java" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/error/401.ftl" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -536,12 +507,20 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1523598820297</updated>
-      <workItem from="1523598825024" duration="12076000" />
+      <workItem from="1523598825024" duration="12216000" />
     </task>
+    <task id="LOCAL-00001" summary="添加shiro权限控制">
+      <created>1523612496298</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1523612496298</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12076000" />
+    <option name="totallyTimeSpent" value="12216000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -577,7 +556,7 @@
       <window_info anchor="bottom" id="Version Control" order="4" />
       <window_info anchor="bottom" id="Spring" order="5" />
       <window_info anchor="bottom" id="Terminal" order="6" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24973147" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24973147" />
       <window_info anchor="right" id="Bean Validation" />
       <window_info id="Web" side_tool="true" />
       <window_info anchor="bottom" id="Find" order="8" />
@@ -595,6 +574,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="添加shiro权限控制" />
+    <option name="LAST_COMMIT_MESSAGE" value="添加shiro权限控制" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/main/resources/templates/user.ftl">
@@ -615,16 +598,6 @@
             <element signature="e#258#259#0" expanded="true" />
             <element signature="e#340#341#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="340">
-            <caret line="8" column="6" lean-forward="true" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
-          </first_editor>
-          <second_editor />
         </state>
       </provider>
     </entry>
@@ -1002,6 +975,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
           <caret line="10" column="7" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="136">
+            <caret line="1" column="131" selection-start-line="1" selection-start-column="131" selection-end-line="1" selection-end-column="131" />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>

@@ -1,5 +1,5 @@
 # 介绍
-`springboot-basic-model`是基于springboot+freemarker+mybatis+mybatis-plus+HikariCP的基础框架脚手架
+`springboot-basic-model`是基于springboot+freemarker+shiro+mybatis+mybatis-plus+HikariCP的基础权限脚手架框架整合，其包括数据库的CRUD、身份认证以及访问角色/权限的控制；欢迎使用。
 # 使用方法
 - 克隆到本地
 ```git
