@@ -1,0 +1,17 @@
+logging:
+  level:
+    cn:
+      licoy:
+        sbm: debug
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/sbm?useUnicode=yes&characterEncoding=UTF8
+    password: root
+    username: root
+    driver-class-name: com.mysql.jdbc.Driver
+  freemarker:
+    request-context-attribute: request
+    expose-request-attributes: true
+    expose-session-attributes: true
+    expose-spring-macro-helpers: true
+    template-loader-path: classpath:/templates
