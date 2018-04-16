@@ -17,7 +17,7 @@ public class ErrorPageConfig {
     public EmbeddedServletContainerCustomizer containerCustomizer(){
         return configurableEmbeddedServletContainer -> {
             configurableEmbeddedServletContainer
-                    .addErrorPages(new ErrorPage(HttpStatus.UNAUTHORIZED,"/error/401"));
+                    .addErrorPages(new ErrorPage(HttpStatus.UNAUTHORIZED,"/error/unauthorized"));
 //            configurableEmbeddedServletContainer
 //                    .addErrorPages(new ErrorPage(HttpStatus.BAD_REQUEST, "/error/400"));
 //            configurableEmbeddedServletContainer

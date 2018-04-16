@@ -9,6 +9,9 @@ spring:
     password: root
     username: root
     driver-class-name: com.mysql.jdbc.Driver
+    hikari:
+      max-lifetime: 1765000
+      maximum-pool-size: 15
   freemarker:
     request-context-attribute: request
     expose-request-attributes: true

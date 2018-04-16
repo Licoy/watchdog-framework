@@ -39,9 +39,9 @@ public class ShiroConfiguration {
         //拦截器.
         Map<String,String> filterChainDefinitionMap = new LinkedHashMap<>();
 
-        //登出
-        filterChainDefinitionMap.put("/logout", "logout");
-
+        //登出 resultAPI不能使用logout，不然会自动跳转至登录页面
+        filterChainDefinitionMap.put("/account/logout", "anon");
+        filterChainDefinitionMap.put("/account/sign-in", "anon");
         //<!-- 过滤链定义，从上向下顺序执行，一般将 /**放在最为下边 -->:这是一个坑呢，一不小心代码就不好使了;
         //<!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
 
@@ -55,14 +55,14 @@ public class ShiroConfiguration {
             });
         }
 
-        filterChainDefinitionMap.put("/**", "anon");
+        filterChainDefinitionMap.put("/**", "authc");
 
         // 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
-        shiroFilterFactoryBean.setLoginUrl("/account/sign-in");
+        shiroFilterFactoryBean.setLoginUrl("/error/unauthorized"); //将页面定向到未登录错误页
         // 登录成功后要跳转的链接
         shiroFilterFactoryBean.setSuccessUrl("/account/home");
         //未授权界面;
-        //shiroFilterFactoryBean.setUnauthorizedUrl("/error/403");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/error/forbidden");
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
