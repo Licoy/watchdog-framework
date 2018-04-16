@@ -19,6 +19,12 @@ spring:
     
     将sbm.sql导入到数据库
 - 启动
+
+    访问地址<a href="http://localhost:8080/account/sign-in">http://localhost:8080/account/sign-in</a>
+    
+    默认用户：user ，管理员用户：admin
+    
+    密码均为：123456
 # 推荐
 此项目配合`mybatisPlus-codeGenerate`食用效果更佳，地址：<a href="https://github.com/Licoy/javas/tree/master/code-generate">https://github.com/Licoy/javas/tree/master/code-generate</a>
 # SSM版本
