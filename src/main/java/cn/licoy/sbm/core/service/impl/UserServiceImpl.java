@@ -35,7 +35,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
         if(user == null){
             return null;
         }
-        user.setRole(roleService.findRoleById(user.getRoleId()));
+        user.setRoles(roleService.findAllRoleByUserId(user.getId()));
         return user;
     }
 

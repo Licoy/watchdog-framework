@@ -35,11 +35,13 @@ public class MyRealm extends AuthorizingRealm {
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
             User user = userService.findUserByName(username);
             if(user!=null){
-                if(user.getRole()!=null){
-                    info.addRole(user.getRole().getName());
-                    if(user.getRole().getPermissions()!=null){
-                        user.getRole().getPermissions().forEach(v-> info.addStringPermission(v.getPermission()));
-                    }
+                if(user.getRoles()!=null){
+                    user.getRoles().forEach(role->{
+                        info.addRole(role.getName());
+                        if(role.getPermissions()!=null){
+                            role.getPermissions().forEach(v-> info.addStringPermission(v.getPermission()));
+                        }
+                    });
                 }
                 return info;
             }

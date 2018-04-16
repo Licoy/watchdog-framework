@@ -5,22 +5,24 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 
+/**
+ * @author Licoy
+ * @version 2018/4/16/11:31
+ */
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class Permission implements Serializable  {
+public class UserRole implements Serializable {
 
     @TableId
     private Integer id;
-    private String name;
-    private String permission;
-    private String url;
-    private Integer fid;
-    private Integer sort;
 
-    private static final long serialVersionUID = 1L;
+    private Integer uid;
+
+    private Integer rid;
 
 }

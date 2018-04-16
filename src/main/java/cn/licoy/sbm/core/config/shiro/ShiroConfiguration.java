@@ -1,5 +1,7 @@
 package cn.licoy.sbm.core.config.shiro;
 
+import cn.licoy.sbm.core.entity.Permission;
+import cn.licoy.sbm.core.service.PermissionService;
 import lombok.extern.log4j.Log4j;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -9,8 +11,11 @@ import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreato
 import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.util.StringUtils;
 
+import javax.annotation.Resource;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,29 +26,43 @@ import java.util.Map;
 @Log4j
 public class ShiroConfiguration {
 
+    @Resource
+    private PermissionService permissionService;
+
     @Bean
     public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager){
-        log.info("ShiroConfiguration initialized");
+        log.info("Shiro Configuration initialized");
         ShiroFilterFactoryBean shiroFilterFactoryBean  = new ShiroFilterFactoryBean();
 
         // 必须设置 SecurityManager
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         //拦截器.
-        Map<String,String> filterChainDefinitionMap = new LinkedHashMap<String,String>();
+        Map<String,String> filterChainDefinitionMap = new LinkedHashMap<>();
 
         //登出
         filterChainDefinitionMap.put("/logout", "logout");
 
         //<!-- 过滤链定义，从上向下顺序执行，一般将 /**放在最为下边 -->:这是一个坑呢，一不小心代码就不好使了;
         //<!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
+
+        List<Permission> permissions = permissionService.selectList(null);
+
+        if(permissions!=null){
+            permissions.forEach(v-> {
+                if(!StringUtils.isEmpty(v.getUrl()) && !StringUtils.isEmpty(v.getPermission())){
+                    filterChainDefinitionMap.put(v.getUrl(),"perms["+v.getPermission()+"]");
+                }
+            });
+        }
+
         filterChainDefinitionMap.put("/**", "anon");
 
         // 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
-        shiroFilterFactoryBean.setLoginUrl("/login");
+        shiroFilterFactoryBean.setLoginUrl("/account/sign-in");
         // 登录成功后要跳转的链接
-        shiroFilterFactoryBean.setSuccessUrl("/");
+        shiroFilterFactoryBean.setSuccessUrl("/account/home");
         //未授权界面;
-        shiroFilterFactoryBean.setUnauthorizedUrl("/403");
+        //shiroFilterFactoryBean.setUnauthorizedUrl("/error/403");
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
