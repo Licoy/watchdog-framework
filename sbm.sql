@@ -82,5 +82,5 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', 'admin', '20', '1b63b0e074a2e3e41caa813ded8e390e', '1');
+INSERT INTO `user` VALUES ('1', 'admin', '20', 'b9d11b3be25f5a1a7dc8ca04cd310b28', '1');
 INSERT INTO `user` VALUES ('2', 'user', '20', 'ad42c83ac4d3b86de14f207c46a0df0e', '2');
