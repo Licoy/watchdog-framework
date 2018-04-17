@@ -1,5 +1,5 @@
 # 介绍
-`saf`基于vue+iview+springboot+shiro+mybatis+mybatis-plus+HikariCP开发的基础权限框架，欢迎使用。
+`watchDog-framework`基于vue+iview+springboot+shiro+mybatis+mybatis-plus+HikariCP开发的基础权限框架，欢迎使用。
 # 使用方法 [开发中，请勿直接使用]
 - 克隆到本地
 ```git
