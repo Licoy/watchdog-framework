@@ -61,7 +61,7 @@ public class MyRealm extends AuthorizingRealm {
         if(user==null){
             throw new DisabledAccountException("用户不存在！");
         }
-        return new SimpleAuthenticationInfo(user.getName(),user.getPassword(),getName());
+        return new SimpleAuthenticationInfo(user.getUsername(),user.getPassword(),getName());
     }
 
     @PostConstruct

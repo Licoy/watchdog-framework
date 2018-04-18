@@ -3,7 +3,9 @@ package cn.licoy.sbm.core.controller;
 import cn.licoy.sbm.common.bean.RequestResult;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * @author Licoy
@@ -11,9 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping(value = {"/error"})
+@ApiIgnore
 public class ErrorController {
 
-    @RequestMapping(value = {"/forbidden"})
+    @RequestMapping(value = {"/forbidden"}, method = RequestMethod.GET)
     public RequestResult Forbidden(){
         return RequestResult.builder()
                 .status(HttpStatus.FORBIDDEN.value())
@@ -21,7 +24,7 @@ public class ErrorController {
                 .build();
     }
 
-    @RequestMapping(value = {"/unauthorized"})
+    @RequestMapping(value = {"/unauthorized"}, method = RequestMethod.GET)
     public RequestResult unauthorized(){
         return RequestResult.builder()
                 .status(HttpStatus.UNAUTHORIZED.value())

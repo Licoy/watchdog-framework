@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -18,11 +19,13 @@ public class User implements Serializable  {
     
     @TableId
     private Integer id;
-    private String name;
+    private String username;
     private Integer age;
     private String password;
+    private Integer status;
     @TableField(exist = false)
     private List<Role> roles;
+    private Date createDate;
 
     private static final long serialVersionUID = 1L;
 

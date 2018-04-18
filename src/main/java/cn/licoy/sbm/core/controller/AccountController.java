@@ -1,13 +1,16 @@
 package cn.licoy.sbm.core.controller;
 
 import cn.licoy.sbm.common.bean.RequestResult;
+import cn.licoy.sbm.common.bean.StatusEnum;
 import cn.licoy.sbm.core.dto.SignInDTO;
 import cn.licoy.sbm.core.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.subject.Subject;
-import org.springframework.http.HttpStatus;
-import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,40 +23,36 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping(value = {"/account"})
+@Api(tags = {"账户相关"})
 public class AccountController {
 
     @Resource
     private UserService userService;
 
     @RequestMapping(value = {"/sign-in"},method = RequestMethod.POST)
-    public RequestResult findUser(SignInDTO signInDTO, Model model){
-        Boolean res = userService.signIn(signInDTO,model);
-        if(res){
-            return RequestResult.builder()
-                    .status(HttpStatus.OK.value())
-                    .msg("登录成功")
-                    .build();
-        }
-        return RequestResult.builder()
-                .status(HttpStatus.UNAUTHORIZED.value())
-                .msg("登录失败")
-                .build();
+    @ApiOperation(value = "登录")
+    public RequestResult findUser(@RequestBody @Validated @ApiParam(value = "登录数据",required = true)
+                                              SignInDTO signInDTO){
+        userService.signIn(signInDTO);
+        return RequestResult.e(StatusEnum.SIGN_IN_OK);
     }
 
-    @RequestMapping(value = "/home")
-    public String home(){
-        return "account/home";
+    @RequestMapping(value = "/current", method = RequestMethod.POST)
+    @ApiOperation(value = "获取当前用户信息")
+    public RequestResult home(){
+        return RequestResult.e(StatusEnum.OK, userService.getCurrentUser());
     }
 
-    @RequestMapping(value = "/logout")
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    @ApiOperation(value = "注销登录")
     public RequestResult logout(){
         try {
             Subject subject = SecurityUtils.getSubject();
             subject.logout();
         }catch (Exception e){
-            return RequestResult.error("注销登录失败");
+            return RequestResult.e(StatusEnum.LOGOUT_FAIL);
         }
-        return RequestResult.okHasDataAndMsg(null, "注销登录成功");
+        return RequestResult.e(StatusEnum.LOGOUT_OK);
     }
 
 }
