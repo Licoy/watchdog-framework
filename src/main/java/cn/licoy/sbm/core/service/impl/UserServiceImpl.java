@@ -32,6 +32,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
 
     @Resource
     private RoleService roleService;
+
     @Override
     public User findUserByName(String name) {
         User user = this.selectOne(new EntityWrapper<User>().eq("username",name));
@@ -105,6 +106,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
         }
         user.setStatus(status);
         this.updateById(user);
+        return RequestResult.e(StatusEnum.OK);
+    }
+
+    @Override
+    public RequestResult removeUser(Integer userId) {
+        User user = this.selectById(userId);
+        if(user==null){
+            throw new RequestException(StatusEnum.FAIL.code,"用户不存在！");
+        }
+        if(user.getUsername().equals(SecurityUtils.getSubject().getPrincipal().toString())){
+            throw new RequestException(StatusEnum.FAIL.code,"不能删除自己的账户！");
+        }
+        this.deleteById(userId);
+        //TODO 删除ROLE、PERMISSION
         return RequestResult.e(StatusEnum.OK);
     }
 }

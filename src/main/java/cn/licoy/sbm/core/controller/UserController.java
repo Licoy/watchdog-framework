@@ -40,4 +40,10 @@ public class UserController {
         return userService.statusChange(id, 1);
     }
 
+    @RequestMapping(value = {"/remove/{id}"}, method = RequestMethod.POST)
+    @ApiOperation(value = "删除用户")
+    public RequestResult remove(@PathVariable("id") Integer id){
+        return userService.removeUser(id);
+    }
+
 }
