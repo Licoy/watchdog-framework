@@ -41,13 +41,17 @@ public class PermissionAuthorizationFilter extends AccessControlFilter {
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws IOException {
         Subject subject = getSubject(request, response);
         System.out.println(SecurityUtils.getSubject().getPrincipal());
-        if (null == subject.getPrincipal()) {//表示没有登录，重定向到登录页面
-            saveRequest(request);
-            HttpServletResponse res = WebUtils.toHttp(response);
-            res.setHeader("Content-Type", "application/json;charset=utf-8");
+        saveRequest(request);
+        HttpServletResponse res = WebUtils.toHttp(response);
+        res.setHeader("Content-Type", "application/json;charset=utf-8");
+        if (null == subject.getPrincipal()) {//表示没有登录，返回登录提示
             res.getWriter().write(JSON.toJSONString(RequestResult.e(StatusEnum.NOT_SING_IN)));
-            return false;
+        }else{
+            res.getWriter().write(JSON.toJSONString(RequestResult.builder()
+                    .status(StatusEnum.FAIL.code)
+                    .msg("无权限访问")
+                    .build()));
         }
-        return true;
+        return false;
     }
 }
