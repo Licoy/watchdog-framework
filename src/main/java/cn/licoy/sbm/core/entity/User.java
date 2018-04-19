@@ -18,7 +18,7 @@ public class User implements Serializable  {
 
     
     @TableId
-    private Integer id;
+    private Long id;
     private String username;
     private Integer age;
     private String password;

@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 public class UserVO {
 
-    private Integer id;
+    private Long id;
     private String username;
     private Integer age;
     private Integer status;

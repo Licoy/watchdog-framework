@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class Permission implements Serializable  {
 
     @TableId
-    private Integer id;
+    private Long id;
     private String name;
     private String permission;
     private String url;

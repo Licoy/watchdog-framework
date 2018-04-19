@@ -41,12 +41,12 @@ public interface UserService extends IService<User> {
      * @param status 状态码
      * @return RequestResult
      */
-    RequestResult statusChange(Integer userId, Integer status);
+    RequestResult statusChange(Long userId, Integer status);
 
     /**
      * 删除用户
      * @param userId 用户ID
      * @return RequestResult
      */
-    RequestResult removeUser(Integer userId);
+    RequestResult removeUser(Long userId);
 }

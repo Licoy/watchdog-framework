@@ -96,7 +96,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
     }
 
     @Override
-    public RequestResult statusChange(Integer userId, Integer status) {
+    public RequestResult statusChange(Long userId, Integer status) {
         User user = this.selectById(userId);
         if(user==null){
             throw new RequestException(StatusEnum.FAIL.code,"用户不存在");
@@ -110,7 +110,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
     }
 
     @Override
-    public RequestResult removeUser(Integer userId) {
+    public RequestResult removeUser(Long userId) {
         User user = this.selectById(userId);
         if(user==null){
             throw new RequestException(StatusEnum.FAIL.code,"用户不存在！");
@@ -119,7 +119,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
             throw new RequestException(StatusEnum.FAIL.code,"不能删除自己的账户！");
         }
         this.deleteById(userId);
-        //TODO 删除ROLE、PERMISSION
         return RequestResult.e(StatusEnum.OK);
     }
 }

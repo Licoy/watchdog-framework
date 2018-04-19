@@ -27,10 +27,10 @@ public class RolePermissionServiceImpl extends ServiceImpl<RolePermissionMapper,
     private PermissionService permissionService;
 
     @Override
-    public List<Permission> findAllPermissionByRoleId(Integer rid) {
+    public List<Permission> findAllPermissionByRoleId(Long rid) {
         List<RolePermission> rps = this.selectList(new EntityWrapper<RolePermission>().eq("rid",rid));
         if(rps!=null){
-            List<Integer> pids = new ArrayList<>();
+            List<Long> pids = new ArrayList<>();
             rps.forEach(v->pids.add(v.getPid()));
             return permissionService.selectList(new EntityWrapper<Permission>().in("id", pids));
         }

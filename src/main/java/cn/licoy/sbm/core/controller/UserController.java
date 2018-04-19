@@ -30,19 +30,19 @@ public class UserController {
 
     @RequestMapping(value = {"/lock/{id}"}, method = RequestMethod.POST)
     @ApiOperation(value = "锁定用户")
-    public RequestResult lock(@PathVariable("id") Integer id){
+    public RequestResult lock(@PathVariable("id") @ApiParam(value = "用户标识ID") Long id){
         return userService.statusChange(id, 0);
     }
 
     @RequestMapping(value = {"/unlock/{id}"}, method = RequestMethod.POST)
     @ApiOperation(value = "解锁用户")
-    public RequestResult unlock(@PathVariable("id") Integer id){
+    public RequestResult unlock(@PathVariable("id") @ApiParam(value = "用户标识ID") Long id){
         return userService.statusChange(id, 1);
     }
 
     @RequestMapping(value = {"/remove/{id}"}, method = RequestMethod.POST)
     @ApiOperation(value = "删除用户")
-    public RequestResult remove(@PathVariable("id") Integer id){
+    public RequestResult remove(@PathVariable("id") @ApiParam(value = "用户标识ID") Long id){
         return userService.removeUser(id);
     }
 

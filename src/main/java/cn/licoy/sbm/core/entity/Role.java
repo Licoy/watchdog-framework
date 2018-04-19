@@ -16,7 +16,7 @@ import java.util.List;
 public class Role implements Serializable  {
 
     @TableId
-    private Integer id;
+    private Long id;
     
     private String name;
 

@@ -12,6 +12,6 @@ import java.util.List;
  */
 public interface RolePermissionService extends IService<RolePermission> {
 
-    List<Permission> findAllPermissionByRoleId(Integer rid);
+    List<Permission> findAllPermissionByRoleId(Long rid);
 
 }

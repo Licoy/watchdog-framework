@@ -19,10 +19,10 @@ import java.io.Serializable;
 public class UserRole implements Serializable {
 
     @TableId
-    private Integer id;
+    private Long id;
 
-    private Integer uid;
+    private Long uid;
 
-    private Integer rid;
+    private Long rid;
 
 }

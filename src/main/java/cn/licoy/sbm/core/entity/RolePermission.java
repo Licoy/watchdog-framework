@@ -19,11 +19,11 @@ import java.io.Serializable;
 public class RolePermission implements Serializable {
 
     @TableId
-    private Integer id;
+    private Long id;
 
-    private Integer rid;
+    private Long rid;
 
-    private Integer pid;
+    private Long pid;
 
     private static final long serialVersionUID = 1L;
 }
