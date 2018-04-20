@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.MybatisConfiguration;
 import com.baomidou.mybatisplus.MybatisXMLLanguageDriver;
 import com.baomidou.mybatisplus.entity.GlobalConfiguration;
 import com.baomidou.mybatisplus.enums.DBType;
+import com.baomidou.mybatisplus.enums.IdType;
 import com.baomidou.mybatisplus.mapper.AutoSqlInjector;
 import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean;
@@ -88,7 +89,8 @@ public class MybatisPlusConfig {
         GlobalConfiguration globalConfig = new GlobalConfiguration();
         globalConfig.setDbType(DBType.MYSQL.name());//数据库类型
         // ID 策略 AUTO->`0`("数据库ID自增") INPUT->`1`(用户输入ID") ID_WORKER->`2`("全局唯一ID") UUID->`3`("全局唯一ID")
-        globalConfig.setIdType(0);
+        //使用ID_WORKER_STR，因为前后端分离使用整形，前端JS会有精度丢失
+        globalConfig.setIdType(IdType.ID_WORKER_STR.getKey());
         globalConfig.setSqlInjector(new AutoSqlInjector());
         //MP 属性下划线 转 驼峰 , 如果原生配置 mc.setMapUnderscoreToCamelCase(true) 开启，该配置可以无。
         //globalConfig.setDbColumnUnderline(true);

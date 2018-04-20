@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-04-20 14:36:13
+Date: 2018-04-20 17:28:11
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -76,6 +76,27 @@ CREATE TABLE `role_permission` (
 INSERT INTO `role_permission` VALUES ('1', '1', '1');
 INSERT INTO `role_permission` VALUES ('2', '1', '2');
 INSERT INTO `role_permission` VALUES ('3', '2', '1');
+
+-- ----------------------------
+-- Table structure for sys_resource
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_resource`;
+CREATE TABLE `sys_resource` (
+  `id` varchar(30) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `parent_id` varchar(30) DEFAULT NULL,
+  `type` int(1) NOT NULL,
+  `url` varchar(100) DEFAULT NULL,
+  `permission` varchar(50) DEFAULT NULL,
+  `icon` varchar(30) DEFAULT NULL,
+  `sort` int(11) NOT NULL DEFAULT '0',
+  `create_date` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of sys_resource
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for user
