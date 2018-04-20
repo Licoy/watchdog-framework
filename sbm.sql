@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-04-18 18:06:25
+Date: 2018-04-20 14:36:13
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -21,21 +21,22 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `permission`;
 CREATE TABLE `permission` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) DEFAULT NULL,
-  `permission` varchar(50) DEFAULT NULL,
-  `url` varchar(100) DEFAULT NULL,
-  `fid` int(11) DEFAULT NULL,
-  `sort` int(11) DEFAULT NULL,
+  `name` varchar(50) NOT NULL,
+  `permission` varchar(50) NOT NULL,
+  `url` varchar(100) NOT NULL,
+  `type` varchar(20) NOT NULL,
+  `fid` int(11) NOT NULL DEFAULT '0',
+  `sort` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of permission
 -- ----------------------------
-INSERT INTO `permission` VALUES ('1', '页面查看', 'page:select', '/page/select/**', '0', '0');
-INSERT INTO `permission` VALUES ('2', '页面删除', 'page:remove', '/page/remove/**', '0', '0');
-INSERT INTO `permission` VALUES ('3', '用户锁定', 'system:user:lock', '/user/lock/**', '0', '0');
-INSERT INTO `permission` VALUES ('4', '用户解锁', 'system:user:unlock', '/user/unlock/**', '0', '0');
+INSERT INTO `permission` VALUES ('1', '页面查看', 'page:select', '/page/select/**', '', '0', '0');
+INSERT INTO `permission` VALUES ('2', '页面删除', 'page:remove', '/page/remove/**', '', '0', '0');
+INSERT INTO `permission` VALUES ('3', '用户锁定', 'system:user:lock', '/user/lock/**', '', '0', '0');
+INSERT INTO `permission` VALUES ('4', '用户解锁', 'system:user:unlock', '/user/unlock/**', '', '0', '0');
 
 -- ----------------------------
 -- Table structure for role
@@ -45,13 +46,14 @@ CREATE TABLE `role` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of role
 -- ----------------------------
 INSERT INTO `role` VALUES ('1', '管理员');
 INSERT INTO `role` VALUES ('2', '普通用户');
+INSERT INTO `role` VALUES ('5', '测试');
 
 -- ----------------------------
 -- Table structure for role_permission
@@ -61,7 +63,11 @@ CREATE TABLE `role_permission` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `rid` int(11) NOT NULL,
   `pid` int(11) NOT NULL,
-  PRIMARY KEY (`id`,`rid`,`pid`)
+  PRIMARY KEY (`id`,`rid`,`pid`),
+  KEY `rid` (`rid`),
+  KEY `pid` (`pid`),
+  CONSTRAINT `role_permission_ibfk_1` FOREIGN KEY (`rid`) REFERENCES `role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `role_permission_ibfk_2` FOREIGN KEY (`pid`) REFERENCES `permission` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -82,7 +88,8 @@ CREATE TABLE `user` (
   `age` int(11) NOT NULL,
   `status` int(1) NOT NULL COMMENT '1',
   `create_date` datetime NOT NULL,
-  PRIMARY KEY (`id`,`username`)
+  PRIMARY KEY (`id`,`username`),
+  KEY `id` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -99,11 +106,16 @@ CREATE TABLE `user_role` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `uid` int(11) NOT NULL,
   `rid` int(11) NOT NULL,
-  PRIMARY KEY (`id`,`uid`,`rid`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`,`uid`,`rid`),
+  KEY `user_role_ibfk_2` (`uid`),
+  KEY `user_role_ibfk_1` (`rid`),
+  CONSTRAINT `user_role_ibfk_1` FOREIGN KEY (`rid`) REFERENCES `role` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `user_role_ibfk_2` FOREIGN KEY (`uid`) REFERENCES `user` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user_role
 -- ----------------------------
 INSERT INTO `user_role` VALUES ('1', '1', '1');
-INSERT INTO `user_role` VALUES ('2', '2', '2');
+INSERT INTO `user_role` VALUES ('4', '1', '5');
+INSERT INTO `user_role` VALUES ('3', '2', '2');

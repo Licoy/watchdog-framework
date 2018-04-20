@@ -15,6 +15,7 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -65,6 +66,9 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper,Role> implements Rol
         if(role==null) throw new RequestException(StatusEnum.FAIL.code,"角色不存在！");
         try {
             this.deleteById(rid);
+        }catch (DataIntegrityViolationException e){
+            throw new RequestException(StatusEnum.FAIL.code,
+                    String.format("请先解除角色为【%s】角色的全部用户！",role.getName()),e);
         }catch (Exception e){
             throw new RequestException(StatusEnum.FAIL.code,"角色删除失败！",e);
         }

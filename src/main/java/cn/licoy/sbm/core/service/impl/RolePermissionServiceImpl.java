@@ -32,6 +32,9 @@ public class RolePermissionServiceImpl extends ServiceImpl<RolePermissionMapper,
         if(rps!=null){
             List<Long> pids = new ArrayList<>();
             rps.forEach(v->pids.add(v.getPid()));
+            if(pids.size()==0){
+                return null;
+            }
             return permissionService.selectList(new EntityWrapper<Permission>().in("id", pids));
         }
         return null;

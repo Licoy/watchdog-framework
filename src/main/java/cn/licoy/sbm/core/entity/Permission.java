@@ -17,9 +17,10 @@ public class Permission implements Serializable  {
     private Long id;
     private String name;
     private String permission;
+    private String type;
     private String url;
-    private Integer fid;
-    private Integer sort;
+    private Long fid;
+    private Long sort;
 
     private static final long serialVersionUID = 1L;
 
