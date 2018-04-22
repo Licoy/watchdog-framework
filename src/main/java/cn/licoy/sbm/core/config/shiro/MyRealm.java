@@ -4,8 +4,7 @@ package cn.licoy.sbm.core.config.shiro;
 
 import cn.licoy.sbm.common.exception.RequestException;
 import cn.licoy.sbm.core.entity.User;
-import cn.licoy.sbm.core.service.UserService;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import cn.licoy.sbm.core.service.system.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;

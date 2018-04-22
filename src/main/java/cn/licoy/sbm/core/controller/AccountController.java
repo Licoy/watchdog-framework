@@ -3,7 +3,7 @@ package cn.licoy.sbm.core.controller;
 import cn.licoy.sbm.common.bean.RequestResult;
 import cn.licoy.sbm.common.bean.StatusEnum;
 import cn.licoy.sbm.core.dto.SignInDTO;
-import cn.licoy.sbm.core.service.UserService;
+import cn.licoy.sbm.core.service.system.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

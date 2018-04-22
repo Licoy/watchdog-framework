@@ -1,4 +1,4 @@
-package cn.licoy.sbm.core.service.impl;
+package cn.licoy.sbm.core.service.system.impl;
 
 import cn.licoy.sbm.common.bean.StatusEnum;
 import cn.licoy.sbm.common.exception.RequestException;
@@ -8,9 +8,9 @@ import cn.licoy.sbm.core.entity.Permission;
 import cn.licoy.sbm.core.entity.Role;
 import cn.licoy.sbm.core.entity.UserRole;
 import cn.licoy.sbm.core.mapper.RoleMapper;
-import cn.licoy.sbm.core.service.RolePermissionService;
-import cn.licoy.sbm.core.service.RoleService;
-import cn.licoy.sbm.core.service.UserRoleService;
+import cn.licoy.sbm.core.service.system.RolePermissionService;
+import cn.licoy.sbm.core.service.system.RoleService;
+import cn.licoy.sbm.core.service.system.UserRoleService;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;

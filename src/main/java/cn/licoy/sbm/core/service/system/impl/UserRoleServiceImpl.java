@@ -1,8 +1,8 @@
-package cn.licoy.sbm.core.service.impl;
+package cn.licoy.sbm.core.service.system.impl;
 
 import cn.licoy.sbm.core.entity.UserRole;
 import cn.licoy.sbm.core.mapper.UserRoleMapper;
-import cn.licoy.sbm.core.service.UserRoleService;
+import cn.licoy.sbm.core.service.system.UserRoleService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

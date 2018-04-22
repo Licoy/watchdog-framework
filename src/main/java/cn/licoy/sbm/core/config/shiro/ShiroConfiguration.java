@@ -2,7 +2,7 @@ package cn.licoy.sbm.core.config.shiro;
 
 import cn.licoy.sbm.core.entity.Permission;
 import cn.licoy.sbm.core.filter.PermissionAuthorizationFilter;
-import cn.licoy.sbm.core.service.PermissionService;
+import cn.licoy.sbm.core.service.system.PermissionService;
 import lombok.extern.log4j.Log4j;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;

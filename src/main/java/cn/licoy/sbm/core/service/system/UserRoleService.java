@@ -1,4 +1,4 @@
-package cn.licoy.sbm.core.service;
+package cn.licoy.sbm.core.service.system;
 
 import cn.licoy.sbm.core.entity.UserRole;
 import com.baomidou.mybatisplus.service.IService;

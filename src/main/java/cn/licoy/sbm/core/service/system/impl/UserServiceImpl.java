@@ -1,4 +1,4 @@
-package cn.licoy.sbm.core.service.impl;
+package cn.licoy.sbm.core.service.system.impl;
 
 import cn.licoy.sbm.common.bean.RequestResult;
 import cn.licoy.sbm.common.bean.StatusEnum;
@@ -7,8 +7,8 @@ import cn.licoy.sbm.core.dto.SignInDTO;
 import cn.licoy.sbm.core.dto.user.FindUserDTO;
 import cn.licoy.sbm.core.entity.User;
 import cn.licoy.sbm.core.mapper.UserMapper;
-import cn.licoy.sbm.core.service.RoleService;
-import cn.licoy.sbm.core.service.UserService;
+import cn.licoy.sbm.core.service.system.RoleService;
+import cn.licoy.sbm.core.service.system.UserService;
 import cn.licoy.sbm.core.vo.UserVO;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
@@ -20,7 +20,6 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;

@@ -4,7 +4,7 @@ import cn.licoy.sbm.common.bean.RequestResult;
 import cn.licoy.sbm.common.bean.StatusEnum;
 import cn.licoy.sbm.core.dto.role.FindRoleDTO;
 import cn.licoy.sbm.core.dto.role.RoleUpdateDTO;
-import cn.licoy.sbm.core.service.RoleService;
+import cn.licoy.sbm.core.service.system.RoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

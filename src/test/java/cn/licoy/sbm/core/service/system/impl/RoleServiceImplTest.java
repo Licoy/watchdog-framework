@@ -1,7 +1,7 @@
-package cn.licoy.sbm.core.service.impl;
+package cn.licoy.sbm.core.service.system.impl;
 
 import cn.licoy.sbm.core.entity.Role;
-import cn.licoy.sbm.core.service.RoleService;
+import cn.licoy.sbm.core.service.system.RoleService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;

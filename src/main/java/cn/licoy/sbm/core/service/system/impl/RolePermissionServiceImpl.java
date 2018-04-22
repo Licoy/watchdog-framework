@@ -1,10 +1,10 @@
-package cn.licoy.sbm.core.service.impl;
+package cn.licoy.sbm.core.service.system.impl;
 
 import cn.licoy.sbm.core.entity.Permission;
 import cn.licoy.sbm.core.entity.RolePermission;
 import cn.licoy.sbm.core.mapper.RolePermissionMapper;
-import cn.licoy.sbm.core.service.PermissionService;
-import cn.licoy.sbm.core.service.RolePermissionService;
+import cn.licoy.sbm.core.service.system.PermissionService;
+import cn.licoy.sbm.core.service.system.RolePermissionService;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
