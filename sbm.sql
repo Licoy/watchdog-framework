@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost
+Source Server         : 本地-localhost
 Source Server Version : 50553
 Source Host           : localhost:3306
 Source Database       : sbm
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-04-20 17:28:11
+Date: 2018-04-22 17:44:54
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -85,7 +85,7 @@ CREATE TABLE `sys_resource` (
   `id` varchar(30) NOT NULL,
   `name` varchar(50) NOT NULL,
   `parent_id` varchar(30) DEFAULT NULL,
-  `type` int(1) NOT NULL,
+  `type` int(1) NOT NULL DEFAULT '0',
   `url` varchar(100) DEFAULT NULL,
   `permission` varchar(50) DEFAULT NULL,
   `icon` varchar(30) DEFAULT NULL,
@@ -97,6 +97,20 @@ CREATE TABLE `sys_resource` (
 -- ----------------------------
 -- Records of sys_resource
 -- ----------------------------
+INSERT INTO `sys_resource` VALUES ('987981486382686210', '用户管理', '987981277195968513', '0', '/system/user/**', 'system:user:*', 'person', '0', '2018-04-22 17:08:36');
+INSERT INTO `sys_resource` VALUES ('987981277195968513', '系统设置', null, '0', '/system/**', 'system:*', 'ios-gear', '0', '2018-04-22 17:07:46');
+INSERT INTO `sys_resource` VALUES ('987974185122832386', '角色添加', '987981659066376194', '1', '/system/role/add/**', 'system:role:add', '', '0', '2018-04-22 16:39:36');
+INSERT INTO `sys_resource` VALUES ('987977834901315586', '首页', null, '0', '/', '', 'ios-home-outline', '-1', '2018-04-22 16:54:06');
+INSERT INTO `sys_resource` VALUES ('987980763175624706', '角色更新', '987981659066376194', '1', '/system/role/update/**', 'system:role:update', '', '0', '2018-04-22 17:05:44');
+INSERT INTO `sys_resource` VALUES ('987981659066376194', '角色管理', '987981277195968513', '0', '/system/role/**', 'system:role:*', 'compose', '0', '2018-04-22 17:09:17');
+INSERT INTO `sys_resource` VALUES ('987982017863917570', '资源管理', '987981277195968513', '0', '/system/resource/**', 'system:resource:*', 'lock-combination', '0', '2018-04-22 17:10:43');
+INSERT INTO `sys_resource` VALUES ('987985589477351426', '资源添加', '987982017863917570', '1', '/system/resource/add/**', 'system:resource:add:*', '', '0', '2018-04-22 17:24:55');
+INSERT INTO `sys_resource` VALUES ('987985700785790978', '资源更新', '987982017863917570', '1', '/system/resource/update/**', 'system:resource:update:*', '', '0', '2018-04-22 17:25:21');
+INSERT INTO `sys_resource` VALUES ('987985782880903170', '资源删除', '987982017863917570', '1', '/system/resource/remove/**', 'system:resource:remove:*', '', '0', '2018-04-22 17:25:41');
+INSERT INTO `sys_resource` VALUES ('987985944781037570', '角色删除', '987981659066376194', '1', '/system/role/remove/**', 'system:role:remove:*', '', '0', '2018-04-22 17:26:19');
+INSERT INTO `sys_resource` VALUES ('987986018126831617', '用户添加', '987981486382686210', '1', '/system/user/add/**', 'system:user:add:*', '', '0', '2018-04-22 17:26:37');
+INSERT INTO `sys_resource` VALUES ('987986318946508801', '用户更新', '987981486382686210', '1', '/system/user/update/**', 'system:user:update:*', '', '0', '2018-04-22 17:27:48');
+INSERT INTO `sys_resource` VALUES ('987986542024761345', '用户删除', '987981486382686210', '1', '/system/user/remove/**', 'system:user:remove:*', '', '0', '2018-04-22 17:28:42');
 
 -- ----------------------------
 -- Table structure for user
