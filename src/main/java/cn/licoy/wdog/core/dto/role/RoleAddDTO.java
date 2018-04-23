@@ -1,6 +1,6 @@
 package cn.licoy.wdog.core.dto.role;
 
-import cn.licoy.wdog.core.entity.Permission;
+import cn.licoy.wdog.core.entity.system.SysResource;
 import lombok.Data;
 
 import java.util.List;
@@ -14,6 +14,6 @@ public class RoleAddDTO {
 
     private String name;
 
-    private List<Permission> permissions;
+    private List<SysResource> resources;
 
 }

@@ -3,7 +3,7 @@ package cn.licoy.wdog.core.controller;
 import cn.licoy.wdog.common.bean.RequestResult;
 import cn.licoy.wdog.common.bean.StatusEnum;
 import cn.licoy.wdog.core.dto.SignInDTO;
-import cn.licoy.wdog.core.service.system.UserService;
+import cn.licoy.wdog.core.service.system.SysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -27,7 +27,7 @@ import javax.annotation.Resource;
 public class AccountController {
 
     @Resource
-    private UserService userService;
+    private SysUserService userService;
 
     @RequestMapping(value = {"/sign-in"},method = RequestMethod.POST)
     @ApiOperation(value = "登录")

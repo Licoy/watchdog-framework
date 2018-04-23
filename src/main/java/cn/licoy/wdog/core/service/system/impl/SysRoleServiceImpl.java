@@ -4,13 +4,13 @@ import cn.licoy.wdog.common.bean.StatusEnum;
 import cn.licoy.wdog.common.exception.RequestException;
 import cn.licoy.wdog.core.dto.role.FindRoleDTO;
 import cn.licoy.wdog.core.dto.role.RoleUpdateDTO;
-import cn.licoy.wdog.core.entity.Permission;
-import cn.licoy.wdog.core.entity.Role;
-import cn.licoy.wdog.core.entity.UserRole;
-import cn.licoy.wdog.core.mapper.RoleMapper;
-import cn.licoy.wdog.core.service.system.RolePermissionService;
-import cn.licoy.wdog.core.service.system.RoleService;
-import cn.licoy.wdog.core.service.system.UserRoleService;
+import cn.licoy.wdog.core.entity.system.SysResource;
+import cn.licoy.wdog.core.entity.system.SysRole;
+import cn.licoy.wdog.core.entity.system.SysUserRole;
+import cn.licoy.wdog.core.mapper.system.SysRoleMapper;
+import cn.licoy.wdog.core.service.system.SysRoleResourceService;
+import cn.licoy.wdog.core.service.system.SysRoleService;
+import cn.licoy.wdog.core.service.system.SysUserRoleService;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
@@ -25,23 +25,23 @@ import java.util.List;
 
 @Service
 @Transactional
-public class RoleServiceImpl extends ServiceImpl<RoleMapper,Role> implements RoleService {
+public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper,SysRole> implements SysRoleService {
 
     @Resource
-    private RolePermissionService rolePermissionService;
+    private SysRoleResourceService roleResourceService;
 
     @Resource
-    private UserRoleService userRoleService;
+    private SysUserRoleService userRoleService;
 
     @Override
-    public List<Role> findAllRoleByUserId(Long uid) {
-        List<UserRole> userRoles = userRoleService.selectList(new EntityWrapper<UserRole>().eq("uid", uid));
-        List<Role> roles = new ArrayList<>();
+    public List<SysRole> findAllRoleByUserId(String uid) {
+        List<SysUserRole> userRoles = userRoleService.selectList(new EntityWrapper<SysUserRole>().eq("uid", uid));
+        List<SysRole> roles = new ArrayList<>();
         userRoles.forEach(v->{
-            Role role = this.selectById(v.getRid());
+            SysRole role = this.selectById(v.getRid());
             if(role!=null){
-                List<Permission> permissions = rolePermissionService.findAllPermissionByRoleId(role.getId());
-                role.setPermissions(permissions);
+                List<SysResource> permissions = roleResourceService.findAllPermissionByRoleId(role.getId());
+                role.setResources(permissions);
                 roles.add(role);
             }
         });
@@ -49,20 +49,20 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper,Role> implements Rol
     }
 
     @Override
-    public Page<Role> getList(FindRoleDTO findRoleDTO) {
-        EntityWrapper<Role> wrapper = new EntityWrapper<>();
-        Page<Role> rolePage = this.selectPage(new Page<>(findRoleDTO.getPage(),
+    public Page<SysRole> getList(FindRoleDTO findRoleDTO) {
+        EntityWrapper<SysRole> wrapper = new EntityWrapper<>();
+        Page<SysRole> rolePage = this.selectPage(new Page<>(findRoleDTO.getPage(),
                 findRoleDTO.getPageSize()), wrapper);
         if(rolePage.getRecords()!=null){
             rolePage.getRecords().forEach(v->
-                    v.setPermissions(rolePermissionService.findAllPermissionByRoleId(v.getId())));
+                    v.setResources(roleResourceService.findAllPermissionByRoleId(v.getId())));
         }
         return rolePage;
     }
 
     @Override
-    public void removeById(Long rid) {
-        Role role = this.selectById(rid);
+    public void removeById(String rid) {
+        SysRole role = this.selectById(rid);
         if(role==null) throw new RequestException(StatusEnum.FAIL.code,"角色不存在！");
         try {
             this.deleteById(rid);
@@ -75,8 +75,8 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper,Role> implements Rol
     }
 
     @Override
-    public void update(Long rid, RoleUpdateDTO roleUpdateDTO) {
-        Role role = this.selectById(rid);
+    public void update(String rid, RoleUpdateDTO roleUpdateDTO) {
+        SysRole role = this.selectById(rid);
         if(role==null) throw new RequestException(StatusEnum.FAIL.code,"角色不存在！");
         BeanUtils.copyProperties(roleUpdateDTO,role);
         try {

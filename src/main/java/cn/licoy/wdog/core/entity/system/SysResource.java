@@ -1,4 +1,4 @@
-package cn.licoy.wdog.core.entity;
+package cn.licoy.wdog.core.entity.system;
 
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;

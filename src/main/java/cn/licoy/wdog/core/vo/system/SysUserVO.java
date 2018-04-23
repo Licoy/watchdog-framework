@@ -1,6 +1,6 @@
-package cn.licoy.wdog.core.vo;
+package cn.licoy.wdog.core.vo.system;
 
-import cn.licoy.wdog.core.entity.Role;
+import cn.licoy.wdog.core.entity.system.SysRole;
 import lombok.Data;
 
 import java.util.Date;
@@ -11,13 +11,13 @@ import java.util.List;
  * @version 2018/4/18/11:34
  */
 @Data
-public class UserVO {
+public class SysUserVO {
 
-    private Long id;
+    private String id;
     private String username;
     private Integer age;
     private Integer status;
-    private List<Role> roles;
+    private List<SysRole> roles;
     private Date createDate;
 
 }

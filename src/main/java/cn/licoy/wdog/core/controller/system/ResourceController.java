@@ -3,7 +3,7 @@ package cn.licoy.wdog.core.controller.system;
 import cn.licoy.wdog.common.bean.RequestResult;
 import cn.licoy.wdog.common.bean.StatusEnum;
 import cn.licoy.wdog.core.dto.system.resource.ResourceDTO;
-import cn.licoy.wdog.core.service.system.ResourceService;
+import cn.licoy.wdog.core.service.system.SysResourceService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -21,7 +21,7 @@ import javax.annotation.Resource;
 public class ResourceController {
 
     @Resource
-    private ResourceService resourceService;
+    private SysResourceService resourceService;
 
     @RequestMapping(value = {"/list"}, method = RequestMethod.POST)
     @ApiOperation(value = "获取所有的资源列表")

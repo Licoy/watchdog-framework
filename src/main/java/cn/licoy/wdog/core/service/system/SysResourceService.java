@@ -1,7 +1,7 @@
 package cn.licoy.wdog.core.service.system;
 
 import cn.licoy.wdog.core.dto.system.resource.ResourceDTO;
-import cn.licoy.wdog.core.entity.SysResource;
+import cn.licoy.wdog.core.entity.system.SysResource;
 import com.baomidou.mybatisplus.service.IService;
 
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
  * @author Licoy
  * @version 2018/4/20/16:35
  */
-public interface ResourceService extends IService<SysResource> {
+public interface SysResourceService extends IService<SysResource> {
 
     /**
      * 获取资源列表

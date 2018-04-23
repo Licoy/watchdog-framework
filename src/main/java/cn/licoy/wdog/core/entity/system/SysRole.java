@@ -1,29 +1,28 @@
-package cn.licoy.wdog.core.entity;
+package cn.licoy.wdog.core.entity.system;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.io.Serializable;
+import java.util.List;
 
-/**
- * @author Licoy
- * @version 2018/4/16/8:58
- */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RolePermission implements Serializable {
+public class SysRole implements Serializable  {
 
     @TableId
-    private Long id;
+    private String id;
+    
+    private String name;
 
-    private Long rid;
-
-    private Long pid;
+    @TableField(exist = false)
+    private List<SysResource> resources;
 
     private static final long serialVersionUID = 1L;
+
 }

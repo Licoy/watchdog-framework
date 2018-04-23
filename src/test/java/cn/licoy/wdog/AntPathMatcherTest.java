@@ -1,7 +1,11 @@
 package cn.licoy.wdog;
 
 
+import org.junit.Test;
 import org.springframework.util.AntPathMatcher;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Licoy
@@ -15,8 +19,19 @@ public class AntPathMatcherTest {
 
         AntPathMatcher antPathMatcher = new AntPathMatcher();
 
-        System.out.println(antPathMatcher.match(s,s2));
+        System.out.println(antPathMatcher.match(s, s2));
     }
 
+    @Test
+    public void a() {
 
+        List<String[]> strings = new ArrayList<>();
+
+        for (int i = 0; i < 10; i++) {
+            strings.add(0,new String[]{"a"+i,"a-v-"+i});
+        }
+
+        System.out.println(strings);
+
+    }
 }

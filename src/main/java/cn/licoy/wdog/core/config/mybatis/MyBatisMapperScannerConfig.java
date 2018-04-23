@@ -7,14 +7,14 @@ import org.springframework.context.annotation.Configuration;
 
 
 @Configuration
-@MapperScan("cn.licoy.sbm.mapper")
+@MapperScan("cn.licoy.wdog.core.mapper")
 @AutoConfigureAfter(MybatisPlusConfig.class)
 public class MyBatisMapperScannerConfig {
 
     public MapperScannerConfigurer mapperScannerConfigurer(){
         MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
         mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactory");
-        mapperScannerConfigurer.setBasePackage("cn.licoy.sbm.mapper");
+        mapperScannerConfigurer.setBasePackage("cn.licoy.wdog.core.mapper");
         return mapperScannerConfigurer;
     }
 }

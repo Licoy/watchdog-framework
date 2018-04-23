@@ -26,10 +26,9 @@ public class PermissionAuthorizationFilter extends AccessControlFilter {
         log.info("PermissionAuthorizationFilter执行");
         Subject subject = getSubject(servletRequest, servletResponse);
         if(null != mappedValue){
-            String[] arra = (String[])mappedValue;
-            for (String permission : arra) {
+            String[] value = (String[])mappedValue;
+            for (String permission : value) {
                 if(subject.isPermitted(permission)){
-                    System.out.println("有权限");
                     return true;
                 }
             }
@@ -40,7 +39,6 @@ public class PermissionAuthorizationFilter extends AccessControlFilter {
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws IOException {
         Subject subject = getSubject(request, response);
-        System.out.println(SecurityUtils.getSubject().getPrincipal());
         saveRequest(request);
         HttpServletResponse res = WebUtils.toHttp(response);
         res.setHeader("Content-Type", "application/json;charset=utf-8");

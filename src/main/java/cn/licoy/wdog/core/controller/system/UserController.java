@@ -1,8 +1,8 @@
-package cn.licoy.wdog.core.controller;
+package cn.licoy.wdog.core.controller.system;
 
 import cn.licoy.wdog.common.bean.RequestResult;
 import cn.licoy.wdog.core.dto.user.FindUserDTO;
-import cn.licoy.wdog.core.service.system.UserService;
+import cn.licoy.wdog.core.service.system.SysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -15,12 +15,12 @@ import javax.annotation.Resource;
  * @version 2018/4/18/14:15
  */
 @RestController
-@RequestMapping(value = {"/user"})
+@RequestMapping(value = {"/system/user"})
 @Api(tags = {"用户管理"})
 public class UserController {
 
     @Resource
-    private UserService userService;
+    private SysUserService userService;
 
     @RequestMapping(value = {"/list"}, method = RequestMethod.POST)
     @ApiOperation(value = "分页获取用户数据")

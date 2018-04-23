@@ -1,8 +1,8 @@
 package cn.licoy.wdog.core.config.shiro;
 
-import cn.licoy.wdog.core.entity.Permission;
+import cn.licoy.wdog.core.entity.system.SysResource;
 import cn.licoy.wdog.core.filter.PermissionAuthorizationFilter;
-import cn.licoy.wdog.core.service.system.PermissionService;
+import cn.licoy.wdog.core.service.system.SysResourceService;
 import lombok.extern.log4j.Log4j;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -16,10 +16,7 @@ import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.Filter;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author licoy.cn
@@ -30,7 +27,7 @@ import java.util.Map;
 public class ShiroConfiguration {
 
     @Resource
-    private PermissionService permissionService;
+    private SysResourceService resourceService;
 
     @Bean
     public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager){
@@ -41,19 +38,25 @@ public class ShiroConfiguration {
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         //拦截器
         Map<String,String> filterChainDefinitionMap = new LinkedHashMap<>();
-
+        List<String[]> permsList = new ArrayList<>();
         //<!-- 过滤链定义，从上向下顺序执行，一般将 /**放在最为下边 -->:这是一个坑呢，一不小心代码就不好使了;
         //<!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
 
-        List<Permission> permissions = permissionService.selectList(null);
+        List<SysResource> resources = resourceService.list();
 
-        if(permissions!=null){
-            permissions.forEach(v-> {
-                if(!StringUtils.isEmpty(v.getUrl()) && !StringUtils.isEmpty(v.getPermission())){
-                    filterChainDefinitionMap.put(v.getUrl(),"perms["+v.getPermission()+"]");
+        if(resources!=null){
+            for (SysResource resource : resources) {
+                if(!StringUtils.isEmpty(resource.getUrl()) && !StringUtils.isEmpty(resource.getPermission())){
+                    permsList.add(0,new String[]{resource.getUrl(),"perms["+resource.getPermission()+"]"});
                 }
-            });
+                iterationAllResourceInToFilter(resource,permsList);
+            }
         }
+
+        for (String[] strings : permsList) {
+            filterChainDefinitionMap.put(strings[0],strings[1]);
+        }
+
         filterChainDefinitionMap.put("/**", "anon");
         //过滤器
         Map<String,Filter> filters = new HashMap<>();
@@ -61,6 +64,18 @@ public class ShiroConfiguration {
         shiroFilterFactoryBean.setFilters(filters);
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
+    }
+
+    private void iterationAllResourceInToFilter(SysResource resource,
+                                                List<String[]> permsList){
+        if(resource.getChildren()!=null && resource.getChildren().size()>0){
+            for (SysResource v : resource.getChildren()) {
+                if(!StringUtils.isEmpty(v.getUrl()) && !StringUtils.isEmpty(v.getPermission())){
+                    permsList.add(0,new String[]{v.getUrl(),"perms["+v.getPermission()+"]"});
+                    iterationAllResourceInToFilter(v,permsList);
+                }
+            }
+        }
     }
 
 

@@ -1,7 +1,7 @@
 package cn.licoy.wdog.core.service.system.impl;
 
-import cn.licoy.wdog.core.entity.Role;
-import cn.licoy.wdog.core.service.system.RoleService;
+import cn.licoy.wdog.core.entity.system.SysRole;
+import cn.licoy.wdog.core.service.system.SysRoleService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,11 +19,11 @@ import javax.annotation.Resource;
 public class RoleServiceImplTest {
 
     @Resource
-    private RoleService roleService;
+    private SysRoleService roleService;
 
     @Test
     public void test(){
-        Role role = Role.builder().name("1").build();
+        SysRole role = SysRole.builder().name("1").build();
         roleService.insert(role);
     }
 

@@ -3,9 +3,9 @@ package cn.licoy.wdog.core.service.system.impl;
 import cn.licoy.wdog.common.bean.StatusEnum;
 import cn.licoy.wdog.common.exception.RequestException;
 import cn.licoy.wdog.core.dto.system.resource.ResourceDTO;
-import cn.licoy.wdog.core.entity.SysResource;
-import cn.licoy.wdog.core.mapper.SysResourceMapper;
-import cn.licoy.wdog.core.service.system.ResourceService;
+import cn.licoy.wdog.core.entity.system.SysResource;
+import cn.licoy.wdog.core.mapper.system.SysResourceMapper;
+import cn.licoy.wdog.core.service.system.SysResourceService;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
@@ -21,8 +21,8 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class ResourceServiceImpl extends ServiceImpl<SysResourceMapper,SysResource>
-        implements ResourceService {
+public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper,SysResource>
+        implements SysResourceService {
     @Override
     public List<SysResource> list() {
         EntityWrapper<SysResource> wrapper = new EntityWrapper<>();

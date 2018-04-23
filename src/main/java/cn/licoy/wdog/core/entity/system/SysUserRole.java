@@ -1,4 +1,4 @@
-package cn.licoy.wdog.core.entity;
+package cn.licoy.wdog.core.entity.system;
 
 import com.baomidou.mybatisplus.annotations.TableId;
 import lombok.AllArgsConstructor;
@@ -16,13 +16,13 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserRole implements Serializable {
+public class SysUserRole implements Serializable {
 
     @TableId
-    private Long id;
+    private String id;
 
-    private Long uid;
+    private String uid;
 
-    private Long rid;
+    private String rid;
 
 }

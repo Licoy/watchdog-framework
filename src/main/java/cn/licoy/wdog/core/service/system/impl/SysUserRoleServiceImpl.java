@@ -1,8 +1,8 @@
 package cn.licoy.wdog.core.service.system.impl;
 
-import cn.licoy.wdog.core.entity.UserRole;
-import cn.licoy.wdog.core.mapper.UserRoleMapper;
-import cn.licoy.wdog.core.service.system.UserRoleService;
+import cn.licoy.wdog.core.entity.system.SysUserRole;
+import cn.licoy.wdog.core.mapper.system.SysUserRoleMapper;
+import cn.licoy.wdog.core.service.system.SysUserRoleService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,5 +13,5 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class UserRoleServiceImpl extends ServiceImpl<UserRoleMapper,UserRole> implements UserRoleService {
+public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper,SysUserRole> implements SysUserRoleService {
 }

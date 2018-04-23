@@ -3,18 +3,18 @@ package cn.licoy.wdog.core.service.system;
 import cn.licoy.wdog.common.bean.RequestResult;
 import cn.licoy.wdog.core.dto.SignInDTO;
 import cn.licoy.wdog.core.dto.user.FindUserDTO;
-import cn.licoy.wdog.core.entity.User;
-import cn.licoy.wdog.core.vo.UserVO;
+import cn.licoy.wdog.core.entity.system.SysUser;
+import cn.licoy.wdog.core.vo.system.SysUserVO;
 import com.baomidou.mybatisplus.service.IService;
 
-public interface UserService extends IService<User> {
+public interface SysUserService extends IService<SysUser> {
 
     /**
      * 根据用户名查找用户
      * @param name 用户名
      * @return User
      */
-    User findUserByName(String name);
+    SysUser findUserByName(String name);
 
     /**
      * 用户登录操作
@@ -26,7 +26,7 @@ public interface UserService extends IService<User> {
      * 获取当前登录用户信息
      * @return UserVO
      */
-    UserVO getCurrentUser();
+    SysUserVO getCurrentUser();
 
     /**
      * 获取所有用户（分页）

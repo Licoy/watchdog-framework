@@ -1,8 +1,8 @@
 package cn.licoy.wdog.core.service.system.impl;
 
 import cn.licoy.wdog.core.dto.system.resource.ResourceDTO;
-import cn.licoy.wdog.core.entity.SysResource;
-import cn.licoy.wdog.core.service.system.ResourceService;
+import cn.licoy.wdog.core.entity.system.SysResource;
+import cn.licoy.wdog.core.service.system.SysResourceService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,7 +22,7 @@ public class ResourceServiceImplTest {
 
 
     @Resource
-    private ResourceService resourceService;
+    private SysResourceService resourceService;
 
     @Test
     public void list() {

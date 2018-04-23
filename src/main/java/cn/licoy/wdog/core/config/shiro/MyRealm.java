@@ -3,8 +3,8 @@ package cn.licoy.wdog.core.config.shiro;
 
 
 import cn.licoy.wdog.common.exception.RequestException;
-import cn.licoy.wdog.core.entity.User;
-import cn.licoy.wdog.core.service.system.UserService;
+import cn.licoy.wdog.core.entity.system.SysUser;
+import cn.licoy.wdog.core.service.system.SysUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -24,7 +24,7 @@ import javax.annotation.Resource;
 @Slf4j
 public class MyRealm extends AuthorizingRealm {
     @Resource
-    private UserService userService;
+    private SysUserService userService;
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
@@ -32,13 +32,13 @@ public class MyRealm extends AuthorizingRealm {
         String username = (String) principalCollection.getPrimaryPrincipal();
         if(username!=null){
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-            User user = userService.findUserByName(username);
+            SysUser user = userService.findUserByName(username);
             if(user!=null){
                 if(user.getRoles()!=null){
                     user.getRoles().forEach(role->{
                         info.addRole(role.getName());
-                        if(role.getPermissions()!=null){
-                            role.getPermissions().forEach(v-> info.addStringPermission(v.getPermission()));
+                        if(role.getResources()!=null){
+                            role.getResources().forEach(v-> info.addStringPermission(v.getPermission()));
                         }
                     });
                 }
@@ -51,7 +51,7 @@ public class MyRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
-        User user = null;
+        SysUser user = null;
         try {
             user = userService.findUserByName(token.getUsername());
         }catch (RequestException e){

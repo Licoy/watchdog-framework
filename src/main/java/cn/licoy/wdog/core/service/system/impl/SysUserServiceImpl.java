@@ -5,11 +5,11 @@ import cn.licoy.wdog.common.bean.StatusEnum;
 import cn.licoy.wdog.common.exception.RequestException;
 import cn.licoy.wdog.core.dto.SignInDTO;
 import cn.licoy.wdog.core.dto.user.FindUserDTO;
-import cn.licoy.wdog.core.entity.User;
-import cn.licoy.wdog.core.mapper.UserMapper;
-import cn.licoy.wdog.core.service.system.RoleService;
-import cn.licoy.wdog.core.service.system.UserService;
-import cn.licoy.wdog.core.vo.UserVO;
+import cn.licoy.wdog.core.entity.system.SysUser;
+import cn.licoy.wdog.core.mapper.system.SysUserMapper;
+import cn.licoy.wdog.core.service.system.SysRoleService;
+import cn.licoy.wdog.core.service.system.SysUserService;
+import cn.licoy.wdog.core.vo.system.SysUserVO;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
@@ -27,14 +27,14 @@ import java.util.List;
 
 @Service
 @Transactional
-public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements UserService {
+public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> implements SysUserService {
 
     @Resource
-    private RoleService roleService;
+    private SysRoleService roleService;
 
     @Override
-    public User findUserByName(String name) {
-        User user = this.selectOne(new EntityWrapper<User>().eq("username",name));
+    public SysUser findUserByName(String name) {
+        SysUser user = this.selectOne(new EntityWrapper<SysUser>().eq("username",name));
         if(user == null){
             return null;
         }
@@ -63,30 +63,30 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
     }
 
 
-    public UserVO getCurrentUser(){
+    public SysUserVO getCurrentUser(){
         Subject subject = SecurityUtils.getSubject();
         if(!subject.isAuthenticated()){
             throw new RequestException(StatusEnum.NOT_SING_IN);
         }
-        User user = this.findUserByName(subject.getPrincipal().toString());
+        SysUser user = this.findUserByName(subject.getPrincipal().toString());
         if(user==null){
             throw new RequestException(StatusEnum.FAIL.code,"用户不存在");
         }
-        UserVO vo = new UserVO();
+        SysUserVO vo = new SysUserVO();
         BeanUtils.copyProperties(user,vo);
         return vo;
     }
 
     @Override
     public RequestResult getAllUserBySplitPage(FindUserDTO findUserDTO) {
-        EntityWrapper<User> wrapper = new EntityWrapper<>();
-        Page<User> userPage = this.selectPage(new Page<>(findUserDTO.getPage(),
+        EntityWrapper<SysUser> wrapper = new EntityWrapper<>();
+        Page<SysUser> userPage = this.selectPage(new Page<>(findUserDTO.getPage(),
                 findUserDTO.getPageSize()), wrapper);
-        Page<UserVO> userVOPage = new Page<>();
+        Page<SysUserVO> userVOPage = new Page<>();
         BeanUtils.copyProperties(userPage,userVOPage);
-        List<UserVO> userVOS = new ArrayList<>();
+        List<SysUserVO> userVOS = new ArrayList<>();
         userPage.getRecords().forEach(v->{
-            UserVO vo = new UserVO();
+            SysUserVO vo = new SysUserVO();
             BeanUtils.copyProperties(v,vo);
             userVOS.add(vo);
         });
@@ -96,7 +96,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
 
     @Override
     public RequestResult statusChange(Long userId, Integer status) {
-        User user = this.selectById(userId);
+        SysUser user = this.selectById(userId);
         if(user==null){
             throw new RequestException(StatusEnum.FAIL.code,"用户不存在");
         }
@@ -110,7 +110,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
 
     @Override
     public RequestResult removeUser(Long userId) {
-        User user = this.selectById(userId);
+        SysUser user = this.selectById(userId);
         if(user==null){
             throw new RequestException(StatusEnum.FAIL.code,"用户不存在！");
         }

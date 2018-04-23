@@ -1,4 +1,4 @@
-package cn.licoy.wdog.core.entity;
+package cn.licoy.wdog.core.entity.system;
 
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
@@ -14,17 +14,17 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User implements Serializable  {
+public class SysUser implements Serializable  {
 
     
     @TableId
-    private Long id;
+    private String id;
     private String username;
     private Integer age;
     private String password;
     private Integer status;
     @TableField(exist = false)
-    private List<Role> roles;
+    private List<SysRole> roles;
     private Date createDate;
 
     private static final long serialVersionUID = 1L;
