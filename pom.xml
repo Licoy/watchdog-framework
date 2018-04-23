@@ -4,12 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cn.licoy</groupId>
-    <artifactId>springboot-basic-model</artifactId>
+    <artifactId>watchDog-framework</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>springboot-basic-model</name>
-    <description>springboot-basic-model</description>
+    <name>watchDog-framework</name>
+    <description>watchDog-framework</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
