@@ -7,10 +7,7 @@ import cn.licoy.wdog.core.service.system.ResourceService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -26,20 +23,20 @@ public class ResourceController {
     @Resource
     private ResourceService resourceService;
 
-    @RequestMapping(value = {"/list"})
+    @RequestMapping(value = {"/list"}, method = RequestMethod.POST)
     @ApiOperation(value = "获取所有的资源列表")
     public RequestResult list(){
         return RequestResult.e(StatusEnum.OK,resourceService.list());
     }
 
-    @RequestMapping(value = {"/add"})
+    @RequestMapping(value = {"/add"}, method = RequestMethod.POST)
     @ApiOperation(value = "添加资源")
     public RequestResult add(@RequestBody @ApiParam("资源数据") ResourceDTO dto){
         resourceService.add(dto);
         return RequestResult.e(StatusEnum.OK);
     }
 
-    @RequestMapping(value = {"/update/{id}"})
+    @RequestMapping(value = {"/update/{id}"}, method = RequestMethod.POST)
     @ApiOperation(value = "添加资源")
     public RequestResult update(@PathVariable("id") @ApiParam("资源ID") String id,
                        @RequestBody @ApiParam("资源数据") ResourceDTO dto){
@@ -47,7 +44,7 @@ public class ResourceController {
         return RequestResult.e(StatusEnum.OK);
     }
 
-    @RequestMapping(value = {"/remove/{id}"})
+    @RequestMapping(value = {"/remove/{id}"}, method = RequestMethod.POST)
     @ApiOperation(value = "删除资源")
     public RequestResult remove(@PathVariable("id") @ApiParam("资源ID") String id){
         resourceService.remove(id);

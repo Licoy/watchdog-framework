@@ -5,7 +5,7 @@ logging:
         sbm: debug
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/sbm?useUnicode=yes&characterEncoding=UTF8
+    url: jdbc:mysql://localhost:3306/wdog?useUnicode=yes&characterEncoding=UTF8
     password: root
     username: root
     driver-class-name: com.mysql.jdbc.Driver
