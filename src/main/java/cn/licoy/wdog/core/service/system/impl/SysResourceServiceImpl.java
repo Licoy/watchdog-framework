@@ -5,6 +5,7 @@ import cn.licoy.wdog.common.exception.RequestException;
 import cn.licoy.wdog.core.dto.system.resource.ResourceDTO;
 import cn.licoy.wdog.core.entity.system.SysResource;
 import cn.licoy.wdog.core.mapper.system.SysResourceMapper;
+import cn.licoy.wdog.core.service.global.ShiroService;
 import cn.licoy.wdog.core.service.system.SysResourceService;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
@@ -12,6 +13,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +25,10 @@ import java.util.List;
 @Transactional
 public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper,SysResource>
         implements SysResourceService {
+
+    @Resource
+    private ShiroService shiroService;
+
     @Override
     public List<SysResource> list() {
         EntityWrapper<SysResource> wrapper = new EntityWrapper<>();
@@ -43,6 +49,7 @@ public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper,SysRes
         BeanUtils.copyProperties(dto,resource);
         resource.setCreateDate(new Date());
         this.insert(resource);
+        shiroService.reloadPerms();
     }
 
     @Override
@@ -52,6 +59,7 @@ public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper,SysRes
             throw new RequestException(StatusEnum.FAIL.code,"更新失败，不存在ID为"+id+"的资源");
         BeanUtils.copyProperties(dto,resource);
         this.updateById(resource);
+        shiroService.reloadPerms();
     }
 
     @Override
@@ -61,6 +69,7 @@ public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper,SysRes
         if(resource==null)
             throw new RequestException(StatusEnum.FAIL.code,"删除失败，不存在ID为"+id+"的资源");
         this.deleteById(id);
+        shiroService.reloadPerms();
     }
 
     public void findAllChild(SysResource resource){

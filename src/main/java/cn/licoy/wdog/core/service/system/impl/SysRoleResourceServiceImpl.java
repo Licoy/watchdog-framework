@@ -27,7 +27,7 @@ public class SysRoleResourceServiceImpl extends ServiceImpl<SysRolePermissionMap
     private SysResourceService resourceService;
 
     @Override
-    public List<SysResource> findAllPermissionByRoleId(String rid) {
+    public List<SysResource> findAllResourceByRoleId(String rid) {
         List<SysRoleResource> rps = this.selectList(new EntityWrapper<SysRoleResource>().eq("rid",rid));
         if(rps!=null){
             List<String> pids = new ArrayList<>();

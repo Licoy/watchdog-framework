@@ -12,6 +12,6 @@ import java.util.List;
  */
 public interface SysRoleResourceService extends IService<SysRoleResource> {
 
-    List<SysResource> findAllPermissionByRoleId(String rid);
+    List<SysResource> findAllResourceByRoleId(String rid);
 
 }

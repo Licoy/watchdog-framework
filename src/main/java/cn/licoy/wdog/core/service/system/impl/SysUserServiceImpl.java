@@ -68,7 +68,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
         if(!subject.isAuthenticated()){
             throw new RequestException(StatusEnum.NOT_SING_IN);
         }
-        SysUser user = this.findUserByName(subject.getPrincipal().toString());
+        SysUser sysUser = (SysUser) subject.getPrincipal();
+        if(sysUser==null){
+            throw new RequestException(StatusEnum.FAIL.code,"用户信息获取失败");
+        }
+        SysUser user = this.findUserByName(sysUser.getUsername());
         if(user==null){
             throw new RequestException(StatusEnum.FAIL.code,"用户不存在");
         }

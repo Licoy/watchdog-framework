@@ -40,7 +40,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper,SysRole> imple
         userRoles.forEach(v->{
             SysRole role = this.selectById(v.getRid());
             if(role!=null){
-                List<SysResource> permissions = roleResourceService.findAllPermissionByRoleId(role.getId());
+                List<SysResource> permissions = roleResourceService.findAllResourceByRoleId(role.getId());
                 role.setResources(permissions);
                 roles.add(role);
             }
@@ -55,7 +55,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper,SysRole> imple
                 findRoleDTO.getPageSize()), wrapper);
         if(rolePage.getRecords()!=null){
             rolePage.getRecords().forEach(v->
-                    v.setResources(roleResourceService.findAllPermissionByRoleId(v.getId())));
+                    v.setResources(roleResourceService.findAllResourceByRoleId(v.getId())));
         }
         return rolePage;
     }
