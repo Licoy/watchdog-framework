@@ -1,8 +1,10 @@
 package cn.licoy.wdog.core.service.system;
 
-import cn.licoy.wdog.core.dto.role.FindRoleDTO;
-import cn.licoy.wdog.core.dto.role.RoleUpdateDTO;
+import cn.licoy.wdog.core.dto.system.role.FindRoleDTO;
+import cn.licoy.wdog.core.dto.system.role.RoleAddDTO;
+import cn.licoy.wdog.core.dto.system.role.RoleUpdateDTO;
 import cn.licoy.wdog.core.entity.system.SysRole;
+import cn.licoy.wdog.core.entity.system.SysUser;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.IService;
 
@@ -35,4 +37,10 @@ public interface SysRoleService extends IService<SysRole> {
      * @param roleUpdateDTO 更新数据DTO
      */
     void update(String rid, RoleUpdateDTO roleUpdateDTO);
+
+    /**
+     * 添加角色
+     * @param addDTO 角色数据DTO
+     */
+    void add(RoleAddDTO addDTO);
 }

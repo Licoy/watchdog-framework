@@ -7,6 +7,7 @@ import cn.licoy.wdog.core.service.system.SysResourceService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -31,7 +32,7 @@ public class ResourceController {
 
     @RequestMapping(value = {"/add"}, method = RequestMethod.POST)
     @ApiOperation(value = "添加资源")
-    public RequestResult add(@RequestBody @ApiParam("资源数据") ResourceDTO dto){
+    public RequestResult add(@RequestBody @Validated @ApiParam("资源数据") ResourceDTO dto){
         resourceService.add(dto);
         return RequestResult.e(StatusEnum.OK);
     }
@@ -39,7 +40,7 @@ public class ResourceController {
     @RequestMapping(value = {"/update/{id}"}, method = RequestMethod.POST)
     @ApiOperation(value = "添加资源")
     public RequestResult update(@PathVariable("id") @ApiParam("资源ID") String id,
-                       @RequestBody @ApiParam("资源数据") ResourceDTO dto){
+                       @RequestBody @Validated @ApiParam("资源数据") ResourceDTO dto){
         resourceService.update(id,dto);
         return RequestResult.e(StatusEnum.OK);
     }

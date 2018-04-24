@@ -28,6 +28,9 @@ public class PermissionAuthorizationFilter extends AccessControlFilter {
         if(null != mappedValue){
             String[] value = (String[])mappedValue;
             for (String permission : value) {
+                if(permission==null || "".equals(permission.trim())){
+                    continue;
+                }
                 if(subject.isPermitted(permission)){
                     return true;
                 }

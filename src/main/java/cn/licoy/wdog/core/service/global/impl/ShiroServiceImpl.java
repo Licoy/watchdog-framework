@@ -45,7 +45,8 @@ public class ShiroServiceImpl implements ShiroService {
         if(resources!=null){
             for (SysResource resource : resources) {
                 if(!StringUtils.isEmpty(resource.getUrl()) && !StringUtils.isEmpty(resource.getPermission())){
-                    permsList.add(0,new String[]{resource.getUrl(),"perms["+resource.getPermission()+"]"});
+                    if(!"".equals(resource.getPermission().trim()))
+                        permsList.add(0,new String[]{resource.getUrl(),"perms["+resource.getPermission()+"]"});
                 }
                 iterationAllResourceInToFilter(resource,permsList);
             }

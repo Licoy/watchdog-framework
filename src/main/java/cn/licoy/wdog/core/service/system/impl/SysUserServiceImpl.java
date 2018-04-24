@@ -4,10 +4,14 @@ import cn.licoy.wdog.common.bean.RequestResult;
 import cn.licoy.wdog.common.bean.StatusEnum;
 import cn.licoy.wdog.common.exception.RequestException;
 import cn.licoy.wdog.core.dto.SignInDTO;
-import cn.licoy.wdog.core.dto.user.FindUserDTO;
+import cn.licoy.wdog.core.dto.system.user.FindUserDTO;
+import cn.licoy.wdog.core.dto.system.user.UserAddDTO;
+import cn.licoy.wdog.core.dto.system.user.UserUpdateDTO;
 import cn.licoy.wdog.core.entity.system.SysUser;
+import cn.licoy.wdog.core.entity.system.SysUserRole;
 import cn.licoy.wdog.core.mapper.system.SysUserMapper;
 import cn.licoy.wdog.core.service.system.SysRoleService;
+import cn.licoy.wdog.core.service.system.SysUserRoleService;
 import cn.licoy.wdog.core.service.system.SysUserService;
 import cn.licoy.wdog.core.vo.system.SysUserVO;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
@@ -23,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -31,6 +36,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
 
     @Resource
     private SysRoleService roleService;
+
+    @Resource
+    private SysUserRoleService userRoleService;
 
     @Override
     public SysUser findUserByName(String name) {
@@ -68,10 +76,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
         if(!subject.isAuthenticated()){
             throw new RequestException(StatusEnum.NOT_SING_IN);
         }
-        SysUser sysUser = (SysUser) subject.getPrincipal();
-        if(sysUser==null){
+        SysUser sysUser = new SysUser();
+        Object principal = subject.getPrincipal();
+        if(principal==null){
             throw new RequestException(StatusEnum.FAIL.code,"用户信息获取失败");
         }
+        BeanUtils.copyProperties(principal,sysUser);
         SysUser user = this.findUserByName(sysUser.getUsername());
         if(user==null){
             throw new RequestException(StatusEnum.FAIL.code,"用户不存在");
@@ -99,12 +109,14 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
     }
 
     @Override
-    public RequestResult statusChange(Long userId, Integer status) {
+    public RequestResult statusChange(String userId, Integer status) {
         SysUser user = this.selectById(userId);
         if(user==null){
             throw new RequestException(StatusEnum.FAIL.code,"用户不存在");
         }
-        if(user.getUsername().equals(SecurityUtils.getSubject().getPrincipal().toString())){
+        SysUser sysUser = new SysUser();
+        BeanUtils.copyProperties(SecurityUtils.getSubject().getPrincipal(),sysUser);
+        if(user.getUsername().equals(sysUser.getUsername())){
             throw new RequestException(StatusEnum.FAIL.code,"不能锁定自己的账户");
         }
         user.setStatus(status);
@@ -113,15 +125,72 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
     }
 
     @Override
-    public RequestResult removeUser(Long userId) {
+    public RequestResult removeUser(String userId) {
         SysUser user = this.selectById(userId);
         if(user==null){
             throw new RequestException(StatusEnum.FAIL.code,"用户不存在！");
         }
-        if(user.getUsername().equals(SecurityUtils.getSubject().getPrincipal().toString())){
+        SysUser sysUser = new SysUser();
+        BeanUtils.copyProperties(SecurityUtils.getSubject().getPrincipal(),sysUser);
+        if(user.getUsername().equals(sysUser.getUsername())){
             throw new RequestException(StatusEnum.FAIL.code,"不能删除自己的账户！");
         }
         this.deleteById(userId);
         return RequestResult.e(StatusEnum.OK);
+    }
+
+    @Override
+    public void add(UserAddDTO addDTO) {
+        SysUser findUser = this.findUserByName(addDTO.getUsername());
+        if(findUser!=null){
+            throw new RequestException(StatusEnum.FAIL.code,
+                    String.format("已经存在用户名为 %s 的用户",addDTO.getUsername()));
+        }
+        try {
+            findUser = new SysUser();
+            BeanUtils.copyProperties(addDTO,findUser);
+            findUser.setCreateDate(new Date());
+            this.insert(findUser);
+        }catch (Exception e){
+            throw new RequestException(StatusEnum.FAIL.code,"添加用户失败",e);
+        }
+    }
+
+    @Override
+    public void update(String id, UserUpdateDTO updateDTO) {
+        SysUser user = this.selectById(id);
+        if(user==null){
+            throw new RequestException(StatusEnum.FAIL.code,
+                    String.format("更新失败，不存在ID为 %s 的用户",id));
+        }
+        SysUser findUser = this.selectOne(new EntityWrapper<SysUser>()
+                    .eq("username",updateDTO.getUsername()).ne("id",id));
+        if(findUser!=null){
+            throw new RequestException(StatusEnum.FAIL.code,
+                    String.format("更新失败，已经存在用户名为 %s 的用户",updateDTO.getUsername()));
+        }
+        BeanUtils.copyProperties(updateDTO,user);
+        try {
+            this.updateById(user);
+            this.updateUserRole(user);
+        }catch (RequestException e){
+            throw new RequestException(StatusEnum.FAIL.code,e.getMsg(),e);
+        }catch (Exception e){
+            throw new RequestException(StatusEnum.FAIL.code,"用户信息更新失败",e);
+        }
+    }
+
+    @Override
+    public void updateUserRole(SysUser user) {
+        try {
+            userRoleService.delete(new EntityWrapper<SysUserRole>().eq("uid",user.getId()));
+            if(user.getRoles()!=null && user.getRoles().size()>0){
+                user.getRoles().forEach(v-> userRoleService.insert(SysUserRole.builder()
+                        .uid(user.getId())
+                        .rid(v.getId()).build()));
+            }
+        }catch (Exception e){
+            throw new RequestException(StatusEnum.FAIL.code,"用户权限关联失败",e);
+        }
     }
 }

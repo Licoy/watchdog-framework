@@ -1,4 +1,4 @@
-package cn.licoy.wdog.core.dto.role;
+package cn.licoy.wdog.core.dto.system.role;
 
 import cn.licoy.wdog.core.dto.SplitPageDTO;
 

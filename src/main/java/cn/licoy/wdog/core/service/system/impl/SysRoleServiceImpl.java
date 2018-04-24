@@ -2,11 +2,10 @@ package cn.licoy.wdog.core.service.system.impl;
 
 import cn.licoy.wdog.common.bean.StatusEnum;
 import cn.licoy.wdog.common.exception.RequestException;
-import cn.licoy.wdog.core.dto.role.FindRoleDTO;
-import cn.licoy.wdog.core.dto.role.RoleUpdateDTO;
-import cn.licoy.wdog.core.entity.system.SysResource;
-import cn.licoy.wdog.core.entity.system.SysRole;
-import cn.licoy.wdog.core.entity.system.SysUserRole;
+import cn.licoy.wdog.core.dto.system.role.FindRoleDTO;
+import cn.licoy.wdog.core.dto.system.role.RoleAddDTO;
+import cn.licoy.wdog.core.dto.system.role.RoleUpdateDTO;
+import cn.licoy.wdog.core.entity.system.*;
 import cn.licoy.wdog.core.mapper.system.SysRoleMapper;
 import cn.licoy.wdog.core.service.system.SysRoleResourceService;
 import cn.licoy.wdog.core.service.system.SysRoleService;
@@ -68,7 +67,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper,SysRole> imple
             this.deleteById(rid);
         }catch (DataIntegrityViolationException e){
             throw new RequestException(StatusEnum.FAIL.code,
-                    String.format("请先解除角色为【%s】角色的全部用户！",role.getName()),e);
+                    String.format("请先解除角色为 %s 角色的全部用户！",role.getName()),e);
         }catch (Exception e){
             throw new RequestException(StatusEnum.FAIL.code,"角色删除失败！",e);
         }
@@ -81,9 +80,39 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper,SysRole> imple
         BeanUtils.copyProperties(roleUpdateDTO,role);
         try {
             this.updateById(role);
+            roleResourceService.delete(new EntityWrapper<SysRoleResource>()
+                    .eq("rid",rid));
+            for (SysResource sysResource : roleUpdateDTO.getResources()) {
+                roleResourceService.insert(SysRoleResource.builder()
+                        .pid(sysResource.getId())
+                        .rid(role.getId())
+                        .build());
+            }
         }catch (Exception e){
             throw new RequestException(StatusEnum.FAIL.code,"角色更新失败！",e);
         }
 
+    }
+
+    @Override
+    public void add(RoleAddDTO addDTO) {
+        SysRole role = this.selectOne(new EntityWrapper<SysRole>().eq("name",addDTO.getName()));
+        if(role!=null){
+            throw new RequestException(StatusEnum.FAIL.code,
+                    String.format("已经存在名称为 %s 的角色",addDTO.getName()));
+        }
+        role = new SysRole();
+        BeanUtils.copyProperties(addDTO,role);
+        try {
+            this.insert(role);
+            for (SysResource sysResource : addDTO.getResources()) {
+                roleResourceService.insert(SysRoleResource.builder()
+                        .pid(sysResource.getId())
+                        .rid(role.getId())
+                        .build());
+            }
+        }catch (Exception e){
+            throw new RequestException(StatusEnum.FAIL.code,"添加失败",e);
+        }
     }
 }

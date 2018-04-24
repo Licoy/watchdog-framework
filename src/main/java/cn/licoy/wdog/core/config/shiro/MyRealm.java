@@ -51,7 +51,11 @@ public class MyRealm extends AuthorizingRealm {
                     findUser.getRoles().forEach(role->{
                         info.addRole(role.getName());
                         if(role.getResources()!=null){
-                            role.getResources().forEach(v-> info.addStringPermission(v.getPermission()));
+                            role.getResources().forEach(v->{
+                                if(!"".equals(v.getPermission().trim())){
+                                    info.addStringPermission(v.getPermission());
+                                }
+                            });
                         }
                     });
                 }

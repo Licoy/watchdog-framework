@@ -2,7 +2,9 @@ package cn.licoy.wdog.core.service.system;
 
 import cn.licoy.wdog.common.bean.RequestResult;
 import cn.licoy.wdog.core.dto.SignInDTO;
-import cn.licoy.wdog.core.dto.user.FindUserDTO;
+import cn.licoy.wdog.core.dto.system.user.FindUserDTO;
+import cn.licoy.wdog.core.dto.system.user.UserAddDTO;
+import cn.licoy.wdog.core.dto.system.user.UserUpdateDTO;
 import cn.licoy.wdog.core.entity.system.SysUser;
 import cn.licoy.wdog.core.vo.system.SysUserVO;
 import com.baomidou.mybatisplus.service.IService;
@@ -41,12 +43,32 @@ public interface SysUserService extends IService<SysUser> {
      * @param status 状态码
      * @return RequestResult
      */
-    RequestResult statusChange(Long userId, Integer status);
+    RequestResult statusChange(String userId, Integer status);
 
     /**
      * 删除用户
      * @param userId 用户ID
      * @return RequestResult
      */
-    RequestResult removeUser(Long userId);
+    RequestResult removeUser(String userId);
+
+    /**
+     * 添加用户
+     * @param addDTO 用户数据DTO
+     */
+    void add(UserAddDTO addDTO);
+
+    /**
+     * 更新用户数据
+     * @param id 用户id
+     * @param updateDTO 用户数据DTO
+     */
+    void update(String id, UserUpdateDTO updateDTO);
+
+    /**
+     * 更新用户角色关联
+     * @param user
+     * @return
+     */
+    void updateUserRole(SysUser user);
 }
