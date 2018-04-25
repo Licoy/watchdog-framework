@@ -3,8 +3,10 @@ package cn.licoy.wdog.core.service.system.impl;
 import cn.licoy.wdog.common.bean.RequestResult;
 import cn.licoy.wdog.common.bean.StatusEnum;
 import cn.licoy.wdog.common.exception.RequestException;
+import cn.licoy.wdog.common.util.Encrypt;
 import cn.licoy.wdog.core.dto.SignInDTO;
 import cn.licoy.wdog.core.dto.system.user.FindUserDTO;
+import cn.licoy.wdog.core.dto.system.user.ResetPasswordDTO;
 import cn.licoy.wdog.core.dto.system.user.UserAddDTO;
 import cn.licoy.wdog.core.dto.system.user.UserUpdateDTO;
 import cn.licoy.wdog.core.entity.system.SysUser;
@@ -43,6 +45,16 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
     @Override
     public SysUser findUserByName(String name) {
         SysUser user = this.selectOne(new EntityWrapper<SysUser>().eq("username",name));
+        if(user == null){
+            return null;
+        }
+        user.setRoles(roleService.findAllRoleByUserId(user.getId()));
+        return user;
+    }
+
+    @Override
+    public SysUser findUserById(String id) {
+        SysUser user = this.selectById(id);
         if(user == null){
             return null;
         }
@@ -94,6 +106,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
     @Override
     public RequestResult getAllUserBySplitPage(FindUserDTO findUserDTO) {
         EntityWrapper<SysUser> wrapper = new EntityWrapper<>();
+        wrapper.orderBy("id",findUserDTO.getAsc());
         Page<SysUser> userPage = this.selectPage(new Page<>(findUserDTO.getPage(),
                 findUserDTO.getPageSize()), wrapper);
         Page<SysUserVO> userVOPage = new Page<>();
@@ -150,7 +163,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
             findUser = new SysUser();
             BeanUtils.copyProperties(addDTO,findUser);
             findUser.setCreateDate(new Date());
+            findUser.setPassword(Encrypt.md5(String.valueOf(findUser.getPassword())+findUser.getUsername()));
             this.insert(findUser);
+            this.updateUserRole(findUser);
         }catch (Exception e){
             throw new RequestException(StatusEnum.FAIL.code,"添加用户失败",e);
         }
@@ -191,6 +206,22 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
             }
         }catch (Exception e){
             throw new RequestException(StatusEnum.FAIL.code,"用户权限关联失败",e);
+        }
+    }
+
+    public void resetPassword(ResetPasswordDTO resetPasswordDTO){
+        SysUser user = this.selectById(resetPasswordDTO.getUid().trim());
+        if(user==null){
+            throw new RequestException(StatusEnum.FAIL.code,
+                    String.format("不存在ID为 %s 的用户",resetPasswordDTO.getUid()));
+        }
+        String password = Encrypt.md5(String.valueOf(resetPasswordDTO.getPassword())+user.getUsername());
+        user.setPassword(password);
+        try {
+            this.updateById(user);
+        }catch (Exception e){
+            throw new RequestException(StatusEnum.FAIL.code,
+                    String.format("ID为 %s 的用户密码重置失败",resetPasswordDTO.getUid()),e);
         }
     }
 }

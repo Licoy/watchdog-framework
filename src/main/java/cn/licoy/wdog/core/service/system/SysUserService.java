@@ -3,6 +3,7 @@ package cn.licoy.wdog.core.service.system;
 import cn.licoy.wdog.common.bean.RequestResult;
 import cn.licoy.wdog.core.dto.SignInDTO;
 import cn.licoy.wdog.core.dto.system.user.FindUserDTO;
+import cn.licoy.wdog.core.dto.system.user.ResetPasswordDTO;
 import cn.licoy.wdog.core.dto.system.user.UserAddDTO;
 import cn.licoy.wdog.core.dto.system.user.UserUpdateDTO;
 import cn.licoy.wdog.core.entity.system.SysUser;
@@ -17,6 +18,13 @@ public interface SysUserService extends IService<SysUser> {
      * @return User
      */
     SysUser findUserByName(String name);
+
+    /**
+     * 根据ID查找用户
+     * @param id ID
+     * @return User
+     */
+    SysUser findUserById(String id);
 
     /**
      * 用户登录操作
@@ -71,4 +79,10 @@ public interface SysUserService extends IService<SysUser> {
      * @return
      */
     void updateUserRole(SysUser user);
+
+    /**
+     * 重置用户密码
+     * @param resetPasswordDTO
+     */
+    void resetPassword(ResetPasswordDTO resetPasswordDTO);
 }

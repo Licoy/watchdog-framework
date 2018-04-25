@@ -103,4 +103,5 @@ public class ShiroServiceImpl implements ShiroService {
     //TODO 根据用户ID清空缓存权限
     //TODO 根据角色ID清空缓存权限
     //TODO 清空全部缓存数据
+    //TODO 锁定用户清空指定用户SESSION
 }

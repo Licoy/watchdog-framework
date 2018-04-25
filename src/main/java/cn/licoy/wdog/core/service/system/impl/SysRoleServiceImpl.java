@@ -50,11 +50,14 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper,SysRole> imple
     @Override
     public Page<SysRole> getList(FindRoleDTO findRoleDTO) {
         EntityWrapper<SysRole> wrapper = new EntityWrapper<>();
+        wrapper.orderBy("id",findRoleDTO.getAsc());
         Page<SysRole> rolePage = this.selectPage(new Page<>(findRoleDTO.getPage(),
                 findRoleDTO.getPageSize()), wrapper);
-        if(rolePage.getRecords()!=null){
-            rolePage.getRecords().forEach(v->
-                    v.setResources(roleResourceService.findAllResourceByRoleId(v.getId())));
+        if(findRoleDTO.getHasResource()){
+            if(rolePage.getRecords()!=null){
+                rolePage.getRecords().forEach(v->
+                        v.setResources(roleResourceService.findAllResourceByRoleId(v.getId())));
+            }
         }
         return rolePage;
     }

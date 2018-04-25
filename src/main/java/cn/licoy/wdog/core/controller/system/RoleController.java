@@ -50,7 +50,7 @@ public class RoleController {
         return RequestResult.e(StatusEnum.OK);
     }
 
-    @RequestMapping(value = "/add/all-resource", method = RequestMethod.POST)
+    @RequestMapping(value = "/add/allResource", method = RequestMethod.POST)
     @ApiOperation(value = "获取添加角色的时可用角色列表")
     public RequestResult getAddAllResource(){
         return RequestResult.e(StatusEnum.OK,

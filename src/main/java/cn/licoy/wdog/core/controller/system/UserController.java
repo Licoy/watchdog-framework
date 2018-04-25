@@ -3,6 +3,7 @@ package cn.licoy.wdog.core.controller.system;
 import cn.licoy.wdog.common.bean.RequestResult;
 import cn.licoy.wdog.common.bean.StatusEnum;
 import cn.licoy.wdog.core.dto.system.user.FindUserDTO;
+import cn.licoy.wdog.core.dto.system.user.ResetPasswordDTO;
 import cn.licoy.wdog.core.dto.system.user.UserAddDTO;
 import cn.licoy.wdog.core.dto.system.user.UserUpdateDTO;
 import cn.licoy.wdog.core.service.system.SysUserService;
@@ -30,6 +31,12 @@ public class UserController {
     @ApiOperation(value = "分页获取用户数据")
     public RequestResult get(@RequestBody @Validated @ApiParam(value = "用户获取过滤条件") FindUserDTO findUserDTO){
         return userService.getAllUserBySplitPage(findUserDTO);
+    }
+
+    @RequestMapping(value = {"/get/id/{id}"}, method = RequestMethod.POST)
+    @ApiOperation(value = "根据ID获取用户信息")
+    public RequestResult getById(@PathVariable("id") @ApiParam(value = "用户ID") String id){
+        return RequestResult.e(StatusEnum.OK,userService.findUserById(id));
     }
 
     @RequestMapping(value = {"/lock/{id}"}, method = RequestMethod.POST)
@@ -65,6 +72,12 @@ public class UserController {
         return RequestResult.e(StatusEnum.OK);
     }
 
-    //TODO 完成前端页面的对接服务
+    @RequestMapping(value = {"/resetPassword"}, method = RequestMethod.POST)
+    @ApiOperation(value = "重置密码")
+    public RequestResult resetPassword(@RequestBody
+                                           @Validated @ApiParam(value = "用户及密码数据") ResetPasswordDTO dto){
+        userService.resetPassword(dto);
+        return RequestResult.e(StatusEnum.OK);
+    }
 
 }

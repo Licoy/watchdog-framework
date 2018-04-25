@@ -13,4 +13,6 @@ public abstract class SplitPageDTO {
 
     private Integer pageSize = 10;
 
+    private Boolean asc = false;
+
 }
