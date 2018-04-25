@@ -12,6 +12,7 @@ import cn.licoy.wdog.core.dto.system.user.UserUpdateDTO;
 import cn.licoy.wdog.core.entity.system.SysUser;
 import cn.licoy.wdog.core.entity.system.SysUserRole;
 import cn.licoy.wdog.core.mapper.system.SysUserMapper;
+import cn.licoy.wdog.core.service.global.ShiroService;
 import cn.licoy.wdog.core.service.system.SysRoleService;
 import cn.licoy.wdog.core.service.system.SysUserRoleService;
 import cn.licoy.wdog.core.service.system.SysUserService;
@@ -41,6 +42,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
 
     @Resource
     private SysUserRoleService userRoleService;
+
+    @Resource
+    private ShiroService shiroService;
 
     @Override
     public SysUser findUserByName(String name) {
@@ -78,7 +82,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
         }catch (DisabledAccountException e){
             throw new RequestException(StatusEnum.SIGN_IN_INPUT_FAIL.code,e.getMessage(),e);
         }catch (Exception e){
-            throw new RequestException(StatusEnum.SIGN_IN_FAIL);
+            throw new RequestException(StatusEnum.SIGN_IN_FAIL,e);
         }
     }
 
@@ -133,7 +137,16 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
             throw new RequestException(StatusEnum.FAIL.code,"不能锁定自己的账户");
         }
         user.setStatus(status);
-        this.updateById(user);
+        try {
+            this.updateById(user);
+            //若为0 需要进行清除登陆授权以及权限信息
+            /*if(status==0){
+
+            }*/
+            shiroService.clearAuthByUserId(userId,true,true);
+        }catch (Exception e){
+            throw new RequestException(StatusEnum.FAIL.code,"操作失败",e);
+        }
         return RequestResult.e(StatusEnum.OK);
     }
 
@@ -148,7 +161,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
         if(user.getUsername().equals(sysUser.getUsername())){
             throw new RequestException(StatusEnum.FAIL.code,"不能删除自己的账户！");
         }
-        this.deleteById(userId);
+        try {
+            this.deleteById(userId);
+            shiroService.clearAuthByUserId(userId,true,true);
+        }catch (Exception e){
+            throw new RequestException(StatusEnum.FAIL.code,"删除失败",e);
+        }
         return RequestResult.e(StatusEnum.OK);
     }
 
@@ -188,6 +206,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
         try {
             this.updateById(user);
             this.updateUserRole(user);
+            shiroService.clearAuthByUserId(user.getId(),true,false);
         }catch (RequestException e){
             throw new RequestException(StatusEnum.FAIL.code,e.getMsg(),e);
         }catch (Exception e){
@@ -219,6 +238,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
         user.setPassword(password);
         try {
             this.updateById(user);
+            shiroService.clearAuthByUserId(user.getId(),true,true);
         }catch (Exception e){
             throw new RequestException(StatusEnum.FAIL.code,
                     String.format("ID为 %s 的用户密码重置失败",resetPasswordDTO.getUid()),e);

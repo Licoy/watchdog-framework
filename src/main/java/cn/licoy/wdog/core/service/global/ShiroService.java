@@ -29,4 +29,6 @@ public interface ShiroService {
      */
     void reloadPerms();
 
+    void clearAuthByUserId(String uid,Boolean author, Boolean out);
+
 }

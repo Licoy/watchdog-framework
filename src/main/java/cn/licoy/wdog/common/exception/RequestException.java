@@ -25,6 +25,12 @@ public class RequestException extends RuntimeException implements Serializable {
         this.msg = msg;
     }
 
+    public RequestException(StatusEnum statusEnum,Exception e) {
+        this.status = statusEnum.code;
+        this.msg = statusEnum.msg;
+        this.e = e;
+    }
+
 
     public RequestException(StatusEnum statusEnum) {
         this.status = statusEnum.code;

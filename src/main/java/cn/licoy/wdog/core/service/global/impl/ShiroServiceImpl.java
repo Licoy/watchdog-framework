@@ -3,6 +3,7 @@ package cn.licoy.wdog.core.service.global.impl;
 import cn.licoy.wdog.common.bean.StatusEnum;
 import cn.licoy.wdog.common.exception.RequestException;
 import cn.licoy.wdog.common.util.SpringUtils;
+import cn.licoy.wdog.core.config.shiro.MyRealm;
 import cn.licoy.wdog.core.entity.system.SysResource;
 import cn.licoy.wdog.core.service.global.ShiroService;
 import cn.licoy.wdog.core.service.system.SysResourceService;
@@ -30,9 +31,6 @@ public class ShiroServiceImpl implements ShiroService {
 
     @Resource
     private SysResourceService resourceService;
-
-    @Resource
-    private SpringUtils springUtils;
 
     @Override
     public Map<String, String> getFilterChainDefinitionMap() {
@@ -98,6 +96,12 @@ public class ShiroServiceImpl implements ShiroService {
         Map<String, String> filterChainDefinitionMap = getFilterChainDefinitionMap();
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         filterChainDefinitionMap.forEach(manager::createChain);
+    }
+
+    public void clearAuthByUserId(String uid,Boolean author, Boolean out){
+        MyRealm myRealm = SpringUtils.getBean(MyRealm.class);
+        myRealm.clearAuthByUserId(uid,author,out);
+
     }
 
     //TODO 根据用户ID清空缓存权限

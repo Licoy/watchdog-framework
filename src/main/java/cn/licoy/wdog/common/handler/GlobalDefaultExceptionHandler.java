@@ -24,6 +24,7 @@ public class GlobalDefaultExceptionHandler {
     @ExceptionHandler(value = RequestException.class)
     @ResponseBody
     public RequestResult requestExceptionHandler(RequestException e){
+        if(e.getE()!=null) e.printStackTrace();
         return RequestResult.builder().msg(e.getMsg()).status(e.getStatus()).build();
     }
 
