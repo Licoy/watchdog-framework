@@ -59,9 +59,7 @@ spring:
 
 - [点击此处进入`watchdog-framework-web`项目部署说明](https://github.com/watchdog-framework/watchdog-framework-web)
 
-# 演示
-  
-更多请预览线上版本
+# 在线演示
 
 [https://wdog-web.licoy.cn](https://wdog-web.licoy.cn)
 
