@@ -4,7 +4,7 @@
 ## 服务端
 - 克隆到本地
 ```git
-git clone git@github.com:Licoy/saf.git
+git clone git@github.com:watchdog-framework/watchdog-framework.git
 ```
 - 导入SQL
 
