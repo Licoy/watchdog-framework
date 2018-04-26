@@ -75,7 +75,10 @@ spring:
   
 - 更多请预览线上版本
     
-   即将部署
+   [https://wdog-web.licoy.cn](https://wdog-web.licoy.cn)
+   
+   - 用户名：test
+   - 密码：test123456
    
 # 讨论
 
