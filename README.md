@@ -1,5 +1,5 @@
 # 介绍
-`watchDog-framework`基于SpringBoot+Shiro+Mybatis+Mybatis-Plus+HikariCP+Redis开发的基础权限框架，欢迎使用。
+`watchdog-framework`基于SpringBoot+Shiro+Mybatis+Mybatis-Plus+HikariCP+Redis+Vue+iView开发的基础权限框架，权限可控制到按钮级别，同时角色、用户、资源更新时关联的用户相应的权限也会实时更新，欢迎使用，若对你有帮助请点击上方的star :beers: 。
 # 技术选型
 ## 后端技术
 技术 | 类型 | 版本 | 官网
@@ -65,11 +65,25 @@ spring:
 
 - 用户名：test
 - 密码：test123456
-   
-   
+
+# 部分界面展示
+
+## 用户管理
+![用户管理](dist/user.png)
+## 用户管理
+![角色管理](dist/role.png) 
+## 用户管理
+![资源管理](dist/resource.png)    
+## 更多请查看上方演示
+
 # 讨论
 
  - QQ群：30261540 
  
     [点我快捷加入QQ群讨论](https://shang.qq.com/wpa/qunwpa?idkey=c3541f1d0dbe443456228e3aebf23f6795b614a94d5df6a32f0b2b1c759bb99b)
+
+- 作者博客：[https://www.licoy.cn](https://www.licoy.cn)
+
+# 开源协议
+MIT
     
