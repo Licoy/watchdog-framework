@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-04-24 17:23:45
+Date: 2018-04-26 17:19:32
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -51,6 +51,10 @@ INSERT INTO `sys_resource` VALUES ('987986318946508801', '用户更新', '987981
 INSERT INTO `sys_resource` VALUES ('987986542024761345', '用户删除', '987981486382686210', '1', '/system/user/remove/**', 'system:user:remove', '', '0', '2018-04-22 17:28:42');
 INSERT INTO `sys_resource` VALUES ('988254531404496898', '资源列表', '987982017863917570', '1', '/system/resource/list/**', 'system:resource:list', '', '0', '2018-04-23 11:13:35');
 INSERT INTO `sys_resource` VALUES ('988602498871316482', '角色列表', '987981659066376194', '1', '/system/role/list/**', 'system:role:list', '', '0', '2018-04-24 10:16:17');
+INSERT INTO `sys_resource` VALUES ('989417091599802370', '用户列表', '987981486382686210', '1', '/system/user/list/**', 'system:user:list', '', '0', '2018-04-26 16:13:12');
+INSERT INTO `sys_resource` VALUES ('989417919966453762', '密码重置', '987981486382686210', '1', '/system/user/resetPassword/**', 'system:user:resetPassword', '', '0', '2018-04-26 16:16:29');
+INSERT INTO `sys_resource` VALUES ('989418114355666946', '锁定用户', '987981486382686210', '1', '/system/user/lock/**', 'system:user:lock', '', '0', '2018-04-26 16:17:16');
+INSERT INTO `sys_resource` VALUES ('989418202087923713', '解锁用户', '987981486382686210', '1', '/system/user/unlock/**', 'system:user:unlock', '', '0', '2018-04-26 16:17:37');
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -66,6 +70,8 @@ CREATE TABLE `sys_role` (
 -- Records of sys_role
 -- ----------------------------
 INSERT INTO `sys_role` VALUES ('988623554205990914', '管理员');
+INSERT INTO `sys_role` VALUES ('989416986389880834', '演示用户组');
+INSERT INTO `sys_role` VALUES ('989419745311301633', 'test');
 
 -- ----------------------------
 -- Table structure for sys_role_resource
@@ -100,6 +106,12 @@ INSERT INTO `sys_role_resource` VALUES ('988679372616089601', '98862355420599091
 INSERT INTO `sys_role_resource` VALUES ('988679372716752897', '988623554205990914', '987985700785790978');
 INSERT INTO `sys_role_resource` VALUES ('988679372825804802', '988623554205990914', '987985782880903170');
 INSERT INTO `sys_role_resource` VALUES ('988679372930662402', '988623554205990914', '988254531404496898');
+INSERT INTO `sys_role_resource` VALUES ('989418543420383234', '989416986389880834', '987986018126831617');
+INSERT INTO `sys_role_resource` VALUES ('989418543437160450', '989416986389880834', '989417091599802370');
+INSERT INTO `sys_role_resource` VALUES ('989418543462326273', '989416986389880834', '987974185122832386');
+INSERT INTO `sys_role_resource` VALUES ('989418543479103489', '989416986389880834', '988602498871316482');
+INSERT INTO `sys_role_resource` VALUES ('989418543500075010', '989416986389880834', '988254531404496898');
+INSERT INTO `sys_role_resource` VALUES ('989419745470685186', '989419745311301633', '987977834901315586');
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -119,8 +131,10 @@ CREATE TABLE `sys_user` (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', 'admin', 'b9d11b3be25f5a1a7dc8ca04cd310b28', '20', '1', '2018-04-18 15:01:04');
-INSERT INTO `sys_user` VALUES ('2', 'user', 'ad42c83ac4d3b86de14f207c46a0df0e', '20', '1', '2018-04-18 15:01:08');
+INSERT INTO `sys_user` VALUES ('1', 'admin', 'e9beba9d3954ddd2b2efc950c4449790', '20', '1', '2018-04-18 15:01:04');
+INSERT INTO `sys_user` VALUES ('2', 'user', '0b1010c7ce259a10d113369c2ac59d11', '20', '1', '2018-04-18 15:01:08');
+INSERT INTO `sys_user` VALUES ('989416849999503361', 'test', '2da88c46ccd04fda15128b1adb82be9e', '0', '1', '2018-04-26 16:12:14');
+INSERT INTO `sys_user` VALUES ('989423607472562177', '111222', '51cd3938e35c9dc38a642d1084281f11', '0', '1', '2018-04-26 16:39:05');
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -133,11 +147,14 @@ CREATE TABLE `sys_user_role` (
   PRIMARY KEY (`id`,`uid`,`rid`),
   KEY `user_role_ibfk_2` (`uid`),
   KEY `user_role_ibfk_1` (`rid`),
-  CONSTRAINT `sys_user_role_ibfk_1` FOREIGN KEY (`rid`) REFERENCES `sys_role` (`id`) ON UPDATE CASCADE,
-  CONSTRAINT `sys_user_role_ibfk_2` FOREIGN KEY (`uid`) REFERENCES `sys_user` (`id`) ON UPDATE CASCADE
+  CONSTRAINT `sys_user_role_ibfk_2` FOREIGN KEY (`uid`) REFERENCES `sys_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `sys_user_role_ibfk_1` FOREIGN KEY (`rid`) REFERENCES `sys_role` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_user_role
 -- ----------------------------
 INSERT INTO `sys_user_role` VALUES ('1', '1', '988623554205990914');
+INSERT INTO `sys_user_role` VALUES ('989419854702944258', '989416849999503361', '989419745311301633');
+INSERT INTO `sys_user_role` VALUES ('989419854874910722', '989416849999503361', '989416986389880834');
+INSERT INTO `sys_user_role` VALUES ('989423607791329281', '989423607472562177', '989419745311301633');
