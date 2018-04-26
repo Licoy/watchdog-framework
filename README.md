@@ -60,25 +60,14 @@ spring:
 - [点击此处进入`watchdog-framework-web`项目部署说明](https://github.com/watchdog-framework/watchdog-framework-web)
 
 # 演示
-
-- 用户管理
   
-  ![用户管理](dist/user.png)
-  
-- 角色管理
-  
-  ![角色管理](dist/role.png)
-  
-- 资源管理
-  
-  ![资源管理](dist/resource.png)
-  
-- 更多请预览线上版本
+    更多请预览线上版本
     
-   [https://wdog-web.licoy.cn](https://wdog-web.licoy.cn)
+    [https://wdog-web.licoy.cn](https://wdog-web.licoy.cn)
    
-   - 用户名：test
-   - 密码：test123456
+    - 用户名：test
+    - 密码：test123456
+   
    
 # 讨论
 
