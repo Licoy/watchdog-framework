@@ -7,6 +7,7 @@ import cn.licoy.wdog.core.dto.system.role.RoleAddDTO;
 import cn.licoy.wdog.core.dto.system.role.RoleUpdateDTO;
 import cn.licoy.wdog.core.entity.system.*;
 import cn.licoy.wdog.core.mapper.system.SysRoleMapper;
+import cn.licoy.wdog.core.service.global.ShiroService;
 import cn.licoy.wdog.core.service.system.SysRoleResourceService;
 import cn.licoy.wdog.core.service.system.SysRoleService;
 import cn.licoy.wdog.core.service.system.SysUserRoleService;
@@ -31,6 +32,9 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper,SysRole> imple
 
     @Resource
     private SysUserRoleService userRoleService;
+
+    @Resource
+    private ShiroService shiroService;
 
     @Override
     public List<SysRole> findAllRoleByUserId(String uid) {
@@ -68,6 +72,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper,SysRole> imple
         if(role==null) throw new RequestException(StatusEnum.FAIL.code,"角色不存在！");
         try {
             this.deleteById(rid);
+            this.updateCache(role,true,false);
         }catch (DataIntegrityViolationException e){
             throw new RequestException(StatusEnum.FAIL.code,
                     String.format("请先解除角色为 %s 角色的全部用户！",role.getName()),e);
@@ -91,6 +96,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper,SysRole> imple
                         .rid(role.getId())
                         .build());
             }
+            this.updateCache(role,true,false);
         }catch (Exception e){
             throw new RequestException(StatusEnum.FAIL.code,"角色更新失败！",e);
         }
@@ -117,5 +123,17 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper,SysRole> imple
         }catch (Exception e){
             throw new RequestException(StatusEnum.FAIL.code,"添加失败",e);
         }
+    }
+
+    @Override
+    public void updateCache(SysRole role,Boolean author, Boolean out) {
+        List<SysUserRole> sysUserRoles = userRoleService.selectList(new EntityWrapper<SysUserRole>()
+                .eq("rid", role.getId())
+                .groupBy("uid"));
+        List<String> userIdList = new ArrayList<>();
+        if(sysUserRoles!=null && sysUserRoles.size()>0){
+            sysUserRoles.forEach(v-> userIdList.add(v.getUid()));
+        }
+        shiroService.clearAuthByUserIdCollection(userIdList,author,out);
     }
 }

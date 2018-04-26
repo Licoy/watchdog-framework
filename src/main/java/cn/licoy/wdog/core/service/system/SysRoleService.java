@@ -43,4 +43,12 @@ public interface SysRoleService extends IService<SysRole> {
      * @param addDTO 角色数据DTO
      */
     void add(RoleAddDTO addDTO);
+
+    /**
+     * 更新缓存
+     * @param role 角色
+     * @param author 是否清空授权信息
+     * @param out 是否清空session
+     */
+    void updateCache(SysRole role,Boolean author, Boolean out);
 }

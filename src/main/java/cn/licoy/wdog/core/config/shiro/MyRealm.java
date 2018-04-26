@@ -101,13 +101,36 @@ public class MyRealm extends AuthorizingRealm {
                 SysUser user = new SysUser();
                 BeanUtils.copyProperties(spc.getPrimaryPrincipal(),user);
                 //判断用户，匹配用户ID。
-                if(uid.equals(user.getId())){
-                    if(author)
-                        this.clearCachedAuthorizationInfo(spc);
-                    if(out){
-                        redisSessionDAO.delete(session);
-                    }
-                }
+                regexClear(author, out, session, spc, user, uid);
+            }
+        }
+    }
+
+    public void clearAuthByUserIdCollection(List<String> userList,Boolean author, Boolean out){
+        //获取所有session
+        Collection<Session> sessions = redisSessionDAO.getActiveSessions();
+        for (Session session:sessions){
+            //获取session登录信息。
+            Object obj = session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
+            if(obj instanceof SimplePrincipalCollection){
+                //强转
+                SimplePrincipalCollection spc = (SimplePrincipalCollection)obj;
+                SysUser user = new SysUser();
+                BeanUtils.copyProperties(spc.getPrimaryPrincipal(),user);
+                //判断用户，匹配用户ID。
+                userList.forEach(v-> regexClear(author, out, session, spc, user, v));
+
+            }
+        }
+    }
+
+    private void regexClear(Boolean author, Boolean out, Session session,
+                            SimplePrincipalCollection spc, SysUser user, String v) {
+        if(v.equals(user.getId())){
+            if(author)
+                this.clearCachedAuthorizationInfo(spc);
+            if(out){
+                redisSessionDAO.delete(session);
             }
         }
     }

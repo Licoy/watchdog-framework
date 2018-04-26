@@ -77,7 +77,7 @@ public class ShiroServiceImpl implements ShiroService {
 
         ShiroFilterFactoryBean shiroFilterFactoryBean = SpringUtils.getBean(ShiroFilterFactoryBean.class);
 
-        AbstractShiroFilter abstractShiroFilter = null;
+        AbstractShiroFilter abstractShiroFilter;
         try {
             abstractShiroFilter = (AbstractShiroFilter) shiroFilterFactoryBean.getObject();
         } catch (Exception e) {
@@ -98,14 +98,15 @@ public class ShiroServiceImpl implements ShiroService {
         filterChainDefinitionMap.forEach(manager::createChain);
     }
 
+    @Override
     public void clearAuthByUserId(String uid,Boolean author, Boolean out){
         MyRealm myRealm = SpringUtils.getBean(MyRealm.class);
         myRealm.clearAuthByUserId(uid,author,out);
-
     }
 
-    //TODO 根据用户ID清空缓存权限
-    //TODO 根据角色ID清空缓存权限
-    //TODO 清空全部缓存数据
-    //TODO 锁定用户清空指定用户SESSION
+    @Override
+    public void clearAuthByUserIdCollection(List<String> userList, Boolean author, Boolean out) {
+        MyRealm myRealm = SpringUtils.getBean(MyRealm.class);
+        myRealm.clearAuthByUserIdCollection(userList,author,out);
+    }
 }
