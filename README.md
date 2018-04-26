@@ -29,6 +29,10 @@ js-md5 | js-md5库 | 0.7.3 | [https://github.com/emn178/js-md5](https://github.c
 js-cookie | js-cookie操作库 | 2.2.0 | [https://github.com/js-cookie/js-cookie](https://github.com/js-cookie/js-cookie)
 
 # 使用方法
+## 软件需求
+    JDK1.8+
+    MySQL5.6+
+    Maven4.0+
 ## 服务端
 - 克隆到本地
 ```git
