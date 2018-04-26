@@ -22,7 +22,7 @@ Vue-Router | 前端路由 | 3.0.1 | [https://router.vuejs.org/](https://router.v
 Vuex | 前端状态管理 | 3.0.1 | [https://vuex.vuejs.org/](https://vuex.vuejs.org/)
 Axios | HTTP库 | 0.18.0 | [https://github.com/axios/axios](https://github.com/axios/axios)
 iView | UI框架 | 2.13.0 | [https://www.iviewui.com/](https://www.iviewui.com/)
-Miment | JS时间操作库 | 0.0.5 | [https://github.com/noahlam/Miment](https://github.com/noahlam/Miment)
+dayjs | JS时间操作库 | 0.0.5 | [https://github.com/xx45/dayjs](https://github.com/xx45/dayjs)
 String-Format | UI框架 | 1.0.0 | [https://github.com/davidchambers/string-format](https://github.com/davidchambers/string-format)
 Vue-table-with-tree-grid | iview-树表格 | 0.2.4 | [https://github.com/MisterTaki/vue-table-with-tree-grid](https://github.com/MisterTaki/vue-table-with-tree-grid)
 js-md5 | js-md5库 | 0.7.3 | [https://github.com/emn178/js-md5](https://github.com/emn178/js-md5)
