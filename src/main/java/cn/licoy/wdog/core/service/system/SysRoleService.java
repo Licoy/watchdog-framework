@@ -16,7 +16,7 @@ public interface SysRoleService extends IService<SysRole> {
      * @param uid 用户ID
      * @return 角色集合
      */
-    List<SysRole> findAllRoleByUserId(String uid);
+    List<SysRole> findAllRoleByUserId(String uid,Boolean hasResource);
 
     /**
      * 分页查找所有的角色列表

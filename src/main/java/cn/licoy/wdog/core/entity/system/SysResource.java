@@ -34,6 +34,8 @@ public class SysResource implements Serializable {
 
     private String permission;
 
+    private String color;
+
     private String icon;
 
     private Long sort;

@@ -37,16 +37,18 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper,SysRole> imple
     private ShiroService shiroService;
 
     @Override
-    public List<SysRole> findAllRoleByUserId(String uid) {
+    public List<SysRole> findAllRoleByUserId(String uid,Boolean hasResource) {
         List<SysUserRole> userRoles = userRoleService.selectList(new EntityWrapper<SysUserRole>().eq("uid", uid));
         List<SysRole> roles = new ArrayList<>();
         userRoles.forEach(v->{
             SysRole role = this.selectById(v.getRid());
             if(role!=null){
-                List<SysResource> permissions = roleResourceService.findAllResourceByRoleId(role.getId());
-                role.setResources(permissions);
-                roles.add(role);
+                if(hasResource){
+                    List<SysResource> permissions = roleResourceService.findAllResourceByRoleId(role.getId());
+                    role.setResources(permissions);
+                }
             }
+            roles.add(role);
         });
         return roles;
     }

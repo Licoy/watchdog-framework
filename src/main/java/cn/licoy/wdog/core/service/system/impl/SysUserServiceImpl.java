@@ -47,22 +47,22 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
     private ShiroService shiroService;
 
     @Override
-    public SysUser findUserByName(String name) {
+    public SysUser findUserByName(String name,boolean hasResource) {
         SysUser user = this.selectOne(new EntityWrapper<SysUser>().eq("username",name));
         if(user == null){
             return null;
         }
-        user.setRoles(roleService.findAllRoleByUserId(user.getId()));
+        user.setRoles(roleService.findAllRoleByUserId(user.getId(),hasResource));
         return user;
     }
 
     @Override
-    public SysUser findUserById(String id) {
+    public SysUser findUserById(String id,boolean hasResource) {
         SysUser user = this.selectById(id);
         if(user == null){
             return null;
         }
-        user.setRoles(roleService.findAllRoleByUserId(user.getId()));
+        user.setRoles(roleService.findAllRoleByUserId(user.getId(),false));
         return user;
     }
 
@@ -98,7 +98,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
             throw new RequestException(StatusEnum.FAIL.code,"用户信息获取失败");
         }
         BeanUtils.copyProperties(principal,sysUser);
-        SysUser user = this.findUserByName(sysUser.getUsername());
+        SysUser user = this.findUserByName(sysUser.getUsername(),false);
         if(user==null){
             throw new RequestException(StatusEnum.FAIL.code,"用户不存在");
         }
@@ -119,6 +119,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
         userPage.getRecords().forEach(v->{
             SysUserVO vo = new SysUserVO();
             BeanUtils.copyProperties(v,vo);
+            //查找匹配所有用户的角色
+            vo.setRoles(roleService.findAllRoleByUserId(v.getId(),false));
             userVOS.add(vo);
         });
         userVOPage.setRecords(userVOS);
@@ -172,7 +174,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
 
     @Override
     public void add(UserAddDTO addDTO) {
-        SysUser findUser = this.findUserByName(addDTO.getUsername());
+        SysUser findUser = this.findUserByName(addDTO.getUsername(),false);
         if(findUser!=null){
             throw new RequestException(StatusEnum.FAIL.code,
                     String.format("已经存在用户名为 %s 的用户",addDTO.getUsername()));

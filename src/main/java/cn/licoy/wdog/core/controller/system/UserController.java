@@ -36,7 +36,7 @@ public class UserController {
     @RequestMapping(value = {"/get/id/{id}"}, method = RequestMethod.POST)
     @ApiOperation(value = "根据ID获取用户信息")
     public RequestResult getById(@PathVariable("id") @ApiParam(value = "用户ID") String id){
-        return RequestResult.e(StatusEnum.OK,userService.findUserById(id));
+        return RequestResult.e(StatusEnum.OK,userService.findUserById(id,true));
     }
 
     @RequestMapping(value = {"/lock/{id}"}, method = RequestMethod.POST)

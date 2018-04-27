@@ -23,6 +23,8 @@ public class ResourceDTO {
     @NotBlank(message = "资源链接不能为空")
     private String url;
 
+    private String color;
+
     private String permission;
 
     private String icon;

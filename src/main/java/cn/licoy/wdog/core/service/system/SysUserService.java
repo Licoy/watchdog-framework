@@ -17,14 +17,14 @@ public interface SysUserService extends IService<SysUser> {
      * @param name 用户名
      * @return User
      */
-    SysUser findUserByName(String name);
+    SysUser findUserByName(String name,boolean hasResource);
 
     /**
      * 根据ID查找用户
      * @param id ID
      * @return User
      */
-    SysUser findUserById(String id);
+    SysUser findUserById(String id,boolean hasResource);
 
     /**
      * 用户登录操作

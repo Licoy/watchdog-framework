@@ -48,7 +48,7 @@ public class MyRealm extends AuthorizingRealm {
         BeanUtils.copyProperties(principalCollection.getPrimaryPrincipal(),user);
         if(user.getId()!=null){
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-            SysUser findUser = userService.findUserByName(user.getUsername());
+            SysUser findUser = userService.findUserByName(user.getUsername(),true);
             if(findUser!=null){
                 if(findUser.getRoles()!=null){
                     findUser.getRoles().forEach(role->{
