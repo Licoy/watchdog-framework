@@ -1,5 +1,5 @@
 # 介绍
-`watchdog-framework`基于SpringBoot+Shiro+Mybatis+Mybatis-Plus+HikariCP+Redis+Vue+iView开发的基础权限框架，权限可控制到按钮级别，同时角色、用户、资源更新时关联的用户相应的权限也会实时更新，欢迎使用，若对你有帮助请点击上方的star :beers: 。
+`watchdog-framework`基于SpringBoot+Shiro+Mybatis+Mybatis-Plus+HikariCP+Redis+Vue+iView等开发的企业级管理系统快速开发脚手架，拥有角色、用户、资源管理、同时数据更新时关联的用户相应的权限也会实时更新，并且此项目会进行持续更新升级，欢迎使用，若对你有帮助请点击上方的star :beers: 。
 # 在线演示
 
 [https://wdog-web.licoy.cn](https://wdog-web.licoy.cn)
