@@ -33,11 +33,11 @@ jedis | redis管理 | 2.9.0 | [https://github.com/xetorthio/jedis](https://githu
 ## 前端技术
 技术 | 类型 | 版本 | 官网
 ----|------|----|----
-Vue | 前端渐进式框架 | 2.5.2 | [https://cn.vuejs.org/](https://cn.vuejs.org/)
+Vue | 前端渐进式框架 | 2.5.13 | [https://cn.vuejs.org/](https://cn.vuejs.org/)
 Vue-Router | 前端路由 | 3.0.1 | [https://router.vuejs.org/](https://router.vuejs.org/)
 Vuex | 前端状态管理 | 3.0.1 | [https://vuex.vuejs.org/](https://vuex.vuejs.org/)
 Axios | HTTP库 | 0.18.0 | [https://github.com/axios/axios](https://github.com/axios/axios)
-iView | UI框架 | 2.13.0 | [https://www.iviewui.com/](https://www.iviewui.com/)
+iView | UI框架 | 2.8.0 | [https://www.iviewui.com/](https://www.iviewui.com/)
 dayjs | JS时间操作库 | 1.5.14 | [https://github.com/xx45/dayjs](https://github.com/xx45/dayjs)
 String-Format | 字符串格式化 | 1.0.0 | [https://github.com/davidchambers/string-format](https://github.com/davidchambers/string-format)
 Vue-table-with-tree-grid | iview-树表格 | 0.2.4 | [https://github.com/MisterTaki/vue-table-with-tree-grid](https://github.com/MisterTaki/vue-table-with-tree-grid)
