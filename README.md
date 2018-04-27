@@ -81,6 +81,20 @@ spring:
 
 - 作者博客：[https://www.licoy.cn](https://www.licoy.cn)
 
+# 项目地址
+
+- Github：[https://github.com/watchdog-framework/watchdog-framework](https://github.com/watchdog-framework/watchdog-framework)
+
+- 码云：[https://gitee.com/licoy/watchdog-framework](https://gitee.com/licoy/watchdog-framework)
+
+# TODO
+
+- [ ] 支持容器化
+- [ ] 字典
+- [ ] 日志记录
+- [ ] More...
+
+
 # 开源协议
 MIT
     
