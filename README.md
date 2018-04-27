@@ -8,13 +8,22 @@
 - 密码：test123456
 
 # 部分界面展示
-
+## 登录
+![登录](dist/login.png)
 ## 用户管理
 ![用户管理](dist/user.png)
 ## 用户管理
+![用户管理](dist/user.png)
+## 用户添加
+![用户添加](dist/add-user.png) 
+## 角色管理
 ![角色管理](dist/role.png) 
-## 用户管理
-![资源管理](dist/resource.png)    
+## 角色添加
+![角色添加](dist/add-role.png) 
+## 资源管理
+![用户添加](dist/resource.png) 
+## 资源添加
+![资源管理](dist/add-resource.png)    
 ## 更多请查看上方演示
 # 技术选型
 ## 后端技术
