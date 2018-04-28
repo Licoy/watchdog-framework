@@ -4,7 +4,6 @@ import cn.licoy.wdog.common.bean.RequestResult;
 import cn.licoy.wdog.common.bean.StatusEnum;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.AccessControlFilter;
 import org.apache.shiro.web.util.WebUtils;

@@ -17,12 +17,9 @@ spring:
     port: 6379
     password:
     timeout: 10000
-  freemarker:
-    request-context-attribute: request
-    expose-request-attributes: true
-    expose-session-attributes: true
-    expose-spring-macro-helpers: true
-    template-loader-path: classpath:/templates
+  aop:
+    proxy-target-class: true
+    auto: true
 server:
   compression:
     enabled: true

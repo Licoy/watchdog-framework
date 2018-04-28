@@ -2,6 +2,7 @@ package cn.licoy.wdog.core.controller;
 
 import cn.licoy.wdog.common.bean.RequestResult;
 import cn.licoy.wdog.common.bean.StatusEnum;
+import cn.licoy.wdog.common.annotation.SysLogs;
 import cn.licoy.wdog.core.dto.SignInDTO;
 import cn.licoy.wdog.core.service.system.SysUserService;
 import io.swagger.annotations.Api;
@@ -31,7 +32,8 @@ public class AccountController {
 
     @RequestMapping(value = {"/sign-in"},method = RequestMethod.POST)
     @ApiOperation(value = "登录")
-    public RequestResult findUser(@RequestBody @Validated @ApiParam(value = "登录数据",required = true)
+    @SysLogs("登录")
+    public RequestResult signIn(@RequestBody @Validated @ApiParam(value = "登录数据",required = true)
                                               SignInDTO signInDTO){
         userService.signIn(signInDTO);
         return RequestResult.e(StatusEnum.SIGN_IN_OK);
@@ -39,12 +41,14 @@ public class AccountController {
 
     @RequestMapping(value = "/current", method = RequestMethod.POST)
     @ApiOperation(value = "获取当前用户信息")
-    public RequestResult home(){
+    @SysLogs("获取当前用户信息")
+    public RequestResult current(){
         return RequestResult.e(StatusEnum.OK, userService.getCurrentUser());
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     @ApiOperation(value = "注销登录")
+    @SysLogs("注销登录")
     public RequestResult logout(){
         try {
             Subject subject = SecurityUtils.getSubject();
