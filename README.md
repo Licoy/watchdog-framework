@@ -39,6 +39,7 @@ HikariCP | 数据库连接池 | 2.7.8 |  [http://brettwooldridge.github.io/Hikar
 Shiro-Redis | shiro缓存工具 | 2.8.24 | [https://github.com/alexxiyang/shiro-redis](https://github.com/alexxiyang/shiro-redis)
 Springfox-Swagger2 | api文档工具 | 2.7.0 | [https://github.com/springfox/springfox](https://github.com/springfox/springfox)
 jedis | redis管理 | 2.9.0 | [https://github.com/xetorthio/jedis](https://github.com/xetorthio/jedis)
+jwt | 身份认证 | 3.2.0 | [https://jwt.io/](https://jwt.io/)
 ## 前端技术
 技术 | 类型 | 版本 | 官网
 ----|------|----|----

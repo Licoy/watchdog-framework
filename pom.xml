@@ -5,7 +5,7 @@
 
     <groupId>cn.licoy</groupId>
     <artifactId>watchDog-framework</artifactId>
-    <version>0.1.1</version>
+    <version>0.1.2</version>
     <packaging>jar</packaging>
 
     <name>watchDog-framework</name>
