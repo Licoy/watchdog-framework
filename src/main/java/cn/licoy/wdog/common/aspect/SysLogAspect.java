@@ -49,9 +49,7 @@ public class SysLogAspect {
     public void after(JoinPoint joinPoint){
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
-        ShiroHttpSession session = (ShiroHttpSession) attributes.resolveReference(RequestAttributes.REFERENCE_SESSION);
-        SimplePrincipalCollection spc = (SimplePrincipalCollection)
-                session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
+        SimplePrincipalCollection spc = null;
         SysLog sysLog = new SysLog();
         //获取动作Action释义
         sysLog.setActionName(getMethodSysLogsAnnotationValue(joinPoint));

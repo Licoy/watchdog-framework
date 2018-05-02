@@ -31,7 +31,7 @@ public class RoleController {
     @Resource
     private SysResourceService resourceService;
 
-    @RequestMapping(value = "/list", method = RequestMethod.POST)
+    @RequestMapping(value = {"/list"}, method = RequestMethod.POST)
     @ApiOperation(value = "分页获取所有角色列表")
     @SysLogs("分页获取所有角色列表")
     public RequestResult get(@RequestBody @ApiParam(value = "权限查找过滤条件") FindRoleDTO findRoleDTO){

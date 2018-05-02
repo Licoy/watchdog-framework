@@ -4,6 +4,7 @@ import cn.licoy.wdog.common.bean.RequestResult;
 import cn.licoy.wdog.common.bean.StatusEnum;
 import cn.licoy.wdog.common.exception.RequestException;
 import cn.licoy.wdog.common.util.Encrypt;
+import cn.licoy.wdog.core.config.jwt.JwtToken;
 import cn.licoy.wdog.core.dto.SignInDTO;
 import cn.licoy.wdog.core.dto.system.user.FindUserDTO;
 import cn.licoy.wdog.core.dto.system.user.ResetPasswordDTO;
@@ -22,7 +23,6 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.DisabledAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -71,11 +71,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
         if( "".equals(signInDTO.getUsername()) || "".equals(signInDTO.getPassword()) ){
             throw new RequestException(StatusEnum.SING_IN_INPUT_EMPTY);
         }
-        UsernamePasswordToken token = new UsernamePasswordToken(signInDTO.getUsername(),signInDTO.getPassword());
+        JwtToken token = new JwtToken(null,signInDTO.getUsername(),signInDTO.getPassword());
         Subject subject = SecurityUtils.getSubject();
         try {
             subject.login(token);
-            subject.getSession().setTimeout(-10001); //session永不超时
             if(!subject.isAuthenticated()){
                 throw new RequestException(StatusEnum.SIGN_IN_INPUT_FAIL);
             }

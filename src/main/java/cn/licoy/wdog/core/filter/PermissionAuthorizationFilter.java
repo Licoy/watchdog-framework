@@ -18,9 +18,9 @@ import java.io.IOException;
  * @version 2018/4/18/16:15
  */
 @Slf4j
-public class PermissionAuthorizationFilter extends AccessControlFilter {
+public class PermissionAuthorizationFilter/* extends AccessControlFilter*/ {
 
-    @Override
+    /*@Override
     protected boolean isAccessAllowed(ServletRequest servletRequest, ServletResponse servletResponse, Object mappedValue) throws Exception {
         log.info("PermissionAuthorizationFilter执行");
         Subject subject = getSubject(servletRequest, servletResponse);
@@ -53,5 +53,5 @@ public class PermissionAuthorizationFilter extends AccessControlFilter {
                     .build()));
         }
         return false;
-    }
+    }*/
 }

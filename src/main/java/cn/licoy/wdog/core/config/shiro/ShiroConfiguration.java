@@ -1,8 +1,10 @@
 package cn.licoy.wdog.core.config.shiro;
 
-import cn.licoy.wdog.core.filter.PermissionAuthorizationFilter;
+import cn.licoy.wdog.core.config.jwt.JwtFilter;
 import cn.licoy.wdog.core.service.global.ShiroService;
 import lombok.extern.log4j.Log4j;
+import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
+import org.apache.shiro.mgt.DefaultSubjectDAO;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -47,7 +49,7 @@ public class ShiroConfiguration {
 
         //过滤器
         Map<String,Filter> filters = new HashMap<>();
-        filters.put("perms",new PermissionAuthorizationFilter());
+        filters.put("perms",new JwtFilter());
         shiroFilterFactoryBean.setFilters(filters);
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
@@ -57,6 +59,7 @@ public class ShiroConfiguration {
     public MyRealm myRealm(){
         MyRealm myRealm = new MyRealm();
         myRealm.setCredentialsMatcher(new CredentialsMatcher());
+        myRealm.setAuthorizationCacheName(MyRealm.class.getName()+".authorizationCache");
         return myRealm;
     }
 
@@ -66,6 +69,13 @@ public class ShiroConfiguration {
         manager.setRealm(myRealm());
         manager.setCacheManager(cacheManager());
         manager.setSessionManager(sessionManager());
+        /*
+        * 关闭session存储，禁用Session作为存储策略的实现，
+        * 但它没有完全地禁用Session所以需要配合SubjectFactory中的context.setSessionCreationEnabled(false)
+        */
+        ((DefaultSessionStorageEvaluator) ((DefaultSubjectDAO)manager.getSubjectDAO())
+                .getSessionStorageEvaluator()).setSessionStorageEnabled(false);
+        manager.setSubjectFactory(new AgileSubjectFactory());
         return manager;
     }
 
@@ -100,6 +110,7 @@ public class ShiroConfiguration {
         return new RedisManager();
     }
 
+    @Bean
     public RedisCacheManager cacheManager() {
         RedisCacheManager redisCacheManager = new RedisCacheManager();
         redisCacheManager.setRedisManager(redisManager());
@@ -116,7 +127,8 @@ public class ShiroConfiguration {
     @Bean
     public DefaultWebSessionManager sessionManager() {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
-        sessionManager.setSessionDAO(redisSessionDAO());
+        sessionManager.setSessionValidationSchedulerEnabled(false);
+//        sessionManager.setSessionDAO(redisSessionDAO());
         return sessionManager;
     }
 }

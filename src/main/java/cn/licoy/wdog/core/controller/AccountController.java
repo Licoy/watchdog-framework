@@ -3,6 +3,7 @@ package cn.licoy.wdog.core.controller;
 import cn.licoy.wdog.common.bean.RequestResult;
 import cn.licoy.wdog.common.bean.StatusEnum;
 import cn.licoy.wdog.common.annotation.SysLogs;
+import cn.licoy.wdog.core.config.jwt.JwtToken;
 import cn.licoy.wdog.core.dto.SignInDTO;
 import cn.licoy.wdog.core.service.system.SysUserService;
 import io.swagger.annotations.Api;
@@ -36,7 +37,7 @@ public class AccountController {
     public RequestResult signIn(@RequestBody @Validated @ApiParam(value = "登录数据",required = true)
                                               SignInDTO signInDTO){
         userService.signIn(signInDTO);
-        return RequestResult.e(StatusEnum.SIGN_IN_OK);
+        return RequestResult.e(StatusEnum.SIGN_IN_OK,((JwtToken)SecurityUtils.getSubject().getPrincipal()).getToken());
     }
 
     @RequestMapping(value = "/current", method = RequestMethod.POST)

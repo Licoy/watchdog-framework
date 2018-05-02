@@ -3,29 +3,24 @@ package cn.licoy.wdog.core.config.shiro;
 
 
 import cn.licoy.wdog.common.exception.RequestException;
-import cn.licoy.wdog.common.util.Encrypt;
+import cn.licoy.wdog.common.util.JwtUtil;
+import cn.licoy.wdog.core.config.jwt.JwtToken;
 import cn.licoy.wdog.core.entity.system.SysUser;
 import cn.licoy.wdog.core.service.system.SysUserService;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.cache.Cache;
+import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.realm.AuthorizingRealm;
-import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.subject.SimplePrincipalCollection;
-import org.apache.shiro.subject.support.DefaultSubjectContext;
 import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.beans.BeanUtils;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -41,14 +36,22 @@ public class MyRealm extends AuthorizingRealm {
     @Resource
     private RedisSessionDAO redisSessionDAO;
 
+    @Autowired
+    private CacheManager cacheManager;
+
+    @Override
+    public boolean supports(AuthenticationToken token) {
+        return token instanceof JwtToken;
+    }
+
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         log.info("Shiro权限验证执行");
-        SysUser user = new SysUser();
-        BeanUtils.copyProperties(principalCollection.getPrimaryPrincipal(),user);
-        if(user.getId()!=null){
+        JwtToken jwtToken = new JwtToken();
+        BeanUtils.copyProperties(principalCollection.getPrimaryPrincipal(),jwtToken);
+        if(jwtToken.getUsername()!=null){
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-            SysUser findUser = userService.findUserByName(user.getUsername(),true);
+            SysUser findUser = userService.findUserByName(jwtToken.getUsername(),true);
             if(findUser!=null){
                 if(findUser.getRoles()!=null){
                     findUser.getRoles().forEach(role->{
@@ -70,11 +73,12 @@ public class MyRealm extends AuthorizingRealm {
 
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
-        SysUser user = null;
+        JwtToken token  = (JwtToken) authenticationToken;
+        SysUser user;
+        String username = token.getUsername()!=null ? token.getUsername() : JwtUtil.getUsername(token.getToken());
         try {
             user = userService.selectOne(new EntityWrapper<SysUser>()
-                    .eq("username",token.getUsername())
+                    .eq("username",username)
                     .setSqlSelect("id,username,status,password"));
         }catch (RequestException e){
             throw new DisabledAccountException(e.getMsg());
@@ -85,53 +89,23 @@ public class MyRealm extends AuthorizingRealm {
         if(user.getStatus()!=1){
             throw new DisabledAccountException("用户账户已锁定，暂无法登陆！");
         }
-        String name = Encrypt.md5(user.getId()+user.getUsername());
-        return new SimpleAuthenticationInfo(user,user.getPassword(),name);
+        if(token.getUsername()==null) token.setUsername(user.getUsername());
+        String sign = JwtUtil.sign(user.getId(), user.getUsername(), user.getPassword());
+        if(token.getToken()==null) token.setToken(sign);
+        token.setUid(user.getId());
+        return new SimpleAuthenticationInfo(token,user.getPassword(),user.getId());
     }
 
     public void clearAuthByUserId(String uid,Boolean author, Boolean out){
         //获取所有session
-        Collection<Session> sessions = redisSessionDAO.getActiveSessions();
-        for (Session session:sessions){
-            //获取session登录信息。
-            Object obj = session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
-            if(obj instanceof SimplePrincipalCollection){
-                //强转
-                SimplePrincipalCollection spc = (SimplePrincipalCollection)obj;
-                SysUser user = new SysUser();
-                BeanUtils.copyProperties(spc.getPrimaryPrincipal(),user);
-                //判断用户，匹配用户ID。
-                regexClear(author, out, session, spc, user, uid);
-            }
-        }
+        Cache<Object, Object> cache = cacheManager
+                .getCache(MyRealm.class.getName()+".authorizationCache");
+        cache.remove(uid);
     }
 
     public void clearAuthByUserIdCollection(List<String> userList,Boolean author, Boolean out){
-        //获取所有session
-        Collection<Session> sessions = redisSessionDAO.getActiveSessions();
-        for (Session session:sessions){
-            //获取session登录信息。
-            Object obj = session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
-            if(obj instanceof SimplePrincipalCollection){
-                //强转
-                SimplePrincipalCollection spc = (SimplePrincipalCollection)obj;
-                SysUser user = new SysUser();
-                BeanUtils.copyProperties(spc.getPrimaryPrincipal(),user);
-                //判断用户，匹配用户ID。
-                userList.forEach(v-> regexClear(author, out, session, spc, user, v));
-
-            }
-        }
-    }
-
-    private void regexClear(Boolean author, Boolean out, Session session,
-                            SimplePrincipalCollection spc, SysUser user, String v) {
-        if(v.equals(user.getId())){
-            if(author)
-                this.clearCachedAuthorizationInfo(spc);
-            if(out){
-                redisSessionDAO.delete(session);
-            }
-        }
+        Cache<Object, Object> cache = cacheManager
+                .getCache(MyRealm.class.getName()+".authorizationCache");
+        userList.forEach(cache::remove);
     }
 }
