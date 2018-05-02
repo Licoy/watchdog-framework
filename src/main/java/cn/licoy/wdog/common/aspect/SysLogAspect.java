@@ -2,6 +2,7 @@ package cn.licoy.wdog.common.aspect;
 
 import cn.licoy.wdog.common.annotation.SysLogs;
 import cn.licoy.wdog.common.util.Tools;
+import cn.licoy.wdog.core.config.jwt.JwtToken;
 import cn.licoy.wdog.core.dto.SignInDTO;
 import cn.licoy.wdog.core.dto.system.user.ResetPasswordDTO;
 import cn.licoy.wdog.core.dto.system.user.UserAddDTO;
@@ -10,7 +11,10 @@ import cn.licoy.wdog.core.entity.system.SysLog;
 import cn.licoy.wdog.core.entity.system.SysUser;
 import cn.licoy.wdog.core.service.system.SysLogService;
 import com.alibaba.fastjson.JSON;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SimplePrincipalCollection;
+import org.apache.shiro.subject.Subject;
 import org.apache.shiro.subject.support.DefaultSubjectContext;
 import org.apache.shiro.web.servlet.ShiroHttpSession;
 import org.aspectj.lang.JoinPoint;
@@ -49,7 +53,11 @@ public class SysLogAspect {
     public void after(JoinPoint joinPoint){
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
-        SimplePrincipalCollection spc = null;
+        PrincipalCollection spc = null;
+        Subject subject = SecurityUtils.getSubject();
+        if(subject.getPrincipals()!=null){
+            spc = subject.getPrincipals();
+        }
         SysLog sysLog = new SysLog();
         //获取动作Action释义
         sysLog.setActionName(getMethodSysLogsAnnotationValue(joinPoint));
@@ -65,10 +73,10 @@ public class SysLogAspect {
                 + "." + joinPoint.getSignature().getName()+"()");
         //判断身份是否为空
         if(spc!=null){
-            SysUser user = new SysUser();
-            BeanUtils.copyProperties(spc.getPrimaryPrincipal(),user);
-            sysLog.setUsername(user.getUsername());
-            sysLog.setUid(user.getId());
+            JwtToken jwtToken = new JwtToken();
+            BeanUtils.copyProperties(spc.getPrimaryPrincipal(),jwtToken);
+            sysLog.setUsername(jwtToken.getUsername());
+            sysLog.setUid(jwtToken.getUid());
         }else{
             sysLog.setUsername("游客");
             sysLog.setUid("0");
