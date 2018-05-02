@@ -21,6 +21,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "/system/log")
+@Api(tags = {"日志管理"})
 public class LogController {
 
     @Resource
