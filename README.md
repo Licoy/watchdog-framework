@@ -66,6 +66,7 @@ git clone git@github.com:watchdog-framework/watchdog-framework.git
 - 导入SQL
 
     将项目根目录下的`wdog.sql`导入至数据库信息
+    > admin默认密码为：123456
 - 修改数据库信息
 ```yml
 # application.yml
