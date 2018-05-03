@@ -29,7 +29,7 @@ public class UserController {
     @Autowired
     private SysUserService userService;
 
-    @RequestMapping(value = {"/list"}, method = RequestMethod.POST)
+    @PostMapping(value = {"/list"})
     @ApiOperation(value = "分页获取用户数据")
     @SysLogs("分页获取用户数据")
     @Cacheable(value = "system:user:get",keyGenerator = "keyGenerator")
@@ -37,14 +37,14 @@ public class UserController {
         return RequestResult.e(StatusEnum.OK,userService.getAllUserBySplitPage(findUserDTO));
     }
 
-    @RequestMapping(value = {"/get/id/{id}"}, method = RequestMethod.POST)
+    @PostMapping(value = {"/get/id/{id}"})
     @ApiOperation(value = "根据ID获取用户信息")
     @SysLogs("根据ID获取用户信息")
     public RequestResult getById(@PathVariable("id") @ApiParam(value = "用户ID") String id){
         return RequestResult.e(StatusEnum.OK,userService.findUserById(id,true));
     }
 
-    @RequestMapping(value = {"/lock/{id}"}, method = RequestMethod.POST)
+    @PostMapping(value = {"/lock/{id}"})
     @ApiOperation(value = "锁定用户")
     @SysLogs("锁定用户")
     public RequestResult lock(@PathVariable("id") @ApiParam(value = "用户标识ID") String id){
@@ -52,7 +52,7 @@ public class UserController {
         return RequestResult.e(StatusEnum.OK);
     }
 
-    @RequestMapping(value = {"/unlock/{id}"}, method = RequestMethod.POST)
+    @PostMapping(value = {"/unlock/{id}"})
     @ApiOperation(value = "解锁用户")
     @SysLogs("解锁用户")
     public RequestResult unlock(@PathVariable("id") @ApiParam(value = "用户标识ID") String id){
@@ -60,7 +60,7 @@ public class UserController {
         return RequestResult.e(StatusEnum.OK);
     }
 
-    @RequestMapping(value = {"/remove/{id}"}, method = RequestMethod.POST)
+    @PostMapping(value = {"/remove/{id}"})
     @ApiOperation(value = "删除用户")
     @SysLogs("删除用户")
     public RequestResult remove(@PathVariable("id") @ApiParam(value = "用户标识ID") String id){
@@ -68,7 +68,7 @@ public class UserController {
         return RequestResult.e(StatusEnum.OK);
     }
 
-    @RequestMapping(value = {"/add"}, method = RequestMethod.POST)
+    @PostMapping(value = {"/add"})
     @ApiOperation(value = "添加用户")
     @SysLogs("添加用户")
     public RequestResult add(@RequestBody @Validated @ApiParam(value = "用户数据") UserAddDTO addDTO){
@@ -76,7 +76,7 @@ public class UserController {
         return RequestResult.e(StatusEnum.OK);
     }
 
-    @RequestMapping(value = {"/update/{id}"}, method = RequestMethod.POST)
+    @PostMapping(value = {"/update/{id}"})
     @ApiOperation(value = "更新用户")
     @SysLogs("更新用户")
     public RequestResult update(@PathVariable("id") @ApiParam(value = "用户标识ID") String id,
@@ -85,7 +85,7 @@ public class UserController {
         return RequestResult.e(StatusEnum.OK);
     }
 
-    @RequestMapping(value = {"/resetPassword"}, method = RequestMethod.POST)
+    @PostMapping(value = {"/resetPassword"})
     @ApiOperation(value = "重置密码")
     @SysLogs("重置密码")
     public RequestResult resetPassword(@RequestBody

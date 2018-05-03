@@ -32,14 +32,14 @@ public class RoleController {
     @Autowired
     private SysResourceService resourceService;
 
-    @RequestMapping(value = {"/list"}, method = RequestMethod.POST)
+    @PostMapping(value = {"/list"})
     @ApiOperation(value = "分页获取所有角色列表")
     @SysLogs("分页获取所有角色列表")
     public RequestResult get(@RequestBody @ApiParam(value = "权限查找过滤条件") FindRoleDTO findRoleDTO){
         return RequestResult.e(StatusEnum.OK,roleService.getList(findRoleDTO));
     }
 
-    @RequestMapping(value = "/remove/{id}", method = RequestMethod.POST)
+    @PostMapping(value = "/remove/{id}")
     @ApiOperation(value = "删除指定ID的角色")
     @SysLogs("删除指定ID的角色")
     public RequestResult remove(@PathVariable("id") @ApiParam(value = "角色标识ID") String id){
@@ -47,7 +47,7 @@ public class RoleController {
         return RequestResult.e(StatusEnum.OK);
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @PostMapping(value = "/add")
     @ApiOperation(value = "添加角色")
     @SysLogs("添加角色")
     public RequestResult add(@RequestBody @Validated @ApiParam(value = "角色添加信息") RoleAddDTO addDTO){
@@ -55,7 +55,7 @@ public class RoleController {
         return RequestResult.e(StatusEnum.OK);
     }
 
-    @RequestMapping(value = "/add/allResource", method = RequestMethod.POST)
+    @PostMapping(value = "/add/allResource")
     @ApiOperation(value = "获取添加角色的时可用角色列表")
     @SysLogs("获取添加角色的时可用角色列表")
     public RequestResult getAddAllResource(){
@@ -63,7 +63,7 @@ public class RoleController {
                 resourceService.list());
     }
 
-    @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
+    @PostMapping(value = "/update/{id}")
     @ApiOperation(value = "更新指定ID的角色信息")
     @SysLogs("更新指定ID的角色信息")
     public RequestResult update(@PathVariable("id") @ApiParam(value = "角色标识ID") String id,

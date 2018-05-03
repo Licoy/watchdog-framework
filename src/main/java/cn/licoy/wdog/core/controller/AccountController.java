@@ -13,10 +13,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Licoy
@@ -30,7 +27,7 @@ public class AccountController {
     @Autowired
     private SysUserService userService;
 
-    @RequestMapping(value = {"/sign-in"},method = RequestMethod.POST)
+    @PostMapping(value = {"/sign-in"})
     @ApiOperation(value = "登录")
     @SysLogs("登录")
     public RequestResult signIn(@RequestBody @Validated @ApiParam(value = "登录数据",required = true)
@@ -39,14 +36,14 @@ public class AccountController {
         return RequestResult.e(StatusEnum.SIGN_IN_OK,((JwtToken)SecurityUtils.getSubject().getPrincipal()).getToken());
     }
 
-    @RequestMapping(value = "/current", method = RequestMethod.POST)
+    @PostMapping(value = "/current")
     @ApiOperation(value = "获取当前用户信息")
     @SysLogs("获取当前用户信息")
     public RequestResult current(){
         return RequestResult.e(StatusEnum.OK, userService.getCurrentUser());
     }
 
-    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    @PostMapping(value = "/logout")
     @ApiOperation(value = "注销登录")
     @SysLogs("注销登录")
     public RequestResult logout(){
