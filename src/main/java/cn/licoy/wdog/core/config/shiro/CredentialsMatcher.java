@@ -24,7 +24,7 @@ public class CredentialsMatcher extends SimpleCredentialsMatcher {
                 throw new DisabledAccountException("密码不正确！");
             }
         }else{
-            boolean verify = JwtUtil.verify(jwtToken.getToken(), jwtToken.getPassword(), accountCredentials.toString());
+            boolean verify = JwtUtil.verify(jwtToken.getToken(), jwtToken.getUsername(), accountCredentials.toString());
             if(!verify){
                 throw new DisabledAccountException("verifyFail");
             }
