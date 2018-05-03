@@ -1,18 +1,18 @@
 package cn.licoy.wdog.core.controller.system;
 
-import cn.licoy.wdog.common.annotation.SysLogs;
 import cn.licoy.wdog.common.bean.RequestResult;
 import cn.licoy.wdog.common.bean.StatusEnum;
 import cn.licoy.wdog.core.dto.system.log.FindLogDTO;
 import cn.licoy.wdog.core.service.system.SysLogService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
+
 import java.util.List;
 
 /**
@@ -24,7 +24,7 @@ import java.util.List;
 @Api(tags = {"日志管理"})
 public class LogController {
 
-    @Resource
+    @Autowired
     private SysLogService sysLogService;
 
     @PostMapping("/list")

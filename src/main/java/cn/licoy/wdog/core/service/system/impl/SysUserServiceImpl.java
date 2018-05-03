@@ -25,10 +25,11 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.DisabledAccountException;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -37,13 +38,13 @@ import java.util.List;
 @Transactional
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> implements SysUserService {
 
-    @Resource
+    @Autowired
     private SysRoleService roleService;
 
-    @Resource
+    @Autowired
     private SysUserRoleService userRoleService;
 
-    @Resource
+    @Autowired
     private ShiroService shiroService;
 
     @Override

@@ -8,10 +8,11 @@ import cn.licoy.wdog.core.service.system.SysResourceService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
+
 
 /**
  * @author licoy.cn
@@ -22,7 +23,7 @@ import javax.annotation.Resource;
 @Api(tags = {"资源管理"})
 public class ResourceController {
 
-    @Resource
+    @Autowired
     private SysResourceService resourceService;
 
     @RequestMapping(value = {"/list"}, method = RequestMethod.POST)

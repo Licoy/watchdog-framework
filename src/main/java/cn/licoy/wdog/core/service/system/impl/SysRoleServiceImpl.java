@@ -15,11 +15,12 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,13 +28,13 @@ import java.util.List;
 @Transactional
 public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper,SysRole> implements SysRoleService {
 
-    @Resource
+    @Autowired
     private SysRoleResourceService roleResourceService;
 
-    @Resource
+    @Autowired
     private SysUserRoleService userRoleService;
 
-    @Resource
+    @Autowired
     private ShiroService shiroService;
 
     @Override

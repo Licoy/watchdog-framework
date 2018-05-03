@@ -10,10 +10,11 @@ import cn.licoy.wdog.core.service.system.SysResourceService;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
+
 import java.util.Date;
 import java.util.List;
 
@@ -26,7 +27,7 @@ import java.util.List;
 public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper,SysResource>
         implements SysResourceService {
 
-    @Resource
+    @Autowired
     private ShiroService shiroService;
 
     @Override

@@ -7,10 +7,11 @@ import cn.licoy.wdog.core.service.system.SysResourceService;
 import cn.licoy.wdog.core.service.system.SysRoleResourceService;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ import java.util.List;
 public class SysRoleResourceServiceImpl extends ServiceImpl<SysRolePermissionMapper,SysRoleResource>
         implements SysRoleResourceService {
 
-    @Resource
+    @Autowired
     private SysResourceService resourceService;
 
     @Override

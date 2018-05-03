@@ -11,13 +11,12 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.annotation.Resource;
 
 /**
  * @author Licoy
@@ -28,7 +27,7 @@ import javax.annotation.Resource;
 @Api(tags = {"账户相关"})
 public class AccountController {
 
-    @Resource
+    @Autowired
     private SysUserService userService;
 
     @RequestMapping(value = {"/sign-in"},method = RequestMethod.POST)

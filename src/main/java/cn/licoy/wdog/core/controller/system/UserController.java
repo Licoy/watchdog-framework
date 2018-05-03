@@ -11,10 +11,11 @@ import cn.licoy.wdog.core.service.system.SysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 
 /**
  * @author Licoy
@@ -25,12 +26,13 @@ import javax.annotation.Resource;
 @Api(tags = {"用户管理"})
 public class UserController {
 
-    @Resource
+    @Autowired
     private SysUserService userService;
 
     @RequestMapping(value = {"/list"}, method = RequestMethod.POST)
     @ApiOperation(value = "分页获取用户数据")
     @SysLogs("分页获取用户数据")
+    //@Cacheable(value = "system:user:get",keyGenerator = "keyGenerator")
     public RequestResult get(@RequestBody @Validated @ApiParam(value = "用户获取过滤条件") FindUserDTO findUserDTO){
         return userService.getAllUserBySplitPage(findUserDTO);
     }

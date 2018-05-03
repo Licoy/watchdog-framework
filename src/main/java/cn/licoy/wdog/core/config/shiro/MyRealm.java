@@ -20,7 +20,7 @@ import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.annotation.Resource;
+
 import java.util.List;
 
 /**
@@ -30,11 +30,8 @@ import java.util.List;
 @Slf4j
 public class MyRealm extends AuthorizingRealm {
 
-    @Resource
+    @Autowired
     private SysUserService userService;
-
-    @Resource
-    private RedisSessionDAO redisSessionDAO;
 
     @Autowired
     private CacheManager cacheManager;

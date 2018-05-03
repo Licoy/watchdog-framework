@@ -14,12 +14,13 @@ import org.crazycake.shiro.RedisCacheManager;
 import org.crazycake.shiro.RedisManager;
 import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.annotation.Resource;
+
 import javax.servlet.Filter;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +33,7 @@ import java.util.Map;
 @Log4j
 public class ShiroConfiguration {
 
-    @Resource
+    @Autowired
     private ShiroService shiroService;
 
     @Bean
@@ -64,15 +65,15 @@ public class ShiroConfiguration {
     }
 
     @Bean
-    public SecurityManager securityManager(){
+    public SecurityManager securityManager(RedisCacheManager RedisCacheManager){
         DefaultWebSecurityManager manager =  new DefaultWebSecurityManager();
         manager.setRealm(myRealm());
-        manager.setCacheManager(cacheManager());
-        manager.setSessionManager(sessionManager());
+        manager.setCacheManager(RedisCacheManager);
         /*
         * 关闭session存储，禁用Session作为存储策略的实现，
         * 但它没有完全地禁用Session所以需要配合SubjectFactory中的context.setSessionCreationEnabled(false)
         */
+        //manager.setSessionManager(sessionManager());
         ((DefaultSessionStorageEvaluator) ((DefaultSubjectDAO)manager.getSubjectDAO())
                 .getSessionStorageEvaluator()).setSessionStorageEnabled(false);
         manager.setSubjectFactory(new AgileSubjectFactory());
@@ -106,17 +107,19 @@ public class ShiroConfiguration {
     }
 
     @ConfigurationProperties(prefix = "spring.redis")
+    @Bean("shiroRedisManager")
     public RedisManager redisManager(){
         return new RedisManager();
     }
 
-    @Bean
-    public RedisCacheManager cacheManager() {
+    @Bean("shiroRedisCacheManager")
+    public RedisCacheManager cacheManager(RedisManager manager) {
         RedisCacheManager redisCacheManager = new RedisCacheManager();
-        redisCacheManager.setRedisManager(redisManager());
+        redisCacheManager.setRedisManager(manager);
         return redisCacheManager;
     }
-
+    /*
+    禁用SESSION，所以此配置无效
     @Bean
     public RedisSessionDAO redisSessionDAO(){
         RedisSessionDAO dao = new RedisSessionDAO();
@@ -128,7 +131,7 @@ public class ShiroConfiguration {
     public DefaultWebSessionManager sessionManager() {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
         sessionManager.setSessionValidationSchedulerEnabled(false);
-//        sessionManager.setSessionDAO(redisSessionDAO());
+        //sessionManager.setSessionDAO(redisSessionDAO());
         return sessionManager;
-    }
+    }*/
 }

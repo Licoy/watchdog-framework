@@ -25,12 +25,13 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.annotation.Resource;
+
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.util.Date;
@@ -43,7 +44,7 @@ import java.util.Date;
 @Component
 public class SysLogAspect {
 
-    @Resource
+    @Autowired
     private SysLogService sysLogService;
 
     @Pointcut("@annotation(cn.licoy.wdog.common.annotation.SysLogs)")
