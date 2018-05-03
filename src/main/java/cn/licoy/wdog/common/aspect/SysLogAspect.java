@@ -44,8 +44,12 @@ import java.util.Date;
 @Component
 public class SysLogAspect {
 
+    private final SysLogService sysLogService;
+
     @Autowired
-    private SysLogService sysLogService;
+    public SysLogAspect(SysLogService sysLogService) {
+        this.sysLogService = sysLogService;
+    }
 
     @Pointcut("@annotation(cn.licoy.wdog.common.annotation.SysLogs)")
     public void log(){}
