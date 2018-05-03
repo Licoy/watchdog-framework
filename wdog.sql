@@ -213,7 +213,7 @@ CREATE TABLE `sys_user` (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', 'admin', 'e9beba9d3954ddd2b2efc950c4449790', '20', '1', '2018-04-18 15:01:04');
+INSERT INTO `sys_user` VALUES ('1', 'admin', 'b9d11b3be25f5a1a7dc8ca04cd310b28', '20', '1', '2018-04-18 15:01:04');
 INSERT INTO `sys_user` VALUES ('2', 'user', '0b1010c7ce259a10d113369c2ac59d11', '20', '1', '2018-04-18 15:01:08');
 INSERT INTO `sys_user` VALUES ('989416849999503361', 'test', '2da88c46ccd04fda15128b1adb82be9e', '0', '1', '2018-04-26 16:12:14');
 INSERT INTO `sys_user` VALUES ('989423607472562177', '111222', 'e30817d8112257be8c5870c2ff53aefb', '0', '1', '2018-04-26 16:39:05');
