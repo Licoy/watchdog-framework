@@ -8,6 +8,7 @@ import cn.licoy.wdog.core.dto.system.user.UserAddDTO;
 import cn.licoy.wdog.core.dto.system.user.UserUpdateDTO;
 import cn.licoy.wdog.core.entity.system.SysUser;
 import cn.licoy.wdog.core.vo.system.SysUserVO;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.IService;
 
 public interface SysUserService extends IService<SysUser> {
@@ -43,22 +44,20 @@ public interface SysUserService extends IService<SysUser> {
      * @param findUserDTO 过滤条件
      * @return RequestResult
      */
-    RequestResult getAllUserBySplitPage(FindUserDTO findUserDTO);
+    Page<SysUserVO> getAllUserBySplitPage(FindUserDTO findUserDTO);
 
     /**
      * 用户状态改变
      * @param userId 用户ID
      * @param status 状态码
-     * @return RequestResult
      */
-    RequestResult statusChange(String userId, Integer status);
+    void statusChange(String userId, Integer status);
 
     /**
      * 删除用户
      * @param userId 用户ID
-     * @return RequestResult
      */
-    RequestResult removeUser(String userId);
+    void removeUser(String userId);
 
     /**
      * 添加用户

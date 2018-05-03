@@ -32,9 +32,9 @@ public class UserController {
     @RequestMapping(value = {"/list"}, method = RequestMethod.POST)
     @ApiOperation(value = "分页获取用户数据")
     @SysLogs("分页获取用户数据")
-    //@Cacheable(value = "system:user:get",keyGenerator = "keyGenerator")
+    @Cacheable(value = "system:user:get",keyGenerator = "keyGenerator")
     public RequestResult get(@RequestBody @Validated @ApiParam(value = "用户获取过滤条件") FindUserDTO findUserDTO){
-        return userService.getAllUserBySplitPage(findUserDTO);
+        return RequestResult.e(StatusEnum.OK,userService.getAllUserBySplitPage(findUserDTO));
     }
 
     @RequestMapping(value = {"/get/id/{id}"}, method = RequestMethod.POST)
@@ -48,21 +48,24 @@ public class UserController {
     @ApiOperation(value = "锁定用户")
     @SysLogs("锁定用户")
     public RequestResult lock(@PathVariable("id") @ApiParam(value = "用户标识ID") String id){
-        return userService.statusChange(id, 0);
+        userService.statusChange(id, 0);
+        return RequestResult.e(StatusEnum.OK);
     }
 
     @RequestMapping(value = {"/unlock/{id}"}, method = RequestMethod.POST)
     @ApiOperation(value = "解锁用户")
     @SysLogs("解锁用户")
     public RequestResult unlock(@PathVariable("id") @ApiParam(value = "用户标识ID") String id){
-        return userService.statusChange(id, 1);
+        userService.statusChange(id, 1);
+        return RequestResult.e(StatusEnum.OK);
     }
 
     @RequestMapping(value = {"/remove/{id}"}, method = RequestMethod.POST)
     @ApiOperation(value = "删除用户")
     @SysLogs("删除用户")
     public RequestResult remove(@PathVariable("id") @ApiParam(value = "用户标识ID") String id){
-        return userService.removeUser(id);
+        userService.removeUser(id);
+        return RequestResult.e(StatusEnum.OK);
     }
 
     @RequestMapping(value = {"/add"}, method = RequestMethod.POST)

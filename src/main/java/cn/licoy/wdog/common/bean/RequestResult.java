@@ -15,11 +15,11 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RequestResult implements Serializable {
+public class RequestResult<T> implements Serializable {
 
     private Integer status;
 
-    private Object data;
+    private T data;
 
     private String msg;
 

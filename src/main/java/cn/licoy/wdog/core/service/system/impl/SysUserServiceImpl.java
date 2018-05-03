@@ -108,7 +108,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
     }
 
     @Override
-    public RequestResult getAllUserBySplitPage(FindUserDTO findUserDTO) {
+    public Page<SysUserVO> getAllUserBySplitPage(FindUserDTO findUserDTO) {
         EntityWrapper<SysUser> wrapper = new EntityWrapper<>();
         wrapper.orderBy("id",findUserDTO.getAsc());
         Page<SysUser> userPage = this.selectPage(new Page<>(findUserDTO.getPage(),
@@ -124,11 +124,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
             userVOS.add(vo);
         });
         userVOPage.setRecords(userVOS);
-        return RequestResult.e(StatusEnum.OK,userVOPage);
+        return userVOPage;
     }
 
     @Override
-    public RequestResult statusChange(String userId, Integer status) {
+    public void statusChange(String userId, Integer status) {
         SysUser user = this.selectById(userId);
         if(user==null){
             throw new RequestException(StatusEnum.FAIL.code,"用户不存在");
@@ -149,11 +149,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
         }catch (Exception e){
             throw new RequestException(StatusEnum.FAIL.code,"操作失败",e);
         }
-        return RequestResult.e(StatusEnum.OK);
     }
 
     @Override
-    public RequestResult removeUser(String userId) {
+    public void removeUser(String userId) {
         SysUser user = this.selectById(userId);
         if(user==null){
             throw new RequestException(StatusEnum.FAIL.code,"用户不存在！");
@@ -169,7 +168,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
         }catch (Exception e){
             throw new RequestException(StatusEnum.FAIL.code,"删除失败",e);
         }
-        return RequestResult.e(StatusEnum.OK);
     }
 
     @Override
