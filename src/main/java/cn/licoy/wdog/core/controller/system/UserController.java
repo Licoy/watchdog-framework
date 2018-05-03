@@ -32,7 +32,6 @@ public class UserController {
     @PostMapping(value = {"/list"})
     @ApiOperation(value = "分页获取用户数据")
     @SysLogs("分页获取用户数据")
-    @Cacheable(value = "system:user:get",keyGenerator = "keyGenerator")
     public RequestResult get(@RequestBody @Validated @ApiParam(value = "用户获取过滤条件") FindUserDTO findUserDTO){
         return RequestResult.e(StatusEnum.OK,userService.getAllUserBySplitPage(findUserDTO));
     }

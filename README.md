@@ -52,7 +52,6 @@ dayjs | JS时间操作库 | 1.5.14 | [https://github.com/xx45/dayjs](https://git
 String-Format | 字符串格式化 | 1.0.0 | [https://github.com/davidchambers/string-format](https://github.com/davidchambers/string-format)
 Vue-table-with-tree-grid | iview-树表格 | 0.2.4 | [https://github.com/MisterTaki/vue-table-with-tree-grid](https://github.com/MisterTaki/vue-table-with-tree-grid)
 js-md5 | js-md5库 | 0.7.3 | [https://github.com/emn178/js-md5](https://github.com/emn178/js-md5)
-js-cookie | js-cookie操作库 | 2.2.0 | [https://github.com/js-cookie/js-cookie](https://github.com/js-cookie/js-cookie)
 
 # 使用方法
 ## 软件需求
