@@ -45,7 +45,7 @@ public class ShiroServiceImpl implements ShiroService {
             for (SysResource resource : resources) {
                 if(!StringUtils.isEmpty(resource.getUrl()) && !StringUtils.isEmpty(resource.getPermission())){
                     if(!"".equals(resource.getPermission().trim()))
-                        permsList.add(0,new String[]{resource.getUrl(),"perms["+resource.getPermission()+"]"});
+                        permsList.add(0,new String[]{resource.getUrl()+"/**","perms["+resource.getPermission()+":*]"});
                 }
                 iterationAllResourceInToFilter(resource,permsList);
             }
@@ -66,7 +66,7 @@ public class ShiroServiceImpl implements ShiroService {
         if(resource.getChildren()!=null && resource.getChildren().size()>0){
             for (SysResource v : resource.getChildren()) {
                 if(!StringUtils.isEmpty(v.getUrl()) && !StringUtils.isEmpty(v.getPermission())){
-                    permsList.add(0,new String[]{v.getUrl(),"perms["+v.getPermission()+"]"});
+                    permsList.add(0,new String[]{v.getUrl()+"/**","perms["+v.getPermission()+":*]"});
                     iterationAllResourceInToFilter(v,permsList);
                 }
             }

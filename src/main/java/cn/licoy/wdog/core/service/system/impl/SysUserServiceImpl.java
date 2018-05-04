@@ -1,19 +1,22 @@
 package cn.licoy.wdog.core.service.system.impl;
 
-import cn.licoy.wdog.common.bean.RequestResult;
 import cn.licoy.wdog.common.bean.StatusEnum;
 import cn.licoy.wdog.common.exception.RequestException;
 import cn.licoy.wdog.common.util.Encrypt;
+import cn.licoy.wdog.common.util.Tools;
 import cn.licoy.wdog.core.config.jwt.JwtToken;
 import cn.licoy.wdog.core.dto.SignInDTO;
 import cn.licoy.wdog.core.dto.system.user.FindUserDTO;
 import cn.licoy.wdog.core.dto.system.user.ResetPasswordDTO;
 import cn.licoy.wdog.core.dto.system.user.UserAddDTO;
 import cn.licoy.wdog.core.dto.system.user.UserUpdateDTO;
+import cn.licoy.wdog.core.entity.system.SysResource;
+import cn.licoy.wdog.core.entity.system.SysRole;
 import cn.licoy.wdog.core.entity.system.SysUser;
 import cn.licoy.wdog.core.entity.system.SysUserRole;
 import cn.licoy.wdog.core.mapper.system.SysUserMapper;
 import cn.licoy.wdog.core.service.global.ShiroService;
+import cn.licoy.wdog.core.service.system.SysResourceService;
 import cn.licoy.wdog.core.service.system.SysRoleService;
 import cn.licoy.wdog.core.service.system.SysUserRoleService;
 import cn.licoy.wdog.core.service.system.SysUserService;
@@ -28,11 +31,17 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Service
 @Transactional
@@ -46,6 +55,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
 
     @Autowired
     private ShiroService shiroService;
+
+    @Autowired
+    private SysResourceService resourceService;
 
     @Override
     public SysUser findUserByName(String name,boolean hasResource) {
@@ -88,23 +100,55 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
 
 
     public SysUserVO getCurrentUser(){
+        HttpServletRequest request =
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        boolean b = Tools.executeLogin(request);
+        if(!b){
+            throw new RequestException(StatusEnum.FAIL.code,"身份已过期或无效，请重新认证");
+        }
         Subject subject = SecurityUtils.getSubject();
         if(!subject.isAuthenticated()){
             throw new RequestException(StatusEnum.NOT_SING_IN);
         }
-        SysUser sysUser = new SysUser();
+        JwtToken jwtToken = new JwtToken();
         Object principal = subject.getPrincipal();
         if(principal==null){
             throw new RequestException(StatusEnum.FAIL.code,"用户信息获取失败");
         }
-        BeanUtils.copyProperties(principal,sysUser);
-        SysUser user = this.findUserByName(sysUser.getUsername(),false);
+        BeanUtils.copyProperties(principal,jwtToken);
+        SysUser user = this.findUserByName(jwtToken.getUsername(),false);
         if(user==null){
             throw new RequestException(StatusEnum.FAIL.code,"用户不存在");
         }
+        //获取菜单/权限信息
+        List<SysResource> allPer = userRolesRegexResource(roleService.findAllRoleByUserId(user.getId(),true));
         SysUserVO vo = new SysUserVO();
         BeanUtils.copyProperties(user,vo);
+        vo.setResources(allPer);
         return vo;
+    }
+
+    public List<SysResource> userRolesRegexResource(List<SysRole> roles){
+        if(roles!=null && roles.size()>0){
+            Map<String,SysResource> resourceMap = new ConcurrentHashMap<>();
+            roles.forEach(role -> {
+                if(role.getResources()!=null && role.getResources().size()>0){
+                    role.getResources().forEach(resource ->
+                            resourceMap.putIfAbsent(resource.getId(), resource));
+                }
+            });
+            Map<String,SysResource> cacheMap = new ConcurrentHashMap<>();
+            List<SysResource> resourceList = new CopyOnWriteArrayList<>();
+            resourceMap.forEach((k,v)-> {
+                SysResource allParent = resourceService.getResourceAllParent(v, cacheMap,resourceMap);
+                //判断是否已经包含此对象
+                if(!resourceList.contains(allParent)){
+                    resourceList.add(allParent);
+                }
+            });
+            return resourceList;
+        }
+        return null;
     }
 
     @Override

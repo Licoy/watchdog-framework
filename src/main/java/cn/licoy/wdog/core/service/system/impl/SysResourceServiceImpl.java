@@ -15,8 +15,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Licoy
@@ -81,5 +83,40 @@ public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper,SysRes
         if(resources!=null && resources.size()>0){
             resources.forEach(this::findAllChild);
         }
+    }
+
+    public SysResource getResourceAllParent(SysResource resource,Map<String,SysResource> cacheMap,
+                                            Map<String,SysResource> cacheMap2){
+        if(resource.getParentId()!=null && !"".equals(resource.getParentId().trim())){
+            SysResource cacheParent = cacheMap.get(resource.getParentId());
+            SysResource parent;
+            if(cacheParent!=null){
+                parent = cacheParent;
+            }else{
+                cacheParent = cacheMap2.get(resource.getParentId());
+                if(cacheParent!=null){
+                    parent = cacheParent;
+                }else{
+                    parent = this.selectById(resource.getParentId());
+                }
+            }
+            if(parent!=null){
+                if(parent.getChildren()==null){
+                    parent.setChildren(new ArrayList<>());
+                }
+                //判断是否已经包含此对象
+                if(!parent.getChildren().contains(resource)){
+                    parent.getChildren().add(resource);
+                }
+                cacheMap.put(resource.getParentId(),parent);
+                //如果此父级还有父级，继续递归查询
+                if(parent.getParentId()!=null && !"".equals(parent.getParentId())){
+                    return getResourceAllParent(parent,cacheMap,cacheMap2);
+                }else{
+                    return parent;
+                }
+            }
+        }
+        return resource;
     }
 }

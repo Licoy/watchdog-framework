@@ -5,6 +5,7 @@ import cn.licoy.wdog.core.entity.system.SysResource;
 import com.baomidou.mybatisplus.service.IService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Licoy
@@ -42,6 +43,18 @@ public interface SysResourceService extends IService<SysResource> {
      * @param resource
      */
     void findAllChild(SysResource resource);
+
+
+
+    /**
+     * 获取资源所有的父级
+     * @param resource 资源
+     * @param cacheMap 缓存对象
+     * @param cacheMap2 缓存对象
+     * @return 资源
+     */
+    SysResource getResourceAllParent(SysResource resource,Map<String,SysResource> cacheMap,
+                                     Map<String,SysResource> cacheMap2);
 
 
 }

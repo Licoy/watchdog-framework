@@ -1,15 +1,18 @@
 package cn.licoy.wdog.core.service.system;
 
-import cn.licoy.wdog.common.bean.RequestResult;
 import cn.licoy.wdog.core.dto.SignInDTO;
 import cn.licoy.wdog.core.dto.system.user.FindUserDTO;
 import cn.licoy.wdog.core.dto.system.user.ResetPasswordDTO;
 import cn.licoy.wdog.core.dto.system.user.UserAddDTO;
 import cn.licoy.wdog.core.dto.system.user.UserUpdateDTO;
+import cn.licoy.wdog.core.entity.system.SysResource;
+import cn.licoy.wdog.core.entity.system.SysRole;
 import cn.licoy.wdog.core.entity.system.SysUser;
 import cn.licoy.wdog.core.vo.system.SysUserVO;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.IService;
+
+import java.util.List;
 
 public interface SysUserService extends IService<SysUser> {
 
@@ -38,6 +41,14 @@ public interface SysUserService extends IService<SysUser> {
      * @return UserVO
      */
     SysUserVO getCurrentUser();
+
+    /**
+     * 用户角色资源匹配
+     * @param roles 用户角色集
+     * @return 资源集合
+     */
+    List<SysResource> userRolesRegexResource(List<SysRole> roles);
+
 
     /**
      * 获取所有用户（分页）

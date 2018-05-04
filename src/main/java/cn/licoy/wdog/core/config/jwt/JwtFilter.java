@@ -3,6 +3,7 @@ package cn.licoy.wdog.core.config.jwt;
 import cn.licoy.wdog.common.bean.RequestResult;
 import cn.licoy.wdog.common.bean.StatusEnum;
 import cn.licoy.wdog.common.exception.RequestException;
+import cn.licoy.wdog.common.util.Tools;
 import com.alibaba.fastjson.JSON;
 import org.apache.shiro.authc.DisabledAccountException;
 import org.apache.shiro.subject.Subject;
@@ -37,24 +38,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
      */
     @Override
     protected boolean executeLogin(ServletRequest request, ServletResponse response){
-        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        String authorization = httpServletRequest.getHeader("Authorization");
-        JwtToken token = new JwtToken(authorization,null,null);
-        // 提交给realm进行登入，如果错误他会抛出异常并被捕获
-        Subject subject = getSubject(request, response);
-        try {
-            subject.login(token);
-        }catch (DisabledAccountException e){
-            if(e.getMessage().equals("verifyFail")){
-                throw new RequestException(StatusEnum.NOT_SING_IN.code,"身份已过期，请重新登录",e);
-            }
-            throw new RequestException(StatusEnum.SIGN_IN_INPUT_FAIL.code,e.getMessage(),e);
-        }catch (Exception e){
-            e.printStackTrace();
-            throw new RequestException(StatusEnum.SIGN_IN_FAIL,e);
-        }
-        // 如果没有抛出异常则代表登入成功，返回true
-        return true;
+        return Tools.executeLogin(request);
     }
 
     @Override
