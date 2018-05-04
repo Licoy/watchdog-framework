@@ -92,29 +92,29 @@ CREATE TABLE `sys_resource` (
 -- ----------------------------
 -- Records of sys_resource
 -- ----------------------------
-INSERT INTO `sys_resource` VALUES ('987974185122832386', '角色添加', '987981659066376194', '1', '/system/role/add/**', 'system:role:add', '#19BE6B', '', '0', '2018-04-22 16:39:36');
+INSERT INTO `sys_resource` VALUES ('987974185122832386', '角色添加', '987981659066376194', '1', '/system/role/add', 'system:role:add', '#19BE6B', '', '0', '2018-04-22 16:39:36');
 INSERT INTO `sys_resource` VALUES ('987977834901315586', '首页', null, '0', '/', '', '#19BE6B', 'ios-home-outline', '-1', '2018-04-22 16:54:06');
-INSERT INTO `sys_resource` VALUES ('987980763175624706', '角色更新', '987981659066376194', '1', '/system/role/update/**', 'system:role:update', '#19BE6B', '', '0', '2018-04-22 17:05:44');
-INSERT INTO `sys_resource` VALUES ('987981277195968513', '系统设置', null, '0', '/system/**', 'system:*', '#19BE6B', 'ios-gear', '0', '2018-04-22 17:07:46');
-INSERT INTO `sys_resource` VALUES ('987981486382686210', '用户管理', '987981277195968513', '0', '/system/user/**', 'system:user:*', '#19BE6B', 'person', '0', '2018-04-22 17:08:36');
-INSERT INTO `sys_resource` VALUES ('987981659066376194', '角色管理', '987981277195968513', '0', '/system/role/**', 'system:role:*', '#19BE6B', 'compose', '0', '2018-04-22 17:09:17');
-INSERT INTO `sys_resource` VALUES ('987982017863917570', '资源管理', '987981277195968513', '0', '/system/resource/**', 'system:resource:*', '#19BE6B', 'lock-combination', '0', '2018-04-22 17:10:43');
-INSERT INTO `sys_resource` VALUES ('987985589477351426', '资源添加', '987982017863917570', '1', '/system/resource/add/**', 'system:resource:add', '#19BE6B', '', '0', '2018-04-22 17:24:55');
-INSERT INTO `sys_resource` VALUES ('987985700785790978', '资源更新', '987982017863917570', '1', '/system/resource/update/**', 'system:resource:update', '#19BE6B', '', '0', '2018-04-22 17:25:21');
-INSERT INTO `sys_resource` VALUES ('987985782880903170', '资源删除', '987982017863917570', '1', '/system/resource/remove/**', 'system:resource:remove', '#EA1A1A', '', '0', '2018-04-22 17:25:41');
-INSERT INTO `sys_resource` VALUES ('987985944781037570', '角色删除', '987981659066376194', '1', '/system/role/remove/**', 'system:role:remove', '#ED3F14', '', '0', '2018-04-22 17:26:19');
-INSERT INTO `sys_resource` VALUES ('987986018126831617', '用户添加', '987981486382686210', '1', '/system/user/add/**', 'system:user:add', '#19BE6B', '', '0', '2018-04-22 17:26:37');
-INSERT INTO `sys_resource` VALUES ('987986318946508801', '用户更新', '987981486382686210', '1', '/system/user/update/**', 'system:user:update', '#19BE6B', '', '0', '2018-04-22 17:27:48');
-INSERT INTO `sys_resource` VALUES ('987986542024761345', '用户删除', '987981486382686210', '1', '/system/user/remove/**', 'system:user:remove', '#ED3F14', '', '0', '2018-04-22 17:28:42');
-INSERT INTO `sys_resource` VALUES ('988254531404496898', '资源列表', '987982017863917570', '1', '/system/resource/list/**', 'system:resource:list', '#19BE6B', '', '0', '2018-04-23 11:13:35');
-INSERT INTO `sys_resource` VALUES ('988602498871316482', '角色列表', '987981659066376194', '1', '/system/role/list/**', 'system:role:list', '#19BE6B', '', '0', '2018-04-24 10:16:17');
-INSERT INTO `sys_resource` VALUES ('989417091599802370', '用户列表', '987981486382686210', '1', '/system/user/list/**', 'system:user:list', '#19BE6B', '', '0', '2018-04-26 16:13:12');
-INSERT INTO `sys_resource` VALUES ('989417919966453762', '密码重置', '987981486382686210', '1', '/system/user/resetPassword/**', 'system:user:resetPassword', '#19BE6B', '', '0', '2018-04-26 16:16:29');
-INSERT INTO `sys_resource` VALUES ('989418114355666946', '锁定用户', '987981486382686210', '1', '/system/user/lock/**', 'system:user:lock', '#FF9900', '', '0', '2018-04-26 16:17:16');
-INSERT INTO `sys_resource` VALUES ('989418202087923713', '解锁用户', '987981486382686210', '1', '/system/user/unlock/**', 'system:user:unlock', '#FF9900', '', '0', '2018-04-26 16:17:37');
-INSERT INTO `sys_resource` VALUES ('990058578210021378', '系统日志', '987981277195968513', '0', '/system/log/**', 'system:log:*', '#19BE6B', 'leaf', '0', '2018-04-28 10:42:14');
-INSERT INTO `sys_resource` VALUES ('990058692110540801', '日志查看', '990058578210021378', '1', '/system/log/list/**', 'system:log:list', '#19BE6B', '', '0', '2018-04-28 10:42:41');
-INSERT INTO `sys_resource` VALUES ('990058791586848769', '日志删除', '990058578210021378', '0', '/system/log/remove/**', 'system:log:remove', '#ED3F14', '', '0', '2018-04-28 10:43:04');
+INSERT INTO `sys_resource` VALUES ('987980763175624706', '角色更新', '987981659066376194', '1', '/system/role/update', 'system:role:update', '#19BE6B', '', '0', '2018-04-22 17:05:44');
+INSERT INTO `sys_resource` VALUES ('987981277195968513', '系统设置', null, '0', '/system', 'system', '#19BE6B', 'ios-gear', '0', '2018-04-22 17:07:46');
+INSERT INTO `sys_resource` VALUES ('987981486382686210', '用户管理', '987981277195968513', '0', '/system/user', 'system:user', '#19BE6B', 'person', '0', '2018-04-22 17:08:36');
+INSERT INTO `sys_resource` VALUES ('987981659066376194', '角色管理', '987981277195968513', '0', '/system/role', 'system:role', '#19BE6B', 'compose', '0', '2018-04-22 17:09:17');
+INSERT INTO `sys_resource` VALUES ('987982017863917570', '资源管理', '987981277195968513', '0', '/system/resource', 'system:resource', '#19BE6B', 'lock-combination', '0', '2018-04-22 17:10:43');
+INSERT INTO `sys_resource` VALUES ('987985589477351426', '资源添加', '987982017863917570', '1', '/system/resource/add', 'system:resource:add', '#19BE6B', '', '0', '2018-04-22 17:24:55');
+INSERT INTO `sys_resource` VALUES ('987985700785790978', '资源更新', '987982017863917570', '1', '/system/resource/update', 'system:resource:update', '#19BE6B', '', '0', '2018-04-22 17:25:21');
+INSERT INTO `sys_resource` VALUES ('987985782880903170', '资源删除', '987982017863917570', '1', '/system/resource/remove', 'system:resource:remove', '#EA1A1A', '', '0', '2018-04-22 17:25:41');
+INSERT INTO `sys_resource` VALUES ('987985944781037570', '角色删除', '987981659066376194', '1', '/system/role/remove', 'system:role:remove', '#ED3F14', '', '0', '2018-04-22 17:26:19');
+INSERT INTO `sys_resource` VALUES ('987986018126831617', '用户添加', '987981486382686210', '1', '/system/user/add', 'system:user:add', '#19BE6B', '', '0', '2018-04-22 17:26:37');
+INSERT INTO `sys_resource` VALUES ('987986318946508801', '用户更新', '987981486382686210', '1', '/system/user/update', 'system:user:update', '#19BE6B', '', '0', '2018-04-22 17:27:48');
+INSERT INTO `sys_resource` VALUES ('987986542024761345', '用户删除', '987981486382686210', '1', '/system/user/remove', 'system:user:remove', '#ED3F14', '', '0', '2018-04-22 17:28:42');
+INSERT INTO `sys_resource` VALUES ('988254531404496898', '资源列表', '987982017863917570', '1', '/system/resource/list', 'system:resource:list', '#19BE6B', '', '0', '2018-04-23 11:13:35');
+INSERT INTO `sys_resource` VALUES ('988602498871316482', '角色列表', '987981659066376194', '1', '/system/role/list', 'system:role:list', '#19BE6B', '', '0', '2018-04-24 10:16:17');
+INSERT INTO `sys_resource` VALUES ('989417091599802370', '用户列表', '987981486382686210', '1', '/system/user/list', 'system:user:list', '#19BE6B', '', '0', '2018-04-26 16:13:12');
+INSERT INTO `sys_resource` VALUES ('989417919966453762', '密码重置', '987981486382686210', '1', '/system/user/resetPassword', 'system:user:resetPassword', '#19BE6B', '', '0', '2018-04-26 16:16:29');
+INSERT INTO `sys_resource` VALUES ('989418114355666946', '锁定用户', '987981486382686210', '1', '/system/user/lock', 'system:user:lock', '#FF9900', '', '0', '2018-04-26 16:17:16');
+INSERT INTO `sys_resource` VALUES ('989418202087923713', '解锁用户', '987981486382686210', '1', '/system/user/unlock', 'system:user:unlock', '#FF9900', '', '0', '2018-04-26 16:17:37');
+INSERT INTO `sys_resource` VALUES ('990058578210021378', '系统日志', '987981277195968513', '0', '/system/log', 'system:log', '#19BE6B', 'leaf', '0', '2018-04-28 10:42:14');
+INSERT INTO `sys_resource` VALUES ('990058692110540801', '日志查看', '990058578210021378', '1', '/system/log/list', 'system:log:list', '#19BE6B', '', '0', '2018-04-28 10:42:41');
+INSERT INTO `sys_resource` VALUES ('990058791586848769', '日志删除', '990058578210021378', '0', '/system/log/remove', 'system:log:remove', '#ED3F14', '', '0', '2018-04-28 10:43:04');
 
 -- ----------------------------
 -- Table structure for sys_role
