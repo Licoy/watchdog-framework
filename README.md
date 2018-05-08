@@ -104,6 +104,9 @@ spring:
 - [x] 日志记录
 - [ ] More...
 
+# 业务扩展
+
+个人接单，有需求的小伙伴可以直接联系我，业务类型请参考：[https://www.licoy.cn/business.html](https://www.licoy.cn/business.html)
 
 # 开源协议
 MIT
