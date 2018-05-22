@@ -1,6 +1,6 @@
 package cn.licoy.wdog.core.service.system.impl;
 
-import cn.licoy.wdog.common.bean.StatusEnum;
+import cn.licoy.wdog.common.bean.ResponseCode;
 import cn.licoy.wdog.common.exception.RequestException;
 import cn.licoy.wdog.core.dto.system.log.FindLogDTO;
 import cn.licoy.wdog.core.entity.system.SysLog;
@@ -31,7 +31,7 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper,SysLog> implemen
         try {
             this.deleteBatchIds(idList);
         }catch (Exception e){
-            throw new RequestException(StatusEnum.FAIL.code,"批量删除日志失败",e);
+            throw new RequestException(ResponseCode.FAIL.code,"批量删除日志失败",e);
         }
     }
 }

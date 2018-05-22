@@ -1,6 +1,6 @@
 package cn.licoy.wdog.common.util;
 
-import cn.licoy.wdog.common.bean.StatusEnum;
+import cn.licoy.wdog.common.bean.ResponseCode;
 import cn.licoy.wdog.common.exception.RequestException;
 import cn.licoy.wdog.core.config.jwt.JwtToken;
 import org.apache.shiro.SecurityUtils;
@@ -55,7 +55,7 @@ public class Tools {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         String authorization = httpServletRequest.getHeader("Authorization");
         if(authorization==null || "".equals(authorization.trim())){
-            throw new RequestException(StatusEnum.FAIL.code,"未含授权标示，禁止访问");
+            throw RequestException.fail("未含授权标示，禁止访问");
         }
         JwtToken token = new JwtToken(authorization,null,null);
         // 提交给realm进行登入，如果错误他会抛出异常并被捕获
@@ -64,12 +64,12 @@ public class Tools {
             subject.login(token);
         }catch (DisabledAccountException e){
             if(e.getMessage().equals("verifyFail")){
-                throw new RequestException(StatusEnum.NOT_SING_IN.code,"身份已过期，请重新登录",e);
+                throw new RequestException(ResponseCode.NOT_SING_IN.code,"身份已过期，请重新登录",e);
             }
-            throw new RequestException(StatusEnum.SIGN_IN_INPUT_FAIL.code,e.getMessage(),e);
+            throw new RequestException(ResponseCode.SIGN_IN_INPUT_FAIL.code,e.getMessage(),e);
         }catch (Exception e){
             e.printStackTrace();
-            throw new RequestException(StatusEnum.SIGN_IN_FAIL,e);
+            throw new RequestException(ResponseCode.SIGN_IN_FAIL,e);
         }
         // 如果没有抛出异常则代表登入成功，返回true
         return true;

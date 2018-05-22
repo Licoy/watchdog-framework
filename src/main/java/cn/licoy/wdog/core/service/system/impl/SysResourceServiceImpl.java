@@ -1,6 +1,6 @@
 package cn.licoy.wdog.core.service.system.impl;
 
-import cn.licoy.wdog.common.bean.StatusEnum;
+import cn.licoy.wdog.common.bean.ResponseCode;
 import cn.licoy.wdog.common.exception.RequestException;
 import cn.licoy.wdog.core.dto.system.resource.ResourceDTO;
 import cn.licoy.wdog.core.entity.system.SysResource;
@@ -59,7 +59,7 @@ public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper,SysRes
     public void update(String id, ResourceDTO dto) {
         SysResource resource = this.selectById(id);
         if(resource==null)
-            throw new RequestException(StatusEnum.FAIL.code,"更新失败，不存在ID为"+id+"的资源");
+            throw RequestException.fail("更新失败，不存在ID为"+id+"的资源");
         BeanUtils.copyProperties(dto,resource);
         this.updateById(resource);
         shiroService.reloadPerms();
@@ -70,7 +70,7 @@ public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper,SysRes
         SysResource resource = this.selectOne(new EntityWrapper<SysResource>()
                 .eq("id",id).setSqlSelect("id"));
         if(resource==null)
-            throw new RequestException(StatusEnum.FAIL.code,"删除失败，不存在ID为"+id+"的资源");
+            throw RequestException.fail("删除失败，不存在ID为"+id+"的资源");
         this.deleteById(id);
         shiroService.reloadPerms();
     }

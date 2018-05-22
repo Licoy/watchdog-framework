@@ -1,6 +1,6 @@
 package cn.licoy.wdog.core.service.global.impl;
 
-import cn.licoy.wdog.common.bean.StatusEnum;
+import cn.licoy.wdog.common.bean.ResponseCode;
 import cn.licoy.wdog.common.exception.RequestException;
 import cn.licoy.wdog.common.util.SpringUtils;
 import cn.licoy.wdog.core.config.shiro.MyRealm;
@@ -82,7 +82,7 @@ public class ShiroServiceImpl implements ShiroService {
         try {
             abstractShiroFilter = (AbstractShiroFilter) shiroFilterFactoryBean.getObject();
         } catch (Exception e) {
-            throw new RequestException(StatusEnum.FAIL.code,"重新加载权限失败",e);
+            throw new RequestException(ResponseCode.FAIL.code,"重新加载权限失败",e);
         }
         PathMatchingFilterChainResolver filterChainResolver =
                 (PathMatchingFilterChainResolver) abstractShiroFilter.getFilterChainResolver();

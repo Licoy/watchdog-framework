@@ -15,7 +15,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RequestResult<T> implements Serializable {
+public class ResponseResult<T> implements Serializable {
 
     private Integer status;
 
@@ -25,13 +25,13 @@ public class RequestResult<T> implements Serializable {
 
     private final long timestamps = System.currentTimeMillis();
 
-    public synchronized static RequestResult e(StatusEnum statusEnum) {
-        return RequestResult.builder().status(statusEnum.code)
+    public synchronized static ResponseResult e(ResponseCode statusEnum) {
+        return ResponseResult.builder().status(statusEnum.code)
                 .msg(statusEnum.msg).data(null).build();
     }
 
-    public synchronized static RequestResult e(StatusEnum statusEnum, Object data) {
-        return RequestResult.builder().status(statusEnum.code)
+    public synchronized static ResponseResult e(ResponseCode statusEnum, Object data) {
+        return ResponseResult.builder().status(statusEnum.code)
                 .msg(statusEnum.msg).data(data).build();
     }
 }

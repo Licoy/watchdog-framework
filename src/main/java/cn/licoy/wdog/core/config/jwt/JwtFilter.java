@@ -1,11 +1,10 @@
 package cn.licoy.wdog.core.config.jwt;
 
-import cn.licoy.wdog.common.bean.RequestResult;
-import cn.licoy.wdog.common.bean.StatusEnum;
+import cn.licoy.wdog.common.bean.ResponseResult;
+import cn.licoy.wdog.common.bean.ResponseCode;
 import cn.licoy.wdog.common.exception.RequestException;
 import cn.licoy.wdog.common.util.Tools;
 import com.alibaba.fastjson.JSON;
-import org.apache.shiro.authc.DisabledAccountException;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.apache.shiro.web.util.WebUtils;
@@ -46,7 +45,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
         log.info("PermissionAuthorizationFilter执行");
         HttpServletResponse res = WebUtils.toHttp(response);
         if (!isLoginAttempt(request, response)) {
-            writerResponse(res,StatusEnum.NOT_SING_IN.code,"无身份认证权限标示");
+            writerResponse(res,ResponseCode.NOT_SING_IN.code,"无身份认证权限标示");
             return false;
         }
         try {
@@ -68,9 +67,9 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
             }
         }
         if (null == subject.getPrincipal()) {//表示没有登录，返回登录提示
-            writerResponse(res,StatusEnum.NOT_SING_IN.code,StatusEnum.NOT_SING_IN.msg);
+            writerResponse(res,ResponseCode.NOT_SING_IN.code,ResponseCode.NOT_SING_IN.msg);
         }else{
-            writerResponse(res,StatusEnum.FAIL.code,"无权限访问");
+            writerResponse(res,ResponseCode.FAIL.code,"无权限访问");
         }
         return false;
     }
@@ -78,7 +77,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
     private void writerResponse(HttpServletResponse response,Integer status,String content){
         response.setHeader("Content-Type", "application/json;charset=utf-8");
         try {
-            response.getWriter().write(JSON.toJSONString(RequestResult.builder()
+            response.getWriter().write(JSON.toJSONString(ResponseResult.builder()
                     .status(status)
                     .msg(content)
                     .build()));

@@ -1,6 +1,6 @@
 package cn.licoy.wdog.core.service.system.impl;
 
-import cn.licoy.wdog.common.bean.StatusEnum;
+import cn.licoy.wdog.common.bean.ResponseCode;
 import cn.licoy.wdog.common.exception.RequestException;
 import cn.licoy.wdog.core.dto.system.role.FindRoleDTO;
 import cn.licoy.wdog.core.dto.system.role.RoleAddDTO;
@@ -72,22 +72,22 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper,SysRole> imple
     @Override
     public void removeById(String rid) {
         SysRole role = this.selectById(rid);
-        if(role==null) throw new RequestException(StatusEnum.FAIL.code,"角色不存在！");
+        if(role==null) throw RequestException.fail("角色不存在！");
         try {
             this.deleteById(rid);
             this.updateCache(role,true,false);
         }catch (DataIntegrityViolationException e){
-            throw new RequestException(StatusEnum.FAIL.code,
+            throw RequestException.fail(
                     String.format("请先解除角色为 %s 角色的全部用户！",role.getName()),e);
         }catch (Exception e){
-            throw new RequestException(StatusEnum.FAIL.code,"角色删除失败！",e);
+            throw RequestException.fail("角色删除失败！",e);
         }
     }
 
     @Override
     public void update(String rid, RoleUpdateDTO roleUpdateDTO) {
         SysRole role = this.selectById(rid);
-        if(role==null) throw new RequestException(StatusEnum.FAIL.code,"角色不存在！");
+        if(role==null) throw RequestException.fail("角色不存在！");
         BeanUtils.copyProperties(roleUpdateDTO,role);
         try {
             this.updateById(role);
@@ -101,7 +101,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper,SysRole> imple
             }
             this.updateCache(role,true,false);
         }catch (Exception e){
-            throw new RequestException(StatusEnum.FAIL.code,"角色更新失败！",e);
+            throw RequestException.fail("角色更新失败！",e);
         }
 
     }
@@ -110,7 +110,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper,SysRole> imple
     public void add(RoleAddDTO addDTO) {
         SysRole role = this.selectOne(new EntityWrapper<SysRole>().eq("name",addDTO.getName()));
         if(role!=null){
-            throw new RequestException(StatusEnum.FAIL.code,
+            throw RequestException.fail(
                     String.format("已经存在名称为 %s 的角色",addDTO.getName()));
         }
         role = new SysRole();
@@ -124,7 +124,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper,SysRole> imple
                         .build());
             }
         }catch (Exception e){
-            throw new RequestException(StatusEnum.FAIL.code,"添加失败",e);
+            throw RequestException.fail("添加失败",e);
         }
     }
 

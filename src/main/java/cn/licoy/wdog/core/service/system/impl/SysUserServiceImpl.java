@@ -1,6 +1,6 @@
 package cn.licoy.wdog.core.service.system.impl;
 
-import cn.licoy.wdog.common.bean.StatusEnum;
+import cn.licoy.wdog.common.bean.ResponseCode;
 import cn.licoy.wdog.common.exception.RequestException;
 import cn.licoy.wdog.common.util.Encrypt;
 import cn.licoy.wdog.common.util.Tools;
@@ -82,19 +82,19 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
     @Override
     public void signIn(SignInDTO signInDTO) {
         if( "".equals(signInDTO.getUsername()) || "".equals(signInDTO.getPassword()) ){
-            throw new RequestException(StatusEnum.SING_IN_INPUT_EMPTY);
+            throw new RequestException(ResponseCode.SING_IN_INPUT_EMPTY);
         }
         JwtToken token = new JwtToken(null,signInDTO.getUsername(),signInDTO.getPassword());
         Subject subject = SecurityUtils.getSubject();
         try {
             subject.login(token);
             if(!subject.isAuthenticated()){
-                throw new RequestException(StatusEnum.SIGN_IN_INPUT_FAIL);
+                throw new RequestException(ResponseCode.SIGN_IN_INPUT_FAIL);
             }
         }catch (DisabledAccountException e){
-            throw new RequestException(StatusEnum.SIGN_IN_INPUT_FAIL.code,e.getMessage(),e);
+            throw new RequestException(ResponseCode.SIGN_IN_INPUT_FAIL.code,e.getMessage(),e);
         }catch (Exception e){
-            throw new RequestException(StatusEnum.SIGN_IN_FAIL,e);
+            throw new RequestException(ResponseCode.SIGN_IN_FAIL,e);
         }
     }
 
@@ -104,21 +104,21 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
                 ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         boolean b = Tools.executeLogin(request);
         if(!b){
-            throw new RequestException(StatusEnum.FAIL.code,"身份已过期或无效，请重新认证");
+            throw RequestException.fail("身份已过期或无效，请重新认证");
         }
         Subject subject = SecurityUtils.getSubject();
         if(!subject.isAuthenticated()){
-            throw new RequestException(StatusEnum.NOT_SING_IN);
+            throw new RequestException(ResponseCode.NOT_SING_IN);
         }
         JwtToken jwtToken = new JwtToken();
         Object principal = subject.getPrincipal();
         if(principal==null){
-            throw new RequestException(StatusEnum.FAIL.code,"用户信息获取失败");
+            throw RequestException.fail("用户信息获取失败");
         }
         BeanUtils.copyProperties(principal,jwtToken);
         SysUser user = this.findUserByName(jwtToken.getUsername(),false);
         if(user==null){
-            throw new RequestException(StatusEnum.FAIL.code,"用户不存在");
+            throw RequestException.fail("用户不存在");
         }
         //获取菜单/权限信息
         List<SysResource> allPer = userRolesRegexResource(roleService.findAllRoleByUserId(user.getId(),true));
@@ -175,12 +175,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
     public void statusChange(String userId, Integer status) {
         SysUser user = this.selectById(userId);
         if(user==null){
-            throw new RequestException(StatusEnum.FAIL.code,"用户不存在");
+            throw RequestException.fail("用户不存在");
         }
         SysUser sysUser = new SysUser();
         BeanUtils.copyProperties(SecurityUtils.getSubject().getPrincipal(),sysUser);
         if(user.getUsername().equals(sysUser.getUsername())){
-            throw new RequestException(StatusEnum.FAIL.code,"不能锁定自己的账户");
+            throw RequestException.fail("不能锁定自己的账户");
         }
         user.setStatus(status);
         try {
@@ -191,7 +191,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
             }*/
             shiroService.clearAuthByUserId(userId,true,true);
         }catch (Exception e){
-            throw new RequestException(StatusEnum.FAIL.code,"操作失败",e);
+            throw RequestException.fail("操作失败",e);
         }
     }
 
@@ -199,18 +199,18 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
     public void removeUser(String userId) {
         SysUser user = this.selectById(userId);
         if(user==null){
-            throw new RequestException(StatusEnum.FAIL.code,"用户不存在！");
+            throw RequestException.fail("用户不存在！");
         }
         SysUser sysUser = new SysUser();
         BeanUtils.copyProperties(SecurityUtils.getSubject().getPrincipal(),sysUser);
         if(user.getUsername().equals(sysUser.getUsername())){
-            throw new RequestException(StatusEnum.FAIL.code,"不能删除自己的账户！");
+            throw RequestException.fail("不能删除自己的账户！");
         }
         try {
             this.deleteById(userId);
             shiroService.clearAuthByUserId(userId,true,true);
         }catch (Exception e){
-            throw new RequestException(StatusEnum.FAIL.code,"删除失败",e);
+            throw RequestException.fail("删除失败",e);
         }
     }
 
@@ -218,7 +218,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
     public void add(UserAddDTO addDTO) {
         SysUser findUser = this.findUserByName(addDTO.getUsername(),false);
         if(findUser!=null){
-            throw new RequestException(StatusEnum.FAIL.code,
+            throw RequestException.fail(
                     String.format("已经存在用户名为 %s 的用户",addDTO.getUsername()));
         }
         try {
@@ -229,7 +229,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
             this.insert(findUser);
             this.updateUserRole(findUser);
         }catch (Exception e){
-            throw new RequestException(StatusEnum.FAIL.code,"添加用户失败",e);
+            throw RequestException.fail("添加用户失败",e);
         }
     }
 
@@ -237,13 +237,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
     public void update(String id, UserUpdateDTO updateDTO) {
         SysUser user = this.selectById(id);
         if(user==null){
-            throw new RequestException(StatusEnum.FAIL.code,
+            throw RequestException.fail(
                     String.format("更新失败，不存在ID为 %s 的用户",id));
         }
         SysUser findUser = this.selectOne(new EntityWrapper<SysUser>()
                     .eq("username",updateDTO.getUsername()).ne("id",id));
         if(findUser!=null){
-            throw new RequestException(StatusEnum.FAIL.code,
+            throw RequestException.fail(
                     String.format("更新失败，已经存在用户名为 %s 的用户",updateDTO.getUsername()));
         }
         BeanUtils.copyProperties(updateDTO,user);
@@ -252,9 +252,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
             this.updateUserRole(user);
             shiroService.clearAuthByUserId(user.getId(),true,false);
         }catch (RequestException e){
-            throw new RequestException(StatusEnum.FAIL.code,e.getMsg(),e);
+            throw RequestException.fail(e.getMsg(),e);
         }catch (Exception e){
-            throw new RequestException(StatusEnum.FAIL.code,"用户信息更新失败",e);
+            throw RequestException.fail("用户信息更新失败",e);
         }
     }
 
@@ -268,15 +268,14 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
                         .rid(v.getId()).build()));
             }
         }catch (Exception e){
-            throw new RequestException(StatusEnum.FAIL.code,"用户权限关联失败",e);
+            throw RequestException.fail("用户权限关联失败",e);
         }
     }
 
     public void resetPassword(ResetPasswordDTO resetPasswordDTO){
         SysUser user = this.selectById(resetPasswordDTO.getUid().trim());
         if(user==null){
-            throw new RequestException(StatusEnum.FAIL.code,
-                    String.format("不存在ID为 %s 的用户",resetPasswordDTO.getUid()));
+            throw RequestException.fail(String.format("不存在ID为 %s 的用户",resetPasswordDTO.getUid()));
         }
         String password = Encrypt.md5(String.valueOf(resetPasswordDTO.getPassword())+user.getUsername());
         user.setPassword(password);
@@ -284,8 +283,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
             this.updateById(user);
             shiroService.clearAuthByUserId(user.getId(),true,true);
         }catch (Exception e){
-            throw new RequestException(StatusEnum.FAIL.code,
-                    String.format("ID为 %s 的用户密码重置失败",resetPasswordDTO.getUid()),e);
+            throw RequestException.fail(String.format("ID为 %s 的用户密码重置失败",resetPasswordDTO.getUid()),e);
         }
     }
 }

@@ -1,17 +1,6 @@
 package cn.licoy.wdog.core.filter;
 
-import cn.licoy.wdog.common.bean.RequestResult;
-import cn.licoy.wdog.common.bean.StatusEnum;
-import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.subject.Subject;
-import org.apache.shiro.web.filter.AccessControlFilter;
-import org.apache.shiro.web.util.WebUtils;
-
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * @author Licoy
