@@ -55,14 +55,6 @@ public class RoleController {
         return RequestResult.e(StatusEnum.OK);
     }
 
-    @PostMapping(value = "/add/allResource")
-    @ApiOperation(value = "获取添加角色的时可用角色列表")
-    @SysLogs("获取添加角色的时可用角色列表")
-    public RequestResult getAddAllResource(){
-        return RequestResult.e(StatusEnum.OK,
-                resourceService.list());
-    }
-
     @PostMapping(value = "/update/{id}")
     @ApiOperation(value = "更新指定ID的角色信息")
     @SysLogs("更新指定ID的角色信息")
