@@ -7,6 +7,7 @@ import cn.licoy.wdog.core.config.jwt.JwtToken;
 import cn.licoy.wdog.core.dto.SignInDTO;
 import cn.licoy.wdog.core.service.system.SysUserService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.apache.shiro.SecurityUtils;
@@ -39,6 +40,7 @@ public class AccountController {
     @PostMapping(value = "/current")
     @ApiOperation(value = "获取当前用户信息")
     @SysLogs("获取当前用户信息")
+    @ApiImplicitParam(paramType = "header",name = "Authorization",value = "身份认证Token")
     public ResponseResult current(){
         return ResponseResult.e(ResponseCode.OK, userService.getCurrentUser());
     }
@@ -46,6 +48,7 @@ public class AccountController {
     @PostMapping(value = "/logout")
     @ApiOperation(value = "注销登录")
     @SysLogs("注销登录")
+    @ApiImplicitParam(paramType = "header",name = "Authorization",value = "身份认证Token")
     public ResponseResult logout(){
         try {
             Subject subject = SecurityUtils.getSubject();

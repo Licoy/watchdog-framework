@@ -5,6 +5,7 @@ import cn.licoy.wdog.common.bean.ResponseCode;
 import cn.licoy.wdog.core.dto.system.log.FindLogDTO;
 import cn.licoy.wdog.core.service.system.SysLogService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,12 +30,14 @@ public class LogController {
 
     @PostMapping("/list")
     @ApiParam("获取日志列表")
+    @ApiImplicitParam(paramType = "header",name = "Authorization",value = "身份认证Token")
     public ResponseResult list(@RequestBody @ApiParam("日志查找过滤数据") FindLogDTO findLogDTO){
         return ResponseResult.e(ResponseCode.OK,sysLogService.list(findLogDTO));
     }
 
     @PostMapping("/remove")
     @ApiParam("批量删除")
+    @ApiImplicitParam(paramType = "header",name = "Authorization",value = "身份认证Token")
     public ResponseResult removeList(@RequestBody @ApiParam("ID集合") List<String> logList){
         sysLogService.remove(logList);
         return ResponseResult.e(ResponseCode.OK);

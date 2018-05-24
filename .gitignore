@@ -13,3 +13,4 @@ buildNumber.properties
 !/.mvn/wrapper/maven-wrapper.jar
 *.iml
 /src/main/resources/application-prod.yml
+/src/main/resources/rebel.xml

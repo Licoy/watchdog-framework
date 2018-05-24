@@ -272,6 +272,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
         }
     }
 
+    @Override
     public void resetPassword(ResetPasswordDTO resetPasswordDTO){
         SysUser user = this.selectById(resetPasswordDTO.getUid().trim());
         if(user==null){

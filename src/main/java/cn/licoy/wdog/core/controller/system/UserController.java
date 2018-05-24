@@ -9,6 +9,7 @@ import cn.licoy.wdog.core.dto.system.user.UserAddDTO;
 import cn.licoy.wdog.core.dto.system.user.UserUpdateDTO;
 import cn.licoy.wdog.core.service.system.SysUserService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ public class UserController {
     @PostMapping(value = {"/list"})
     @ApiOperation(value = "分页获取用户数据")
     @SysLogs("分页获取用户数据")
+    @ApiImplicitParam(paramType = "header",name = "Authorization",value = "身份认证Token")
     public ResponseResult get(@RequestBody @Validated @ApiParam(value = "用户获取过滤条件") FindUserDTO findUserDTO){
         return ResponseResult.e(ResponseCode.OK,userService.getAllUserBySplitPage(findUserDTO));
     }
@@ -45,6 +47,7 @@ public class UserController {
     @PostMapping(value = {"/lock/{id}"})
     @ApiOperation(value = "锁定用户")
     @SysLogs("锁定用户")
+    @ApiImplicitParam(paramType = "header",name = "Authorization",value = "身份认证Token")
     public ResponseResult lock(@PathVariable("id") @ApiParam(value = "用户标识ID") String id){
         userService.statusChange(id, 0);
         return ResponseResult.e(ResponseCode.OK);
@@ -53,6 +56,7 @@ public class UserController {
     @PostMapping(value = {"/unlock/{id}"})
     @ApiOperation(value = "解锁用户")
     @SysLogs("解锁用户")
+    @ApiImplicitParam(paramType = "header",name = "Authorization",value = "身份认证Token")
     public ResponseResult unlock(@PathVariable("id") @ApiParam(value = "用户标识ID") String id){
         userService.statusChange(id, 1);
         return ResponseResult.e(ResponseCode.OK);
@@ -69,6 +73,7 @@ public class UserController {
     @PostMapping(value = {"/add"})
     @ApiOperation(value = "添加用户")
     @SysLogs("添加用户")
+    @ApiImplicitParam(paramType = "header",name = "Authorization",value = "身份认证Token")
     public ResponseResult add(@RequestBody @Validated @ApiParam(value = "用户数据") UserAddDTO addDTO){
         userService.add(addDTO);
         return ResponseResult.e(ResponseCode.OK);
@@ -77,15 +82,17 @@ public class UserController {
     @PostMapping(value = {"/update/{id}"})
     @ApiOperation(value = "更新用户")
     @SysLogs("更新用户")
+    @ApiImplicitParam(paramType = "header",name = "Authorization",value = "身份认证Token")
     public ResponseResult update(@PathVariable("id") @ApiParam(value = "用户标识ID") String id,
                                  @RequestBody @Validated @ApiParam(value = "用户数据") UserUpdateDTO updateDTO){
         userService.update(id,updateDTO);
         return ResponseResult.e(ResponseCode.OK);
     }
 
-    @PostMapping(value = {"/resetPassword"})
+    @PostMapping(value = {"/reset-password"})
     @ApiOperation(value = "重置密码")
     @SysLogs("重置密码")
+    @ApiImplicitParam(paramType = "header",name = "Authorization",value = "身份认证Token")
     public ResponseResult resetPassword(@RequestBody
                                            @Validated @ApiParam(value = "用户及密码数据") ResetPasswordDTO dto){
         userService.resetPassword(dto);
