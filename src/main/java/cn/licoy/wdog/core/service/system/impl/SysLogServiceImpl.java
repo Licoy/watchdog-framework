@@ -19,6 +19,7 @@ import java.util.List;
  */
 @Service
 public class SysLogServiceImpl extends ServiceImpl<SysLogMapper,SysLog> implements SysLogService {
+
     @Override
     public Page<SysLog> list(FindLogDTO findLogDTO) {
         EntityWrapper<SysLog> wrapper = new EntityWrapper<>();

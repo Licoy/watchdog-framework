@@ -1,7 +1,7 @@
 package cn.licoy.wdog.core.service.system.impl;
 
-import cn.licoy.wdog.common.bean.ResponseCode;
 import cn.licoy.wdog.common.exception.RequestException;
+import cn.licoy.wdog.common.service.BaseService;
 import cn.licoy.wdog.core.dto.system.role.FindRoleDTO;
 import cn.licoy.wdog.core.dto.system.role.RoleAddDTO;
 import cn.licoy.wdog.core.dto.system.role.RoleUpdateDTO;
@@ -26,7 +26,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper,SysRole> implements SysRoleService {
+public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper,SysRole> implements SysRoleService{
 
     @Autowired
     private SysRoleResourceService roleResourceService;
@@ -55,7 +55,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper,SysRole> imple
     }
 
     @Override
-    public Page<SysRole> getList(FindRoleDTO findRoleDTO) {
+    public Page<SysRole> list(FindRoleDTO findRoleDTO) {
         EntityWrapper<SysRole> wrapper = new EntityWrapper<>();
         wrapper.orderBy("id",findRoleDTO.getAsc());
         Page<SysRole> rolePage = this.selectPage(new Page<>(findRoleDTO.getPage(),
@@ -70,7 +70,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper,SysRole> imple
     }
 
     @Override
-    public void removeById(String rid) {
+    public void remove(String rid) {
         SysRole role = this.selectById(rid);
         if(role==null) throw RequestException.fail("角色不存在！");
         try {

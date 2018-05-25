@@ -1,19 +1,13 @@
 package cn.licoy.wdog.core.controller.system;
 
-import cn.licoy.wdog.common.annotation.SysLogs;
-import cn.licoy.wdog.common.bean.ResponseResult;
-import cn.licoy.wdog.common.bean.ResponseCode;
+import cn.licoy.wdog.common.controller.CrudController;
 import cn.licoy.wdog.core.dto.system.role.FindRoleDTO;
 import cn.licoy.wdog.core.dto.system.role.RoleAddDTO;
 import cn.licoy.wdog.core.dto.system.role.RoleUpdateDTO;
-import cn.licoy.wdog.core.service.system.SysResourceService;
+import cn.licoy.wdog.core.entity.system.SysRole;
 import cn.licoy.wdog.core.service.system.SysRoleService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -25,45 +19,17 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = {"/system/role"})
 @Api(tags = {"角色管理"})
-public class RoleController {
+public class RoleController implements CrudController<SysRole,RoleAddDTO,RoleUpdateDTO,String,FindRoleDTO,SysRoleService>{
+
+    private final SysRoleService sysRoleService;
 
     @Autowired
-    private SysRoleService roleService;
-
-    @PostMapping(value = {"/list"})
-    @ApiOperation(value = "分页获取所有角色列表")
-    @SysLogs("分页获取所有角色列表")
-    @ApiImplicitParam(paramType = "header",name = "Authorization",value = "身份认证Token")
-    public ResponseResult get(@RequestBody @ApiParam(value = "权限查找过滤条件") FindRoleDTO findRoleDTO){
-        return ResponseResult.e(ResponseCode.OK,roleService.getList(findRoleDTO));
+    public RoleController(SysRoleService sysRoleService) {
+        this.sysRoleService = sysRoleService;
     }
 
-    @PostMapping(value = "/remove/{id}")
-    @ApiOperation(value = "删除指定ID的角色")
-    @SysLogs("删除指定ID的角色")
-    @ApiImplicitParam(paramType = "header",name = "Authorization",value = "身份认证Token")
-    public ResponseResult remove(@PathVariable("id") @ApiParam(value = "角色标识ID") String id){
-        roleService.removeById(id);
-        return ResponseResult.e(ResponseCode.OK);
+    @Override
+    public SysRoleService getService() {
+        return sysRoleService;
     }
-
-    @PostMapping(value = "/add")
-    @ApiOperation(value = "添加角色")
-    @SysLogs("添加角色")
-    @ApiImplicitParam(paramType = "header",name = "Authorization",value = "身份认证Token")
-    public ResponseResult add(@RequestBody @Validated @ApiParam(value = "角色添加信息") RoleAddDTO addDTO){
-        roleService.add(addDTO);
-        return ResponseResult.e(ResponseCode.OK);
-    }
-
-    @PostMapping(value = "/update/{id}")
-    @ApiOperation(value = "更新指定ID的角色信息")
-    @SysLogs("更新指定ID的角色信息")
-    @ApiImplicitParam(paramType = "header",name = "Authorization",value = "身份认证Token")
-    public ResponseResult update(@PathVariable("id") @ApiParam(value = "角色标识ID") String id,
-                                 @RequestBody @Validated @ApiParam(value = "角色更新信息") RoleUpdateDTO updateDTO){
-        roleService.update(id, updateDTO);
-        return ResponseResult.e(ResponseCode.OK);
-    }
-
 }
