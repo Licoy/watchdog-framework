@@ -36,7 +36,10 @@ public class SysRoleResourceServiceImpl extends ServiceImpl<SysRolePermissionMap
             if(pids.size()==0){
                 return null;
             }
-            return resourceService.selectList(new EntityWrapper<SysResource>().in("id", pids));
+            return resourceService.selectList(new EntityWrapper<SysResource>()
+                    .in("id", pids)
+                    .orderBy("sort",true)
+            );
         }
         return null;
     }

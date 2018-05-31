@@ -36,10 +36,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -130,10 +127,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
 
     public List<SysResource> userRolesRegexResource(List<SysRole> roles){
         if(roles!=null && roles.size()>0){
-            Map<String,SysResource> resourceMap = new ConcurrentHashMap<>();
+            Map<String,SysResource> resourceMap = new LinkedHashMap<>();
             roles.forEach(role -> {
                 if(role.getResources()!=null && role.getResources().size()>0){
-                    role.getResources().forEach(resource ->
+                    role.getResources().forEach(resource -> //含有则不覆盖
                             resourceMap.putIfAbsent(resource.getId(), resource));
                 }
             });
