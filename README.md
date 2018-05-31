@@ -85,6 +85,9 @@ spring:
 
 - [点击此处进入“watchdog-framework-web”项目部署说明](https://github.com/watchdog-framework/watchdog-framework-web)
 
+# 常见问题
+- [点此查看解决办法](QUESTION.md)
+
 # 讨论
 
  - QQ群：30261540  &nbsp; [点我加入QQ群讨论](https://shang.qq.com/wpa/qunwpa?idkey=c3541f1d0dbe443456228e3aebf23f6795b614a94d5df6a32f0b2b1c759bb99b)
