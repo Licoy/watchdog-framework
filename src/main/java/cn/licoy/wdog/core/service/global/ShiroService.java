@@ -22,7 +22,8 @@ public interface ShiroService {
      * @param resource
      * @param permsList
      */
-    void iterationAllResourceInToFilter(SysResource resource,List<String[]> permsList);
+    void iterationAllResourceInToFilter(SysResource resource,
+                                        List<String[]> permsList,List<String[]> anonList);
 
     /**
      * 重新加载权限

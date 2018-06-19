@@ -32,4 +32,6 @@ public class ResourceDTO {
     @NotNull(message = "资源排序不能为空")
     private Long sort;
 
+    private Boolean verification = true;
+
 }

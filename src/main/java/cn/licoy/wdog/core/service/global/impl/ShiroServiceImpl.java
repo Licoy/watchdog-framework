@@ -17,10 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Licoy
@@ -37,18 +34,32 @@ public class ShiroServiceImpl implements ShiroService {
     public Map<String, String> getFilterChainDefinitionMap() {
 
         Map<String,String> filterChainDefinitionMap = new LinkedHashMap<>();
-        List<String[]> permsList = new ArrayList<>();
+        List<String[]> permsList = new LinkedList<>();
+        List<String[]> anonList = new LinkedList<>();
 
         List<SysResource> resources = resourceService.list();
 
         if(resources!=null){
             for (SysResource resource : resources) {
                 if(!StringUtils.isEmpty(resource.getUrl()) && !StringUtils.isEmpty(resource.getPermission())){
-                    if(!"".equals(resource.getPermission().trim()))
-                        permsList.add(0,new String[]{resource.getUrl()+"/**","perms["+resource.getPermission()+":*]"});
+                    if(!"".equals(resource.getPermission().trim())) {
+                        //判断是否需要权限验证
+                        if(resource.getVerification()){
+                            permsList.add(0,new String[]{resource.getUrl()+
+                                    "/**","perms["+resource.getPermission()+":*]"});
+                        }else{
+                            anonList.add(0,new String[]{resource.getUrl()+
+                                    "/**","anon"});
+                        }
+                    }
                 }
-                iterationAllResourceInToFilter(resource,permsList);
+                iterationAllResourceInToFilter(resource,permsList,anonList);
             }
+        }
+
+
+        for (String[] strings : anonList) {
+            filterChainDefinitionMap.put(strings[0],strings[1]);
         }
 
         for (String[] strings : permsList) {
@@ -62,12 +73,16 @@ public class ShiroServiceImpl implements ShiroService {
 
     @Override
     public void iterationAllResourceInToFilter(SysResource resource,
-                                                List<String[]> permsList){
+                                               List<String[]> permsList,List<String[]> anonList){
         if(resource.getChildren()!=null && resource.getChildren().size()>0){
             for (SysResource v : resource.getChildren()) {
                 if(!StringUtils.isEmpty(v.getUrl()) && !StringUtils.isEmpty(v.getPermission())){
-                    permsList.add(0,new String[]{v.getUrl()+"/**","perms["+v.getPermission()+":*]"});
-                    iterationAllResourceInToFilter(v,permsList);
+                    if(v.getVerification()){
+                        permsList.add(0,new String[]{v.getUrl()+"/**","perms["+v.getPermission()+":*]"});
+                    }else{
+                        anonList.add(0,new String[]{v.getUrl()+"/**","anon"});
+                    }
+                    iterationAllResourceInToFilter(v,permsList,anonList);
                 }
             }
         }
@@ -93,7 +108,7 @@ public class ShiroServiceImpl implements ShiroService {
         manager.getFilterChains().clear();
         shiroFilterFactoryBean.getFilterChainDefinitionMap().clear();
 
-       /*更新新数据*/
+        /*更新新数据*/
         Map<String, String> filterChainDefinitionMap = getFilterChainDefinitionMap();
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         filterChainDefinitionMap.forEach(manager::createChain);

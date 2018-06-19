@@ -40,6 +40,8 @@ public class SysResource implements Serializable {
 
     private Long sort;
 
+    private Boolean verification;
+
     private Date createDate;
 
     @TableField(exist = false)
