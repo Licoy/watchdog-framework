@@ -6,8 +6,8 @@ logging:
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/wdog?useUnicode=yes&characterEncoding=UTF8
-    password: root
     username: root
+    password: root
     driver-class-name: com.mysql.jdbc.Driver
     hikari:
       max-lifetime: 1765000
