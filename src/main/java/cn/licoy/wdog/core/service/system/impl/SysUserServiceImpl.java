@@ -97,12 +97,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
 
 
     public SysUserVO getCurrentUser(){
-        HttpServletRequest request =
-                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        boolean b = Tools.executeLogin(request);
-        if(!b){
-            throw RequestException.fail("身份已过期或无效，请重新认证");
-        }
+        Tools.executeLogin();
         Subject subject = SecurityUtils.getSubject();
         if(!subject.isAuthenticated()){
             throw new RequestException(ResponseCode.NOT_SING_IN);
@@ -123,6 +118,35 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
         BeanUtils.copyProperties(user,vo);
         vo.setResources(allPer);
         return vo;
+    }
+
+    @Override
+    public List<String> getAllPermissionTag() {
+        Tools.executeLogin();
+        Subject subject = SecurityUtils.getSubject();
+        if(!subject.isAuthenticated()){
+            throw new RequestException(ResponseCode.NOT_SING_IN);
+        }
+        JwtToken jwtToken = new JwtToken();
+        Object principal = subject.getPrincipal();
+        if(principal==null){
+            throw RequestException.fail("用户信息获取失败");
+        }
+        BeanUtils.copyProperties(principal,jwtToken);
+        SysUser user = this.selectOne(new EntityWrapper<SysUser>()
+                .eq("username",jwtToken.getUsername())
+                .setSqlSelect("id"));
+        if(user==null){
+            throw RequestException.fail("用户不存在");
+        }
+        List<SysRole> allRoleByUserId = roleService.findAllRoleByUserId(user.getId(), true);
+        List<String> permissions = new LinkedList<>();
+        for (SysRole sysRole : allRoleByUserId) {
+            if(sysRole.getResources()!=null && sysRole.getResources().size()>0){
+                sysRole.getResources().forEach(s-> permissions.add(s.getPermission()));
+            }
+        }
+        return permissions;
     }
 
     public List<SysResource> userRolesRegexResource(List<SysRole> roles){
@@ -151,7 +175,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
     @Override
     public Page<SysUserVO> getAllUserBySplitPage(FindUserDTO findUserDTO) {
         EntityWrapper<SysUser> wrapper = new EntityWrapper<>();
-        wrapper.orderBy("id",findUserDTO.getAsc());
+        wrapper.orderBy("create_date",findUserDTO.getAsc());
         Page<SysUser> userPage = this.selectPage(new Page<>(findUserDTO.getPage(),
                 findUserDTO.getPageSize()), wrapper);
         Page<SysUserVO> userVOPage = new Page<>();

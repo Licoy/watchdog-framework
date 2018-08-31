@@ -43,6 +43,12 @@ public interface SysUserService extends IService<SysUser> {
     SysUserVO getCurrentUser();
 
     /**
+     * 获取当前登录用户所有的权限标示
+     * @return UserVO
+     */
+    List<String> getAllPermissionTag();
+
+    /**
      * 用户角色资源匹配
      * @param roles 用户角色集
      * @return 资源集合

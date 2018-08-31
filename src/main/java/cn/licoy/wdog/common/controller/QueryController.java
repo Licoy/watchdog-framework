@@ -19,7 +19,6 @@ public interface QueryController<E,FD,S extends QueryService<E,FD>> {
     S getService();
 
     @PostMapping("/list")
-    @SysLogs("分页获取所有列表")
     @ApiOperation(value = "分页获取所有列表")
     @ApiImplicitParam(paramType = "header",name = "Authorization",value = "身份认证Token",required = true)
     default ResponseResult<Page<E>> list(@RequestBody FD findDTO){

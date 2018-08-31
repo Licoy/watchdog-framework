@@ -6,6 +6,8 @@ import cn.licoy.wdog.core.config.jwt.JwtToken;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.DisabledAccountException;
 import org.apache.shiro.subject.Subject;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
@@ -73,6 +75,15 @@ public class Tools {
         }
         // 如果没有抛出异常则代表登入成功，返回true
         return true;
+    }
+
+    public static synchronized void executeLogin(){
+        HttpServletRequest request =
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        boolean b = Tools.executeLogin(request);
+        if(!b){
+            throw RequestException.fail("身份已过期或无效，请重新认证");
+        }
     }
 
 }

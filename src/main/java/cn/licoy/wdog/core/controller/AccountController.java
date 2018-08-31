@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @author Licoy
  * @version 2018/4/13/14:02
@@ -57,6 +59,13 @@ public class AccountController {
             return ResponseResult.e(ResponseCode.LOGOUT_FAIL);
         }
         return ResponseResult.e(ResponseCode.LOGOUT_OK);
+    }
+
+    @PostMapping(value = "/all-permission-tag")
+    @ApiOperation(value = "获取所有的权限标示")
+    @ApiImplicitParam(paramType = "header",name = "Authorization",value = "身份认证Token")
+    public ResponseResult<List<String>> getAllPermissionTag(){
+        return ResponseResult.e(ResponseCode.OK,userService.getAllPermissionTag());
     }
 
 }
