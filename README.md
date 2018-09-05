@@ -59,6 +59,10 @@ js-md5 | js-md5库 | 0.7.3 | [https://github.com/emn178/js-md5](https://github.c
     MySQL5.6+
     Maven4.0+
 ## 服务端
+- 使用前提：安装lombok插件
+   
+   - IDEA安装方法：[https://blog.csdn.net/zhglance/article/details/54931430](https://blog.csdn.net/zhglance/article/details/54931430)
+   - eclipse安装方法：[https://blog.csdn.net/dorothy1224/article/details/79280591/](https://blog.csdn.net/dorothy1224/article/details/79280591/)
 - 克隆到本地
 ```git
 git clone git@github.com:watchdog-framework/watchdog-framework.git
