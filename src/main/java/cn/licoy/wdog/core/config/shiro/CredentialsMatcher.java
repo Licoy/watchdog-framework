@@ -1,6 +1,7 @@
 package cn.licoy.wdog.core.config.shiro;
 
 
+import cn.licoy.encryptbody.util.MD5EncryptUtil;
 import cn.licoy.wdog.common.util.Encrypt;
 import cn.licoy.wdog.common.util.JwtUtil;
 import cn.licoy.wdog.core.config.jwt.JwtToken;
@@ -18,7 +19,7 @@ public class CredentialsMatcher extends SimpleCredentialsMatcher {
         JwtToken jwtToken = (JwtToken) token;
         Object accountCredentials = getCredentials(info);
         if(jwtToken.getPassword()!=null){
-            Object tokenCredentials = Encrypt.md5(String.valueOf(
+            Object tokenCredentials = MD5EncryptUtil.encrypt(String.valueOf(
                     jwtToken.getPassword())+jwtToken.getUsername());
             if(!accountCredentials.equals(tokenCredentials)){
                 throw new DisabledAccountException("密码不正确！");

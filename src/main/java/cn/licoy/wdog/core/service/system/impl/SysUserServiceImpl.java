@@ -1,5 +1,6 @@
 package cn.licoy.wdog.core.service.system.impl;
 
+import cn.licoy.encryptbody.util.MD5EncryptUtil;
 import cn.licoy.wdog.common.bean.ResponseCode;
 import cn.licoy.wdog.common.exception.RequestException;
 import cn.licoy.wdog.common.util.Encrypt;
@@ -246,7 +247,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
             findUser = new SysUser();
             BeanUtils.copyProperties(addDTO,findUser);
             findUser.setCreateDate(new Date());
-            findUser.setPassword(Encrypt.md5(String.valueOf(findUser.getPassword())+findUser.getUsername()));
+            findUser.setPassword(MD5EncryptUtil.encrypt(String.valueOf(findUser.getPassword())+findUser.getUsername()));
             this.insert(findUser);
             this.updateUserRole(findUser);
         }catch (Exception e){
@@ -299,7 +300,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
         if(user==null){
             throw RequestException.fail(String.format("不存在ID为 %s 的用户",resetPasswordDTO.getUid()));
         }
-        String password = Encrypt.md5(String.valueOf(resetPasswordDTO.getPassword())+user.getUsername());
+        String password = MD5EncryptUtil.encrypt(String.valueOf(resetPasswordDTO.getPassword())+user.getUsername());
         user.setPassword(password);
         try {
             this.updateById(user);

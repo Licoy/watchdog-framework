@@ -26,7 +26,7 @@ public class JwtUtil {
             JWTVerifier verifier = JWT.require(algorithm)
                     .withClaim("username", username)
                     .build();
-            DecodedJWT jwt = verifier.verify(token);
+            verifier.verify(token);
             return true;
         } catch (Exception exception) {
             return false;
@@ -41,6 +41,18 @@ public class JwtUtil {
         try {
             DecodedJWT jwt = JWT.decode(token);
             return jwt.getClaim("username").asString();
+        } catch (JWTDecodeException e) {
+            return null;
+        }
+    }
+
+    /**
+     * 获得token中的指定KEY值信息
+     */
+    public static String get(String token,String key) {
+        try {
+            DecodedJWT jwt = JWT.decode(token);
+            return jwt.getClaim(key).asString();
         } catch (JWTDecodeException e) {
             return null;
         }

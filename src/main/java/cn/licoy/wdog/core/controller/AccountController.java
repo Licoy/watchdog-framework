@@ -1,5 +1,6 @@
 package cn.licoy.wdog.core.controller;
 
+import cn.licoy.wdog.common.annotation.JwtClaim;
 import cn.licoy.wdog.common.bean.ResponseResult;
 import cn.licoy.wdog.common.bean.ResponseCode;
 import cn.licoy.wdog.common.annotation.SysLogs;
@@ -64,7 +65,7 @@ public class AccountController {
     @PostMapping(value = "/all-permission-tag")
     @ApiOperation(value = "获取所有的权限标示")
     @ApiImplicitParam(paramType = "header",name = "Authorization",value = "身份认证Token")
-    public ResponseResult<List<String>> getAllPermissionTag(){
+    public ResponseResult<List<String>> getAllPermissionTag(@JwtClaim String t){
         return ResponseResult.e(ResponseCode.OK,userService.getAllPermissionTag());
     }
 

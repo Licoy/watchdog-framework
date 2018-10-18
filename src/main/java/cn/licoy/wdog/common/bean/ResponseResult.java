@@ -20,6 +20,7 @@ import java.io.Serializable;
 @ApiModel(value = "请求结果响应体")
 public class ResponseResult<T> implements Serializable {
 
+
     @ApiModelProperty(value = "响应状态回执码")
     private Integer status;
 
