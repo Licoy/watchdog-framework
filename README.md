@@ -92,12 +92,6 @@ spring:
 # 常见问题
 - [点此查看解决办法](QUESTION.md)
 
-# 讨论
-
- - QQ群：30261540  &nbsp; [点我加入QQ群讨论](https://shang.qq.com/wpa/qunwpa?idkey=c3541f1d0dbe443456228e3aebf23f6795b614a94d5df6a32f0b2b1c759bb99b)
-
-- 作者博客：[https://www.licoy.cn](https://www.licoy.cn)
-
 # 项目地址
 
 - Github：[https://github.com/watchdog-framework/watchdog-framework](https://github.com/watchdog-framework/watchdog-framework)
@@ -110,10 +104,6 @@ spring:
 - [ ] 字典
 - [x] 日志记录
 - [ ] More...
-
-# 业务扩展
-
-个人接单，有需求的小伙伴可以直接联系我，业务类型请参考：[https://www.licoy.cn/business.html](https://www.licoy.cn/business.html)
 
 # 开源协议
 MIT
